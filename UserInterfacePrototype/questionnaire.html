@@ -5,13 +5,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>WWv_index_v3.html</title>
+  <title>questionnaire.html</title>
 
   <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
   <!-- MyCustom CSS file -->
   <link rel="stylesheet" type="text/css" href="index_v3.css">
+  <link rel="stylesheet" type="text/css" href="questionaire.css">
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,12 +50,14 @@
           <form class="navbar-form navbar-right">
                 
                     <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class = "glyphicon glyphicon-cog"></span> Settings <span class="caret"></span></button>
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class = "glyphicon glyphicon-cog"></span> Charts <span class="caret"></span></button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">See All Charts</a></li>
+                            <li><a href="#">Disable Charts</a></li>
+                            <li><a href="#">Show Pie chart</a></li>
+                            <li><a href="#">Hide Pie Chart</a></li>
+                            <li><a href="#">Show Graph chart</a></li>
+                            <li><a href="#">Hide Graph Chart</a></li>
                         </ul>
                     </div>
 
@@ -135,158 +138,97 @@
                         </div>  <!-- class col-sm-6 (right side) end here -->
                     </div>  <!-- Questionnaire content row end here -->
 
-                    <div class = "row">
-                        <a href="questionnaire.html">
-                            <button type="button" class="btn btn-info pull-right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> More info</button>
-                        </a>
+                    <div class = "charts">
+                        <div class = "row">
+                            <div class="panel panel-primary">
+                                <div class = "panel-heading">
+                                    <h6 class = panel-title>Many Pie Charts here <span class = "pull-right">X</span></h6>
+                                </div>
+                                <div class="panel-body">
+                                    <h5>each Pie represent one answer</h5>
+                                    <h5>The amount of fulfilnes of a pie represent the amount of votes</h5>
+                                    <img class = "img img-responsive" src="screenshots/WB0PHMG9K.png">
+                                </div>
+                                <div class="panel-footer">Some description of the data???? Hints maby? or date?</div>
+                            </div>
+                        </div>  <!-- first row of chart end here -->
+
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                <div class="panel panel-success">
+                                    <div class = "panel-heading">
+                                        <h6 class = panel-title>Graph here <span class = "pull-right">X</span></h6>
+                                    </div>
+                                    <div class="panel-body">
+                                        <h5>Graphical representation of voting activity</h5>
+                                        <h5> X axis represent time</h5>
+                                        <h5>Y axis represent votes</h5>
+                                        <img class = "img img-responsive" src="screenshots/WB0PHMG9K.png">
+                                    </div>
+                                </div>
+                            </div>
+                                <div class = "col-md-6">
+                                    <div class = "well">
+                                        <h4>Coments here</h4>
+                                    </div>
+
+                                    <div class="detailBox">
+                                        <div class="titleBox">
+                                          <label>Comment Box</label>
+                                          <button type="button" class="close" aria-hidden="true">&times;</button>
+                                      </div>
+                                      <div class="commentBox">
+                                        
+                                        <p class="taskDescription">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                    </div>
+                                    <div class="actionBox">
+                                        <ul class="commentList">
+                                            <li>
+                                                <div class="commenterImage">
+                                                  <img src="http://lorempixel.com/50/50/people/6" />
+                                              </div>
+                                              <div class="commentText">
+                                                <p class="">Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
+
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="commenterImage">
+                                              <img src="http://lorempixel.com/50/50/people/7" />
+                                          </div>
+                                          <div class="commentText">
+                                            <p class="">Hello this is a test comment and this comment is particularly very long and it goes on and on and on.</p> <span class="date sub-text">on March 5th, 2014</span>
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="commenterImage">
+                                          <img src="http://lorempixel.com/50/50/people/9" />
+                                      </div>
+                                      <div class="commentText">
+                                        <p class="">Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
+
+                                    </div>
+                                </li>
+                            </ul>
+                            <form class="form-inline" role="form">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" placeholder="Your comments" />
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-default">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                                </div>
+                            </div>
                     </div>
                 </div>  <!-- class container end here -->
             </div>  <!-- class qustioonaireEven end here -->
 
-            <div class = "questionnaireOdd">
-                <div class = "container">
-                    <div class = "row"> <!-- questionarie title row start here -->
-                        <h1>Questionnaire Title
-                            <small>
-                                <a class = "badge" href="#">tag1</a>
-                                <a class = "badge" href="#">tag2</a>
-                                <a class = "badge" href="#">tag3</a>
-                            </small>
-                        </h1>
-                    </div>  <!-- questionnaire title row end here -->
-
-                    <div class = "row"> <!-- questionnaire content row start here-->
-                        <div class = "col-sm-6">
-                            <h4>Questionnaire description:</h4>
-                            <img class = "img-responsive imageQuestionnaireDescription" src="http://placehold.it/350x150">
-                            <p class = "questionnaireDescriptionParagraph">Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. </p>
-                        </div>  <!-- class col-sm-6 (left side) end here -->
-                        <div class = "col-sm-6">
-                            <h4>Answer the questionnaire:</h4>
-                            <div class = "well">
-                                <div class = "row">
-                                    <ul class = "list-unstyled">
-                                        <li> <input type="checkbox"> First chose of multiple possible</li>
-                                        <li> <input type="checkbox"> Second chose of multiple possible</li>
-                                        <li> <input type="checkbox"> Third chose of multiple possible</li>
-                                        <li> <input type="checkbox"> Fourth chose of multiple possible</li>
-                                        <li> <input type="checkbox"> Fifth chose of multiple possible</li>
-                                    </ul>
-                                </div>
-                                <div class = "row">
-                                    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
-                                </div>
-                            </div>
-                            <div class="alert alert-warning" role="alert"><span class = "glyphicon glyphicon-warning-sign"></span> Multiple answers available</div>
-                        </div>  <!-- class col-md-6 (right side) end here -->
-                    </div>  <!-- Questionnaire content row end here -->
-
-                    <div class = "row">
-                        <a href="questionnaire.html">
-                            <button type="button" class="btn btn-info pull-right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> More info</button>
-                        </a>
-                    </div>
-                </div>     <!-- class container end here -->
-            </div>  <!-- class qustioonaireOdd end here -->
-
-            <div class = "questionnaireEven">
-                <div class = "container">
-                    <div class = "row"> <!-- questionnaire title row start here -->
-                        <h1>Questionnaire Title
-                            <small>
-                                <a class = "badge" href="#">tag1</a>
-                                <a class = "badge" href="#">tag2</a>
-                                <a class = "badge" href="#">tag3</a>
-                            </small>
-                        </h1>
-                    </div>  <!-- questionnaire title row end here -->
-
-                    <div class = "row"> <!-- questionnaire content row start here-->
-                        <div class = "col-sm-6">
-                            <h4>Questionnaire description:</h4>
-                            <img class = "img-responsive imageQuestionnaireDescription" src="http://placehold.it/350x150">
-                            <p class = "questionnaireDescriptionParagraph">Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. </p>
-                        </div>  <!-- class col-sm-6 (left side) end here -->
-                        <div class = "col-sm-6">
-                            <h4>Answer the questionnaire:</h4>
-                            <div class = "well">
-                                <div class = "row">
-                                    <ul class = "list-unstyled">
-                                        <li> <input type="radio"> First chose of multiple possible</li>
-                                        <li> <input type="radio"> Second chose of multiple possible</li>
-                                        <li> <input type="radio"> Third chose of multiple possible</li>
-                                        <li> <input type="radio"> Fourth chose of multiple possible</li>
-                                        <li> <input type="radio"> Fifth chose of multiple possible</li>
-                                    </ul>
-                                </div>
-                                <div class = "row">
-                                    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
-                                </div>
-                            </div>
-                            <div class="alert alert-warning" role="alert"><span class = "glyphicon glyphicon-warning-sign"></span> Single answer only available</div>
-                        </div>  <!-- class col-md-6 (right side) end here -->
-                    </div>  <!-- Questionnaire content row end here -->
-
-                    <div class = "row">
-                        <a href="questionnaire.html">
-                            <button type="button" class="btn btn-info pull-right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> More info</button>
-                        </a>
-                    </div>
-                </div>  <!-- class container end here-->
-            </div>  <!-- class qustioonaireEven end here -->
-
-            <div class = "questionnaireOdd">
-                <div class = "container">
-                    <div class = "row"> <!-- questionaire title row start here -->
-                        <h1>Questionnaire Title
-                            <small>
-                                <a class = "badge" href="#">tag1</a>
-                                <a class = "badge" href="#">tag2</a>
-                                <a class = "badge" href="#">tag3</a>
-                            </small>
-                        </h1>
-                    </div>  <!-- questionnaire title row end here -->
-
-                    <div class = "row"> <!-- questionnaire content row start here-->
-                        <div class = "col-sm-6">
-                            <h4>Questionnaire description:</h4>
-                            <img class = "img-responsive imageQuestionnaireDescription" src="http://placehold.it/350x150">
-                            <p class = "questionnaireDescriptionParagraph">Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. Questionnaire description here. </p>
-                        </div>  <!-- class col-sm-6 (left side) end here -->
-                        <div class = "col-sm-6">
-                            <h4>Answer the questionnaire:</h4>
-                            <div class = "well">
-                                <div class = "row">
-                                    <ul class = "list-unstyled">
-                                        <li> <input type="radio"> First chose of multiple possible</li>
-                                        <li> <input type="radio"> Second chose of multiple possible</li>
-                                        <li> <input type="radio"> Third chose of multiple possible</li>
-                                        <li> <input type="radio"> Fourth chose of multiple possible</li>
-                                        <li> <input type="radio"> Fifth chose of multiple possible</li>
-                                    </ul>
-                                </div>
-                                <div class = "row">
-                                    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
-                                </div>
-                            </div>
-                            <div class="alert alert-warning" role="alert"><span class = "glyphicon glyphicon-warning-sign"></span> Single answer only available</div>
-                        </div>  <!-- class col-md-6 (right side) end here -->
-                    </div>  <!-- Questionnaire content row end here -->
-
-                    <div class = "row">
-                        <a href="questionnaire.html">
-                            <button type="button" class="btn btn-info pull-right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> More info</button>
-                        </a>
-                    </div>
-                </div>     <!-- class container end here -->
-            </div>  <!-- class qustioonaireOdd end here -->
-
-        </div>  <!-- class container flyid end here -->
-    </div>  <!-- class questionnaire end here -->
-
-    <!-- Questionnaires end here -->
-
-
+            
     <!-- footer start here -->
     <div class = "myfooter">
         <div class="progress">
