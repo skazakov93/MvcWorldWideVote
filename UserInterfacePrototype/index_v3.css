@@ -1,0 +1,117 @@
+/* top menu style start here */
+
+@media (max-width: 767px) {
+    .navbar-fixed-top .navbar-collapse {
+     height: 200px;
+     max-height: 800px;
+  }
+
+    .dropdown{
+      /*float: none !important;*/
+      margin-bottom: 10px;
+  }
+
+    .open{
+      /*margin-bottom: 40px;*/
+  }
+
+    .navbar-inverse .navbar-form {
+      height: 92%;
+  }
+
+    .btn-success {
+      color: #fff;
+      background-color: #5cb85c;
+      border-color: #4cae4c;
+      float: right;
+    }
+}
+
+.navbar .input-group {
+  width: 546px;
+  margin-top: 7px;
+
+}
+
+.dropdown{
+  float: left;
+  margin-right: 10px;
+}
+
+/* top menu style end hele*/
+
+
+
+
+
+/* title style start here */
+
+@media (max-width: 767px) {
+    .titleImage{
+     display: none;
+  }
+    .title{
+      height: 130px !important;
+  }
+    .titleText{
+      top: 30px !important;
+      margin-left: 0px !important;
+    }
+}
+
+.content{
+  margin-top: 50px;
+}
+
+.title{
+  background: #2A569D;
+  height: 250px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.titleImage{
+    height: 250px;
+}
+
+.titleText{
+    position: relative;
+    top: -170px;
+    color: white;
+    /* padding-left: 200px; */
+    /* padding-right: 200px; */
+    margin-left: 200px;
+    /* margin-right: 200px; */
+}
+
+/* title style end here */
+
+
+
+
+/* questionnaire style start here */
+
+.questionnaireOdd{
+  background: rgb(34, 34, 34);
+  padding-bottom: 30px;
+  color: white;
+  padding-top: 15px;
+}
+
+.questionnaireEven{
+  padding-bottom: 30px;
+  padding-top: 15px;
+}
+
+.questionnaire .btn-info{
+  margin-right: 13px;
+  margin-top: 20px;
+}
+
+.questionnaire .well{
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: rgba(245, 245, 245, 0.05);
+}
+
+/* questionnaire style start here */
