@@ -1,0 +1,106 @@
+﻿@model Anketa_Proekt.Models.Anketa
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<!-- content of the page start here -->
+<div class="container-flyid">
+    <div class="content">
+
+        <div class="title">
+            <!-- title start here -->
+            <div class="container">
+                <!-- wrap image and title -->
+                <img class="img-responsive titleImage" src="~/img/backgroundTransparentSmall.png" />
+                <h1 class="text-center titleText">Detailed preview</h1>
+            </div>
+        </div>  <!-- class title end here -->
+    </div>  <!-- class content end here -->
+</div>  <!-- class container-flyid end here -->
+
+
+
+
+<div class="questionnaire">
+    <div class="container-flyid">
+        <div class="questionnaireEven">
+            <div class="container">
+                <div class="row">
+                    <!-- questionarie title row start here -->
+                    <h1>
+                        @Html.DisplayFor(model => model.prasanje)
+
+                        @{
+        HashSet<Anketa_Proekt.Models.Kategorija> kategorii = (HashSet<Anketa_Proekt.Models.Kategorija>) Model.Kategorijas;
+
+        <small>
+            @foreach (Anketa_Proekt.Models.Kategorija k in kategorii)
+            {
+                string ime_k = k.ime_k;
+                <a class="badge" href="#">@ime_k</a>
+            }
+        </small>
+                        }
+                    </h1>
+                </div>  <!-- questionnaire title row end here -->
+
+                <div class="row">
+                    <!-- questionnaire content row start here-->
+                    <div class="col-sm-6">
+                        <h4>@Html.DisplayFor(model => model.opis_a):</h4>
+                        <img class="img-responsive imageQuestionnaireDescription" src="http://placehold.it/350x150">
+                        <p class="questionnaireDescriptionParagraph">@Html.DisplayFor(model => model.opis_a)</p>
+                    </div>  <!-- class col-sm-6 (left side) end here -->
+                    <div class="col-sm-6">
+                        <h4>Answer the questionnaire:</h4>
+
+                        @{
+            int multi_choice = (Model.multi_choice);
+
+            HashSet<Anketa_Proekt.Models.Mozni_Odgovori> odgovori = (HashSet<Anketa_Proekt.Models.Mozni_Odgovori>)Model.Mozni_Odgovori;
+
+            string radioOrChechBox = "";
+            string multiAnsewrs = "";
+
+            if (multi_choice == 1)
+            {
+                radioOrChechBox = "checkbox";
+
+                multiAnsewrs = "Multiple answers available";
+            }
+            else
+            {
+                radioOrChechBox = "radio";
+
+                multiAnsewrs = "Single answer only available";
+            }
+                        }
+
+                        <div class="well">
+                            <div class="row">
+                                <ul class="list-unstyled">
+                                    @foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odgovori)
+                                    {
+                                        <li> <input type="@radioOrChechBox" name="grupa" value="@o.id_odg">@o.ime_odg</li>
+                                    }
+
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span> @multiAnsewrs</div>
+
+                    </div>  <!-- class col-sm-6 (right side) end here -->
+                </div>  <!-- Questionnaire content row end here -->
+            </div>  <!-- class container end here -->
+        </div>  </div>  <!-- class qustioonaireEven end here -->
+
+    }
+
+    </div>  <!-- class container flyid end here -->
+</div>  <!-- class questionnaire end here -->
+<!-- Questionnaires end here -->

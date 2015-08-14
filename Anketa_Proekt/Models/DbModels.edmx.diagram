@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="318b272db1834926b04fb0a826c84489" Name="Diagram1">
+        <EntityTypeShape EntityType="AnketiModel1.Anketa" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel1.Glasa" Width="1.5" PointX="7.5" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel1.Kategorija" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel1.Komentar" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel1.Komentar_Za" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel1.Korisnik" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel1.Louse" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel1.Mozni_Odgovori" Width="1.5" PointX="5.25" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel1.Ogranicuvanja" Width="1.5" PointX="8.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel1.Premium_Korisnik" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel1.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="AnketiModel1.FK_Anketa_Lice" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.FK_Glasa_Anketa" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.FK_Komentar_Za_Anketa" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.FK_Glasa_Lice" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.FK_Glasa_Mozni_Odgovori" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.FK_Komentar_Za_Komentar" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.FK_Komentar_Za_Lice" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.FK_Korisnik_Lice" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.FK_Premium_Korisnik_Lice" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.Dozvoleni_Korisnici" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.Ima_Ogranicuvanje" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.Pripagja" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel1.Sodrzi" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
