@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="217a2191f3584543b9a0be9973652dd0" Name="Diagram1">
+        <EntityTypeShape EntityType="AnketiModel.Anketa" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel.Glasa" Width="1.5" PointX="7.5" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel.Kategorija" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel.Korisnik" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel.Louse" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel.Mozni_Odgovori" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel.Ogranicuvanja" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel.Premium_Korisnik" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnketiModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="AnketiModel.FK_Anketa_Lice" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel.FK_Glasa_Anketa" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel.FK_Glasa_Lice" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel.FK_Glasa_Mozni_Odgovori" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel.FK_Korisnik_Lice" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel.FK_Premium_Korisnik_Lice" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel.Dozvoleni_Korisnici" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel.Ima_Ogranicuvanje" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel.Pripagja" ManuallyRouted="false" />
+        <AssociationConnector Association="AnketiModel.Sodrzi" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

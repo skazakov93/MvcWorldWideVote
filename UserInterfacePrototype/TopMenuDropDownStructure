@@ -1,0 +1,16 @@
+settings = pools
+	- create pool
+	- delete pool
+	- my pools
+			- name of pool 1
+			- name of pool 2
+			-
+	- sort pools
+			- by date
+			- by votes
+
+my account = sign in
+	- check status
+	- logout
+
+byu premium = login (if not loged in)

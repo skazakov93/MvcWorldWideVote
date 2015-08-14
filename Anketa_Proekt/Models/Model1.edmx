@@ -1,0 +1,754 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AnketiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Anketa">
+          <Key>
+            <PropertyRef Name="id_anketa" />
+          </Key>
+          <Property Name="id_anketa" Type="int" Nullable="false" />
+          <Property Name="prasanje" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="opis_a" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="kraen_datum" Type="datetime" Nullable="false" />
+          <Property Name="id_lice" Type="int" Nullable="false" />
+          <Property Name="datum_kreiranje" Type="datetime" Nullable="false" />
+          <Property Name="multi_choice" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dozvoleni_Korisnici">
+          <Key>
+            <PropertyRef Name="id_o" />
+            <PropertyRef Name="id_anketa" />
+          </Key>
+          <Property Name="id_o" Type="int" Nullable="false" />
+          <Property Name="id_anketa" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Glasa">
+          <Key>
+            <PropertyRef Name="id_lice" />
+            <PropertyRef Name="id_anketa" />
+            <PropertyRef Name="id_odg" />
+          </Key>
+          <Property Name="id_lice" Type="int" Nullable="false" />
+          <Property Name="id_anketa" Type="int" Nullable="false" />
+          <Property Name="id_odg" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ima_Ogranicuvanje">
+          <Key>
+            <PropertyRef Name="id_lice" />
+            <PropertyRef Name="id_o" />
+          </Key>
+          <Property Name="id_lice" Type="int" Nullable="false" />
+          <Property Name="id_o" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategorija">
+          <Key>
+            <PropertyRef Name="id_k" />
+          </Key>
+          <Property Name="id_k" Type="int" Nullable="false" />
+          <Property Name="ime_k" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="opis_k" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Korisnik">
+          <Key>
+            <PropertyRef Name="id_lice" />
+          </Key>
+          <Property Name="id_lice" Type="int" Nullable="false" />
+          <Property Name="br_anketi" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lice">
+          <Key>
+            <PropertyRef Name="id_lice" />
+          </Key>
+          <Property Name="id_lice" Type="int" Nullable="false" />
+          <Property Name="ime" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="prezime" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="e_mail" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="lozinka" Type="char" MaxLength="40" Nullable="false" />
+          <Property Name="tel_broj" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="ulica" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="grad" Type="char" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mozni_Odgovori">
+          <Key>
+            <PropertyRef Name="id_odg" />
+          </Key>
+          <Property Name="id_odg" Type="int" Nullable="false" />
+          <Property Name="ime_odg" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ogranicuvanja">
+          <Key>
+            <PropertyRef Name="id_o" />
+          </Key>
+          <Property Name="id_o" Type="int" Nullable="false" />
+          <Property Name="ime_o" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="opis_o" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Premium_Korisnik">
+          <Key>
+            <PropertyRef Name="id_lice" />
+          </Key>
+          <Property Name="id_lice" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pripagja">
+          <Key>
+            <PropertyRef Name="id_k" />
+            <PropertyRef Name="id_anketa" />
+          </Key>
+          <Property Name="id_k" Type="int" Nullable="false" />
+          <Property Name="id_anketa" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sodrzi">
+          <Key>
+            <PropertyRef Name="id_odg" />
+            <PropertyRef Name="id_anketa" />
+          </Key>
+          <Property Name="id_odg" Type="int" Nullable="false" />
+          <Property Name="id_anketa" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Anketa_Lice">
+          <End Role="Lice" Type="Self.Lice" Multiplicity="1" />
+          <End Role="Anketa" Type="Self.Anketa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lice">
+              <PropertyRef Name="id_lice" />
+            </Principal>
+            <Dependent Role="Anketa">
+              <PropertyRef Name="id_lice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dozvoleni_Korisnici_Anketa">
+          <End Role="Anketa" Type="Self.Anketa" Multiplicity="1" />
+          <End Role="Dozvoleni_Korisnici" Type="Self.Dozvoleni_Korisnici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Anketa">
+              <PropertyRef Name="id_anketa" />
+            </Principal>
+            <Dependent Role="Dozvoleni_Korisnici">
+              <PropertyRef Name="id_anketa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dozvoleni_Korisnici_Ogranicuvanja">
+          <End Role="Ogranicuvanja" Type="Self.Ogranicuvanja" Multiplicity="1" />
+          <End Role="Dozvoleni_Korisnici" Type="Self.Dozvoleni_Korisnici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogranicuvanja">
+              <PropertyRef Name="id_o" />
+            </Principal>
+            <Dependent Role="Dozvoleni_Korisnici">
+              <PropertyRef Name="id_o" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Glasa_Anketa">
+          <End Role="Anketa" Type="Self.Anketa" Multiplicity="1" />
+          <End Role="Glasa" Type="Self.Glasa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Anketa">
+              <PropertyRef Name="id_anketa" />
+            </Principal>
+            <Dependent Role="Glasa">
+              <PropertyRef Name="id_anketa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Glasa_Lice">
+          <End Role="Lice" Type="Self.Lice" Multiplicity="1" />
+          <End Role="Glasa" Type="Self.Glasa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lice">
+              <PropertyRef Name="id_lice" />
+            </Principal>
+            <Dependent Role="Glasa">
+              <PropertyRef Name="id_lice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Glasa_Mozni_Odgovori">
+          <End Role="Mozni_Odgovori" Type="Self.Mozni_Odgovori" Multiplicity="1" />
+          <End Role="Glasa" Type="Self.Glasa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mozni_Odgovori">
+              <PropertyRef Name="id_odg" />
+            </Principal>
+            <Dependent Role="Glasa">
+              <PropertyRef Name="id_odg" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ima_Ogranicuvanje_Lice">
+          <End Role="Lice" Type="Self.Lice" Multiplicity="1" />
+          <End Role="Ima_Ogranicuvanje" Type="Self.Ima_Ogranicuvanje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lice">
+              <PropertyRef Name="id_lice" />
+            </Principal>
+            <Dependent Role="Ima_Ogranicuvanje">
+              <PropertyRef Name="id_lice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ima_Ogranicuvanje_Ogranicuvanja">
+          <End Role="Ogranicuvanja" Type="Self.Ogranicuvanja" Multiplicity="1" />
+          <End Role="Ima_Ogranicuvanje" Type="Self.Ima_Ogranicuvanje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogranicuvanja">
+              <PropertyRef Name="id_o" />
+            </Principal>
+            <Dependent Role="Ima_Ogranicuvanje">
+              <PropertyRef Name="id_o" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Korisnik_Lice">
+          <End Role="Lice" Type="Self.Lice" Multiplicity="1" />
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Lice">
+              <PropertyRef Name="id_lice" />
+            </Principal>
+            <Dependent Role="Korisnik">
+              <PropertyRef Name="id_lice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Premium_Korisnik_Lice">
+          <End Role="Lice" Type="Self.Lice" Multiplicity="1" />
+          <End Role="Premium_Korisnik" Type="Self.Premium_Korisnik" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Lice">
+              <PropertyRef Name="id_lice" />
+            </Principal>
+            <Dependent Role="Premium_Korisnik">
+              <PropertyRef Name="id_lice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pripagja_Anketa">
+          <End Role="Anketa" Type="Self.Anketa" Multiplicity="1" />
+          <End Role="Pripagja" Type="Self.Pripagja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Anketa">
+              <PropertyRef Name="id_anketa" />
+            </Principal>
+            <Dependent Role="Pripagja">
+              <PropertyRef Name="id_anketa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pripagja_Kategorija">
+          <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="1" />
+          <End Role="Pripagja" Type="Self.Pripagja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorija">
+              <PropertyRef Name="id_k" />
+            </Principal>
+            <Dependent Role="Pripagja">
+              <PropertyRef Name="id_k" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sodrzi_Anketa">
+          <End Role="Anketa" Type="Self.Anketa" Multiplicity="1" />
+          <End Role="Sodrzi" Type="Self.Sodrzi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Anketa">
+              <PropertyRef Name="id_anketa" />
+            </Principal>
+            <Dependent Role="Sodrzi">
+              <PropertyRef Name="id_anketa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sodrzi_Mozni_Odgovori">
+          <End Role="Mozni_Odgovori" Type="Self.Mozni_Odgovori" Multiplicity="1" />
+          <End Role="Sodrzi" Type="Self.Sodrzi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mozni_Odgovori">
+              <PropertyRef Name="id_odg" />
+            </Principal>
+            <Dependent Role="Sodrzi">
+              <PropertyRef Name="id_odg" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AnketiModelStoreContainer">
+          <EntitySet Name="Anketa" EntityType="Self.Anketa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dozvoleni_Korisnici" EntityType="Self.Dozvoleni_Korisnici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Glasa" EntityType="Self.Glasa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ima_Ogranicuvanje" EntityType="Self.Ima_Ogranicuvanje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategorija" EntityType="Self.Kategorija" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Korisnik" EntityType="Self.Korisnik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lice" EntityType="Self.Lice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mozni_Odgovori" EntityType="Self.Mozni_Odgovori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ogranicuvanja" EntityType="Self.Ogranicuvanja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Premium_Korisnik" EntityType="Self.Premium_Korisnik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pripagja" EntityType="Self.Pripagja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sodrzi" EntityType="Self.Sodrzi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Anketa_Lice" Association="Self.FK_Anketa_Lice">
+            <End Role="Lice" EntitySet="Lice" />
+            <End Role="Anketa" EntitySet="Anketa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dozvoleni_Korisnici_Anketa" Association="Self.FK_Dozvoleni_Korisnici_Anketa">
+            <End Role="Anketa" EntitySet="Anketa" />
+            <End Role="Dozvoleni_Korisnici" EntitySet="Dozvoleni_Korisnici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dozvoleni_Korisnici_Ogranicuvanja" Association="Self.FK_Dozvoleni_Korisnici_Ogranicuvanja">
+            <End Role="Ogranicuvanja" EntitySet="Ogranicuvanja" />
+            <End Role="Dozvoleni_Korisnici" EntitySet="Dozvoleni_Korisnici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Glasa_Anketa" Association="Self.FK_Glasa_Anketa">
+            <End Role="Anketa" EntitySet="Anketa" />
+            <End Role="Glasa" EntitySet="Glasa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Glasa_Lice" Association="Self.FK_Glasa_Lice">
+            <End Role="Lice" EntitySet="Lice" />
+            <End Role="Glasa" EntitySet="Glasa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Glasa_Mozni_Odgovori" Association="Self.FK_Glasa_Mozni_Odgovori">
+            <End Role="Mozni_Odgovori" EntitySet="Mozni_Odgovori" />
+            <End Role="Glasa" EntitySet="Glasa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ima_Ogranicuvanje_Lice" Association="Self.FK_Ima_Ogranicuvanje_Lice">
+            <End Role="Lice" EntitySet="Lice" />
+            <End Role="Ima_Ogranicuvanje" EntitySet="Ima_Ogranicuvanje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ima_Ogranicuvanje_Ogranicuvanja" Association="Self.FK_Ima_Ogranicuvanje_Ogranicuvanja">
+            <End Role="Ogranicuvanja" EntitySet="Ogranicuvanja" />
+            <End Role="Ima_Ogranicuvanje" EntitySet="Ima_Ogranicuvanje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Korisnik_Lice" Association="Self.FK_Korisnik_Lice">
+            <End Role="Lice" EntitySet="Lice" />
+            <End Role="Korisnik" EntitySet="Korisnik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Premium_Korisnik_Lice" Association="Self.FK_Premium_Korisnik_Lice">
+            <End Role="Lice" EntitySet="Lice" />
+            <End Role="Premium_Korisnik" EntitySet="Premium_Korisnik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pripagja_Anketa" Association="Self.FK_Pripagja_Anketa">
+            <End Role="Anketa" EntitySet="Anketa" />
+            <End Role="Pripagja" EntitySet="Pripagja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pripagja_Kategorija" Association="Self.FK_Pripagja_Kategorija">
+            <End Role="Kategorija" EntitySet="Kategorija" />
+            <End Role="Pripagja" EntitySet="Pripagja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sodrzi_Anketa" Association="Self.FK_Sodrzi_Anketa">
+            <End Role="Anketa" EntitySet="Anketa" />
+            <End Role="Sodrzi" EntitySet="Sodrzi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sodrzi_Mozni_Odgovori" Association="Self.FK_Sodrzi_Mozni_Odgovori">
+            <End Role="Mozni_Odgovori" EntitySet="Mozni_Odgovori" />
+            <End Role="Sodrzi" EntitySet="Sodrzi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AnketiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Anketa">
+          <Key>
+            <PropertyRef Name="id_anketa" />
+          </Key>
+          <Property Name="id_anketa" Type="Int32" Nullable="false" />
+          <Property Name="prasanje" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="opis_a" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="kraen_datum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="id_lice" Type="Int32" Nullable="false" />
+          <Property Name="datum_kreiranje" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="multi_choice" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Louse" Relationship="Self.FK_Anketa_Lice" FromRole="Anketa" ToRole="Lice" />
+          <NavigationProperty Name="Glasas" Relationship="Self.FK_Glasa_Anketa" FromRole="Anketa" ToRole="Glasa" />
+          <NavigationProperty Name="Ogranicuvanjas" Relationship="Self.Dozvoleni_Korisnici" FromRole="Anketa" ToRole="Ogranicuvanja" />
+          <NavigationProperty Name="Kategorijas" Relationship="Self.Pripagja" FromRole="Anketa" ToRole="Kategorija" />
+          <NavigationProperty Name="Mozni_Odgovori" Relationship="Self.Sodrzi" FromRole="Anketa" ToRole="Mozni_Odgovori" />
+        </EntityType>
+        <EntityType Name="Glasa">
+          <Key>
+            <PropertyRef Name="id_lice" />
+            <PropertyRef Name="id_anketa" />
+            <PropertyRef Name="id_odg" />
+          </Key>
+          <Property Name="id_lice" Type="Int32" Nullable="false" />
+          <Property Name="id_anketa" Type="Int32" Nullable="false" />
+          <Property Name="id_odg" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Anketa" Relationship="Self.FK_Glasa_Anketa" FromRole="Glasa" ToRole="Anketa" />
+          <NavigationProperty Name="Louse" Relationship="Self.FK_Glasa_Lice" FromRole="Glasa" ToRole="Lice" />
+          <NavigationProperty Name="Mozni_Odgovori" Relationship="Self.FK_Glasa_Mozni_Odgovori" FromRole="Glasa" ToRole="Mozni_Odgovori" />
+        </EntityType>
+        <EntityType Name="Kategorija">
+          <Key>
+            <PropertyRef Name="id_k" />
+          </Key>
+          <Property Name="id_k" Type="Int32" Nullable="false" />
+          <Property Name="ime_k" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="opis_k" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Anketas" Relationship="Self.Pripagja" FromRole="Kategorija" ToRole="Anketa" />
+        </EntityType>
+        <EntityType Name="Korisnik">
+          <Key>
+            <PropertyRef Name="id_lice" />
+          </Key>
+          <Property Name="id_lice" Type="Int32" Nullable="false" />
+          <Property Name="br_anketi" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Louse" Relationship="Self.FK_Korisnik_Lice" FromRole="Korisnik" ToRole="Lice" />
+        </EntityType>
+        <EntityType Name="Louse">
+          <Key>
+            <PropertyRef Name="id_lice" />
+          </Key>
+          <Property Name="id_lice" Type="Int32" Nullable="false" />
+          <Property Name="ime" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="prezime" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="e_mail" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="lozinka" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tel_broj" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ulica" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="grad" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Anketas" Relationship="Self.FK_Anketa_Lice" FromRole="Lice" ToRole="Anketa" />
+          <NavigationProperty Name="Glasas" Relationship="Self.FK_Glasa_Lice" FromRole="Lice" ToRole="Glasa" />
+          <NavigationProperty Name="Korisnik" Relationship="Self.FK_Korisnik_Lice" FromRole="Lice" ToRole="Korisnik" />
+          <NavigationProperty Name="Premium_Korisnik" Relationship="Self.FK_Premium_Korisnik_Lice" FromRole="Lice" ToRole="Premium_Korisnik" />
+          <NavigationProperty Name="Ogranicuvanjas" Relationship="Self.Ima_Ogranicuvanje" FromRole="Lice" ToRole="Ogranicuvanja" />
+        </EntityType>
+        <EntityType Name="Mozni_Odgovori">
+          <Key>
+            <PropertyRef Name="id_odg" />
+          </Key>
+          <Property Name="id_odg" Type="Int32" Nullable="false" />
+          <Property Name="ime_odg" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Glasas" Relationship="Self.FK_Glasa_Mozni_Odgovori" FromRole="Mozni_Odgovori" ToRole="Glasa" />
+          <NavigationProperty Name="Anketas" Relationship="Self.Sodrzi" FromRole="Mozni_Odgovori" ToRole="Anketa" />
+        </EntityType>
+        <EntityType Name="Ogranicuvanja">
+          <Key>
+            <PropertyRef Name="id_o" />
+          </Key>
+          <Property Name="id_o" Type="Int32" Nullable="false" />
+          <Property Name="ime_o" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="opis_o" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Anketas" Relationship="Self.Dozvoleni_Korisnici" FromRole="Ogranicuvanja" ToRole="Anketa" />
+          <NavigationProperty Name="Lice" Relationship="Self.Ima_Ogranicuvanje" FromRole="Ogranicuvanja" ToRole="Lice" />
+        </EntityType>
+        <EntityType Name="Premium_Korisnik">
+          <Key>
+            <PropertyRef Name="id_lice" />
+          </Key>
+          <Property Name="id_lice" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Louse" Relationship="Self.FK_Premium_Korisnik_Lice" FromRole="Premium_Korisnik" ToRole="Lice" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Anketa_Lice">
+          <End Role="Lice" Type="Self.Louse" Multiplicity="1" />
+          <End Role="Anketa" Type="Self.Anketa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lice">
+              <PropertyRef Name="id_lice" />
+            </Principal>
+            <Dependent Role="Anketa">
+              <PropertyRef Name="id_lice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Glasa_Anketa">
+          <End Role="Anketa" Type="Self.Anketa" Multiplicity="1" />
+          <End Role="Glasa" Type="Self.Glasa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Anketa">
+              <PropertyRef Name="id_anketa" />
+            </Principal>
+            <Dependent Role="Glasa">
+              <PropertyRef Name="id_anketa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Glasa_Lice">
+          <End Role="Lice" Type="Self.Louse" Multiplicity="1" />
+          <End Role="Glasa" Type="Self.Glasa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lice">
+              <PropertyRef Name="id_lice" />
+            </Principal>
+            <Dependent Role="Glasa">
+              <PropertyRef Name="id_lice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Glasa_Mozni_Odgovori">
+          <End Role="Mozni_Odgovori" Type="Self.Mozni_Odgovori" Multiplicity="1" />
+          <End Role="Glasa" Type="Self.Glasa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mozni_Odgovori">
+              <PropertyRef Name="id_odg" />
+            </Principal>
+            <Dependent Role="Glasa">
+              <PropertyRef Name="id_odg" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Korisnik_Lice">
+          <End Role="Lice" Type="Self.Louse" Multiplicity="1" />
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Lice">
+              <PropertyRef Name="id_lice" />
+            </Principal>
+            <Dependent Role="Korisnik">
+              <PropertyRef Name="id_lice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Premium_Korisnik_Lice">
+          <End Role="Lice" Type="Self.Louse" Multiplicity="1" />
+          <End Role="Premium_Korisnik" Type="Self.Premium_Korisnik" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Lice">
+              <PropertyRef Name="id_lice" />
+            </Principal>
+            <Dependent Role="Premium_Korisnik">
+              <PropertyRef Name="id_lice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Dozvoleni_Korisnici">
+          <End Role="Anketa" Type="Self.Anketa" Multiplicity="*" />
+          <End Role="Ogranicuvanja" Type="Self.Ogranicuvanja" Multiplicity="*" />
+        </Association>
+        <Association Name="Ima_Ogranicuvanje">
+          <End Role="Lice" Type="Self.Louse" Multiplicity="*" />
+          <End Role="Ogranicuvanja" Type="Self.Ogranicuvanja" Multiplicity="*" />
+        </Association>
+        <Association Name="Pripagja">
+          <End Role="Anketa" Type="Self.Anketa" Multiplicity="*" />
+          <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="*" />
+        </Association>
+        <Association Name="Sodrzi">
+          <End Role="Anketa" Type="Self.Anketa" Multiplicity="*" />
+          <End Role="Mozni_Odgovori" Type="Self.Mozni_Odgovori" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="AnketiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Anketas" EntityType="Self.Anketa" />
+          <EntitySet Name="Glasas" EntityType="Self.Glasa" />
+          <EntitySet Name="Kategorijas" EntityType="Self.Kategorija" />
+          <EntitySet Name="Korisniks" EntityType="Self.Korisnik" />
+          <EntitySet Name="Lice" EntityType="Self.Louse" />
+          <EntitySet Name="Mozni_Odgovori" EntityType="Self.Mozni_Odgovori" />
+          <EntitySet Name="Ogranicuvanjas" EntityType="Self.Ogranicuvanja" />
+          <EntitySet Name="Premium_Korisnik" EntityType="Self.Premium_Korisnik" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_Anketa_Lice" Association="Self.FK_Anketa_Lice">
+            <End Role="Lice" EntitySet="Lice" />
+            <End Role="Anketa" EntitySet="Anketas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Glasa_Anketa" Association="Self.FK_Glasa_Anketa">
+            <End Role="Anketa" EntitySet="Anketas" />
+            <End Role="Glasa" EntitySet="Glasas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Glasa_Lice" Association="Self.FK_Glasa_Lice">
+            <End Role="Lice" EntitySet="Lice" />
+            <End Role="Glasa" EntitySet="Glasas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Glasa_Mozni_Odgovori" Association="Self.FK_Glasa_Mozni_Odgovori">
+            <End Role="Mozni_Odgovori" EntitySet="Mozni_Odgovori" />
+            <End Role="Glasa" EntitySet="Glasas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Korisnik_Lice" Association="Self.FK_Korisnik_Lice">
+            <End Role="Lice" EntitySet="Lice" />
+            <End Role="Korisnik" EntitySet="Korisniks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Premium_Korisnik_Lice" Association="Self.FK_Premium_Korisnik_Lice">
+            <End Role="Lice" EntitySet="Lice" />
+            <End Role="Premium_Korisnik" EntitySet="Premium_Korisnik" />
+          </AssociationSet>
+          <AssociationSet Name="Dozvoleni_Korisnici" Association="Self.Dozvoleni_Korisnici">
+            <End Role="Anketa" EntitySet="Anketas" />
+            <End Role="Ogranicuvanja" EntitySet="Ogranicuvanjas" />
+          </AssociationSet>
+          <AssociationSet Name="Ima_Ogranicuvanje" Association="Self.Ima_Ogranicuvanje">
+            <End Role="Lice" EntitySet="Lice" />
+            <End Role="Ogranicuvanja" EntitySet="Ogranicuvanjas" />
+          </AssociationSet>
+          <AssociationSet Name="Pripagja" Association="Self.Pripagja">
+            <End Role="Anketa" EntitySet="Anketas" />
+            <End Role="Kategorija" EntitySet="Kategorijas" />
+          </AssociationSet>
+          <AssociationSet Name="Sodrzi" Association="Self.Sodrzi">
+            <End Role="Anketa" EntitySet="Anketas" />
+            <End Role="Mozni_Odgovori" EntitySet="Mozni_Odgovori" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AnketiModelStoreContainer" CdmEntityContainer="AnketiEntities">
+          <EntitySetMapping Name="Anketas">
+            <EntityTypeMapping TypeName="AnketiModel.Anketa">
+              <MappingFragment StoreEntitySet="Anketa">
+                <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
+                <ScalarProperty Name="prasanje" ColumnName="prasanje" />
+                <ScalarProperty Name="opis_a" ColumnName="opis_a" />
+                <ScalarProperty Name="kraen_datum" ColumnName="kraen_datum" />
+                <ScalarProperty Name="id_lice" ColumnName="id_lice" />
+                <ScalarProperty Name="datum_kreiranje" ColumnName="datum_kreiranje" />
+                <ScalarProperty Name="multi_choice" ColumnName="multi_choice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Glasas">
+            <EntityTypeMapping TypeName="AnketiModel.Glasa">
+              <MappingFragment StoreEntitySet="Glasa">
+                <ScalarProperty Name="id_lice" ColumnName="id_lice" />
+                <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
+                <ScalarProperty Name="id_odg" ColumnName="id_odg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategorijas">
+            <EntityTypeMapping TypeName="AnketiModel.Kategorija">
+              <MappingFragment StoreEntitySet="Kategorija">
+                <ScalarProperty Name="id_k" ColumnName="id_k" />
+                <ScalarProperty Name="ime_k" ColumnName="ime_k" />
+                <ScalarProperty Name="opis_k" ColumnName="opis_k" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Korisniks">
+            <EntityTypeMapping TypeName="AnketiModel.Korisnik">
+              <MappingFragment StoreEntitySet="Korisnik">
+                <ScalarProperty Name="id_lice" ColumnName="id_lice" />
+                <ScalarProperty Name="br_anketi" ColumnName="br_anketi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lice">
+            <EntityTypeMapping TypeName="AnketiModel.Louse">
+              <MappingFragment StoreEntitySet="Lice">
+                <ScalarProperty Name="id_lice" ColumnName="id_lice" />
+                <ScalarProperty Name="ime" ColumnName="ime" />
+                <ScalarProperty Name="prezime" ColumnName="prezime" />
+                <ScalarProperty Name="e_mail" ColumnName="e_mail" />
+                <ScalarProperty Name="lozinka" ColumnName="lozinka" />
+                <ScalarProperty Name="tel_broj" ColumnName="tel_broj" />
+                <ScalarProperty Name="ulica" ColumnName="ulica" />
+                <ScalarProperty Name="grad" ColumnName="grad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mozni_Odgovori">
+            <EntityTypeMapping TypeName="AnketiModel.Mozni_Odgovori">
+              <MappingFragment StoreEntitySet="Mozni_Odgovori">
+                <ScalarProperty Name="id_odg" ColumnName="id_odg" />
+                <ScalarProperty Name="ime_odg" ColumnName="ime_odg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ogranicuvanjas">
+            <EntityTypeMapping TypeName="AnketiModel.Ogranicuvanja">
+              <MappingFragment StoreEntitySet="Ogranicuvanja">
+                <ScalarProperty Name="id_o" ColumnName="id_o" />
+                <ScalarProperty Name="ime_o" ColumnName="ime_o" />
+                <ScalarProperty Name="opis_o" ColumnName="opis_o" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Premium_Korisnik">
+            <EntityTypeMapping TypeName="AnketiModel.Premium_Korisnik">
+              <MappingFragment StoreEntitySet="Premium_Korisnik">
+                <ScalarProperty Name="id_lice" ColumnName="id_lice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="AnketiModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Dozvoleni_Korisnici" TypeName="AnketiModel.Dozvoleni_Korisnici" StoreEntitySet="Dozvoleni_Korisnici">
+            <EndProperty Name="Anketa">
+              <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
+            </EndProperty>
+            <EndProperty Name="Ogranicuvanja">
+              <ScalarProperty Name="id_o" ColumnName="id_o" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Ima_Ogranicuvanje" TypeName="AnketiModel.Ima_Ogranicuvanje" StoreEntitySet="Ima_Ogranicuvanje">
+            <EndProperty Name="Lice">
+              <ScalarProperty Name="id_lice" ColumnName="id_lice" />
+            </EndProperty>
+            <EndProperty Name="Ogranicuvanja">
+              <ScalarProperty Name="id_o" ColumnName="id_o" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Pripagja" TypeName="AnketiModel.Pripagja" StoreEntitySet="Pripagja">
+            <EndProperty Name="Anketa">
+              <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
+            </EndProperty>
+            <EndProperty Name="Kategorija">
+              <ScalarProperty Name="id_k" ColumnName="id_k" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Sodrzi" TypeName="AnketiModel.Sodrzi" StoreEntitySet="Sodrzi">
+            <EndProperty Name="Anketa">
+              <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
+            </EndProperty>
+            <EndProperty Name="Mozni_Odgovori">
+              <ScalarProperty Name="id_odg" ColumnName="id_odg" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
