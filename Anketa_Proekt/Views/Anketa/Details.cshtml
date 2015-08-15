@@ -110,6 +110,17 @@
                     </div>  <!-- class col-sm-6 (right side) end here -->
                 </div>  <!-- Questionnaire content row end here -->
 
+                @{
+                    List<Anketa_Proekt.Models.Mozni_Odgovori> odg = Model.Mozni_Odgovori.ToList();
+
+                    foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odg)
+                    {
+                        int brGlasovi = o.Glasas.Count;
+                        
+                        <p>(ID @o.id_odg) @o.ime_odg - @brGlasovi glasa</p>
+                    }
+                }
+
                 <div class="charts">
                     <div class="row">
                         <div class="panel panel-primary">
