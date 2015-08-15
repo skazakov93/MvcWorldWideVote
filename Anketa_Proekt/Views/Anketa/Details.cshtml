@@ -5,9 +5,7 @@
 }
 
 <head>
-
     <link href="~/myCSS/questionaire.css" rel="stylesheet" />
-
 </head>
 
 <!-- content of the page start here -->
@@ -113,12 +111,15 @@
                 @{
                     List<Anketa_Proekt.Models.Mozni_Odgovori> odg = Model.Mozni_Odgovori.ToList();
 
+                    int vkupno = 0;
                     foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odg)
                     {
                         int brGlasovi = o.Glasas.Count;
+                        vkupno += brGlasovi;
                         
                         <p>(ID @o.id_odg) @o.ime_odg - @brGlasovi glasa</p>
                     }
+                    <p>Vkupno glasovi: @vkupno</p>
                 }
 
                 <div class="charts">

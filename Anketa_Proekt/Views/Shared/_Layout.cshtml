@@ -12,14 +12,11 @@
     <link href="~/myCSS/index_v3.css" rel="stylesheet" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
 </head>
 
 <body>
     <!-- navbar at login page start here  -->
     <!--  -->
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -30,72 +27,96 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">World Wide Vote</a>
-
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search categories, users, questionaries...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                        <button class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
                     </span>
                 </div><!-- /input-group -->
-
-            </div>
-
-            @if (Session["id_lice"] != null)
-            {
-                <div id="navbar" class="navbar-collapse collapse">
-                    <form class="navbar-form navbar-right">
-
-                        <div class="dropdown">
-                            <button class="blackButton btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-ok-sign"></span> Questionnaire <span class="caret"></span></button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a href="#">Create Pool</a></li>
-                                <li><a href="#">Delete Pool</a></li>
-                                <li><a href="#">My Pools</a></li>
-                                <li><a href="#">Sort Pools</a></li>
-                            </ul>
-                        </div>
-                        <div class="dropdown">
-                            <button class="blackButton btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-user"></span> My Account <span class="caret"></span></button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a href="#">Check Status</a></li>
-                                <li><a href="#">Log Out</a></li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-success"><span class="glyphicon glyphicon-usd"></span> Buy Premium</button>
-                    </form>
-                </div>
+            </div>  <!-- navbar-header -->
+            <div id="navbar" class="navbar-collapse collapse">
+                
+                @if (Session["id_lice"] != null)
+                {
+                <div class="navbar-form navbar-right">
                     
+                    <div class="dropdown">
+                        <button class="blackButton btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-ok-sign"></span> Questionnaire <span class="caret"></span></button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">Create Pool</a></li>
+                            <li><a href="#">Delete Pool</a></li>
+                            <li><a href="#">My Pools</a></li>
+                            <li><a href="#">Sort Pools</a></li>
+                        </ul>
+                    </div>   <!-- dropdown first -->
+                    <div class="dropdown">
+                        <button class="blackButton btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-user"></span> My Account <span class="caret"></span></button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">Check Status</a></li>
+                            <li><a href="#">Log Out</a></li>
+                        </ul>
+                    </div>      <!-- dropdown second -->
 
-            }
-            else
-            {
-                <div id="navbar" class="navbar-collapse collapse">
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-usd"></span> Buy Premium</button>
+                </div>  <!-- class = " navbar-form navbar-tight" -->
+                
+                }
+                else
+                {
                     <div class="navbar-form navbar-right">
 
-                        <div class="dropdown">
-                            <button class="blackButton btn btn-default dropdown-toggle disabled" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-ok-sign"></span> Questionnaire <span class="caret"></span></button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a href="#">Create Pool</a></li>
-                                <li><a href="#">Delete Pool</a></li>
-                                <li><a href="#">My Pools</a></li>
-                                <li><a href="#">Sort Pools</a></li>
-                            </ul>
-                        </div>
+                    
+                    <div class="dropdown">
+                        <button class="blackButton btn btn-default dropdown-toggle disabled" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class = "glyphicon glyphicon-ok-sign"></span> Questionnaire <span class="caret"></span></button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">Create Pool</a></li>
+                            <li><a href="#">Delete Pool</a></li>
+                            <li><a href="#">My Pools</a></li>
+                            <li><a href="#">Sort Pools</a></li>
+                        </ul>
+                    </div>  <!-- class = "dropdown" -->
 
-
-                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Sign Up</button>
-
+                    <button type="submit" class="btn btn-primary"><span class = "glyphicon glyphicon-plus"></span> Sign Up</button>
                         <a href="@Url.Action("Login", "User", null)">
                             <button class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Sign In</button>
                             <!-- <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-ok"></span> Sign In</button> -->
                         </a>
-                    </div>
-                </div>
-            }
-        </div>      <!-- class .navbar-collapse end here -->
+                </div> <!-- class = "navbar-form navbar-right" -->
+                }
+            </div>      <!-- id = navbar -->
+            <!-- tuka imase vishok zatvoren div tag -->
         </div>    <!-- class contaienr end here -->
-    </nav>  <!-- class navbar end here -->
+    </nav>  <!-- class navbar navbar-inverse navbar-fixed-top end here -->
     <!-- navbar at index page end here  -->
+
+    <div class="progress progres-top">
+        <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 12%">
+            <span class="sr-only">35% Complete (success)</span>
+        </div>
+        <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 12%">
+            <span class="sr-only">20% Complete (warning)</span>
+        </div>
+        <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: 12%">
+            <span class="sr-only">10% Complete (danger)</span>
+        </div>
+        <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 14%">
+            <span class="sr-only">10% Complete (danger)</span>
+        </div>
+        <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 14%">
+            <span class="sr-only">35% Complete (success)</span>
+        </div>
+        <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 12%">
+            <span class="sr-only">20% Complete (warning)</span>
+        </div>
+        <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: 12%">
+            <span class="sr-only">10% Complete (danger)</span>
+        </div>
+        <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 12%">
+            <span class="sr-only">10% Complete (danger)</span>
+        </div>
+    </div>
 
         @RenderBody()
         
