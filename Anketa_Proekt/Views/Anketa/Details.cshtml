@@ -4,6 +4,12 @@
     ViewBag.Title = "Details";
 }
 
+<head>
+
+    <link href="~/myCSS/questionaire.css" rel="stylesheet" />
+
+</head>
+
 <!-- content of the page start here -->
 <div class="container-flyid">
     <div class="content">
@@ -63,6 +69,13 @@
             string radioOrChechBox = "";
             string multiAnsewrs = "";
 
+            string disabled = "";
+
+            if (Session["id_lice"] == null)
+            {
+                disabled = "disabled";
+            }
+
             if (multi_choice == 1)
             {
                 radioOrChechBox = "checkbox";
@@ -88,7 +101,7 @@
                                 </ul>
                             </div>
                             <div class="row">
-                                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
+                                <button type="button" class="btn btn-success @disabled"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
                             </div>
                         </div>
 
@@ -96,8 +109,85 @@
 
                     </div>  <!-- class col-sm-6 (right side) end here -->
                 </div>  <!-- Questionnaire content row end here -->
+
+                <div class="charts">
+                    <div class="row">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h6 class=panel-title>Many Pie Charts here <span class="pull-right">X</span></h6>
+                            </div>
+                            <div class="panel-body">
+                                <h5>each Pie represent one answer</h5>
+                                <h5>The amount of fulfilnes of a pie represent the amount of votes</h5>
+                                <img class="img img-responsive" src="~/img/WB0PHMG9K.png" />
+                            </div>
+                            <div class="panel-footer">Some description of the data???? Hints maby? or date?</div>
+                        </div>
+                    </div>  <!-- first row of chart end here -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <h6 class=panel-title>Graph here <span class="pull-right">X</span></h6>
+                                </div>
+                                <div class="panel-body">
+                                    <h5>Graphical representation of voting activity</h5>
+                                    <h5> X axis represent time</h5>
+                                    <h5>Y axis represent votes</h5>
+                                    <img class="img img-responsive" src="~/img/WB0PHMG9K.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="well">
+                                <h4>Coments here</h4>
+                                
+                                <div class="detailBox">
+                                    <div class="titleBox">
+                                        <label>Comment Box</label>
+                                        <button type="button" class="close" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="actionBox">
+                                        <ul class="commentList">
+
+                                            @{
+                                                List<Anketa_Proekt.Models.Komentar_Za> komentari =  Model.Komentar_Za.ToList();
+                                                
+                                                foreach (Anketa_Proekt.Models.Komentar_Za k in komentari)
+                                                {
+                                                    Anketa_Proekt.Models.Komentar kom = k.Komentar;
+                                                    
+                                                    string datumStr = k.datum.ToString("MMMM d, yyyy");
+                                                    
+                                                    <li>
+                                                        <div class="commenterImage">
+                                                            <img src="http://lorempixel.com/50/50/people/6" />
+                                                        </div>
+                                                        <div class="commentText">
+                                                            <p class="">@kom.sodrzina</p> <span class="date sub-text">on @datumStr</span>
+                                                        </div>
+                                                    </li>
+                                                } 
+                                            }
+                                        </ul>
+                                        <form class="form-inline" role="form">
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" placeholder="Your comments" />
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-default">Add</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>  <!-- class container end here -->
-        </div>  </div>  <!-- class qustioonaireEven end here -->
+    </div>  <!-- class qustioonaireEven end here -->
 
     }
 

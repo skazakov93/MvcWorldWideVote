@@ -40,180 +40,158 @@
 
             </div>
 
-            <div id="navbar" class="navbar-collapse collapse">
-                <form class="navbar-form navbar-right">
+            @if (Session["id_lice"] != null)
+            {
+                <div id="navbar" class="navbar-collapse collapse">
+                    <form class="navbar-form navbar-right">
 
-                    <div class="dropdown">
-                        <button class="blackButton btn btn-default dropdown-toggle disabled" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-ok-sign"></span> Questionnaire <span class="caret"></span></button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">Create Pool</a></li>
-                            <li><a href="#">Delete Pool</a></li>
-                            <li><a href="#">My Pools</a></li>
-                            <li><a href="#">Sort Pools</a></li>
-                        </ul>
+                        <div class="dropdown">
+                            <button class="blackButton btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-ok-sign"></span> Questionnaire <span class="caret"></span></button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#">Create Pool</a></li>
+                                <li><a href="#">Delete Pool</a></li>
+                                <li><a href="#">My Pools</a></li>
+                                <li><a href="#">Sort Pools</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="blackButton btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-user"></span> My Account <span class="caret"></span></button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#">Check Status</a></li>
+                                <li><a href="#">Log Out</a></li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-success"><span class="glyphicon glyphicon-usd"></span> Buy Premium</button>
+                    </form>
+                </div>
+                    
+
+            }
+            else
+            {
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="navbar-form navbar-right">
+
+                        <div class="dropdown">
+                            <button class="blackButton btn btn-default dropdown-toggle disabled" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-ok-sign"></span> Questionnaire <span class="caret"></span></button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#">Create Pool</a></li>
+                                <li><a href="#">Delete Pool</a></li>
+                                <li><a href="#">My Pools</a></li>
+                                <li><a href="#">Sort Pools</a></li>
+                            </ul>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Sign Up</button>
+
+                        <a href="@Url.Action("Login", "User", null)">
+                            <button class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Sign In</button>
+                            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-ok"></span> Sign In</button> -->
+                        </a>
                     </div>
-
-                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Sign Up</button>
-                    <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-ok"></span> Sign In</button>
-            </div>
-            </form>
+                </div>
+            }
         </div>      <!-- class .navbar-collapse end here -->
         </div>    <!-- class contaienr end here -->
     </nav>  <!-- class navbar end here -->
     <!-- navbar at index page end here  -->
 
-
-    <!-- my popUp WINDOW  -->
-    <div class="container">
+        @RenderBody()
         
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Log in to WWV (World Wide Vote)</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" action='' name="login_form">
-                            <p><input type="text" class="span3" name="eid" id="email" placeholder="E-mail"></p>
-                            <p><input type="password" class="span3" name="passwd" id="password" placeholder="Password"></p>
-                            <p>
-                                <button type="submit" class="btn btn-primary">Sign in</button>
-                            </p>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+    <!-- footer start here -->
+    <div class="myfooter">
+        <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 12%">
+                <span class="sr-only">35% Complete (success)</span>
+            </div>
+            <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 12%">
+                <span class="sr-only">20% Complete (warning)</span>
+            </div>
+            <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: 12%">
+                <span class="sr-only">10% Complete (danger)</span>
+            </div>
+            <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 14%">
+                <span class="sr-only">10% Complete (danger)</span>
+            </div>
+            <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 14%">
+                <span class="sr-only">35% Complete (success)</span>
+            </div>
+            <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 12%">
+                <span class="sr-only">20% Complete (warning)</span>
+            </div>
+            <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: 12%">
+                <span class="sr-only">10% Complete (danger)</span>
+            </div>
+            <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 12%">
+                <span class="sr-only">10% Complete (danger)</span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h4>
+                        About WorldWideVote:</h3>
+                        <p>World Wide Vote's purpose is to fulfill the daily needs of thorough answers and fast elections.</p>
+                        <br>
+                        <h4>
+                            About us:</h3>
+                            <p>We are four students at university studying computer science. Our goal is to provide  simple to use website with responsive UI that suit any device.</p>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6 col-xs-6 mythumbnail">
+                                    <h5>
+                                        My Name Here:</h3>
+                                        <div class="col-sm-4">
+                                            <img class="img-circle img-responsive" src="http://placehold.it/110x110">
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <h6>Email: mymail@domain</h6>
+                                            <h6>git: urltogit</h6>
+                                        </div>
+                                </div>  <!-- end first -->
+                                <div class="col-md-3 col-sm-6  col-xs-6 mythumbnail">
+                                    <h5>
+                                        Other Name here:</h3>
+                                        <div class="col-sm-4">
+                                            <img class="img-circle img-responsive" src="http://placehold.it/110x110">
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <h6>Email: xyz@xyz</h6>
+                                            <h6>git: xyz@git</h6>
+                                        </div>
+                                </div>  <!-- end second -->
+                                <div class="col-md-3 col-sm-6 col-xs-6  mythumbnail">
+                                    <h5>
+                                        Other Name here</h3>
+                                        <div class="col-sm-4">
+                                            <img class="img-circle img-responsive" src="http://placehold.it/110x110">
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <h6>Email: xyz@xyz</h6>
+                                            <h6>git: xyz@git</h6>
+                                        </div>
+                                </div>  <!-- end third -->
+                                <div class="col-md-3 col-sm-6 col-xs-6  mythumbnail">
+                                    <h5>
+                                        Other Name here</h3>
+                                        <div class="col-sm-4">
+                                            <img class="img-circle img-responsive" src="http://placehold.it/110x110">
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <h6>Email: xyz@xyz</h6>
+                                            <h6>git: xyz@git</h6>
+                                        </div>
+                                </div>  <!-- end fourth -->
+                            </div>
                 </div>
-
+                <div class="col-md-3">
+                    <img class="footer-img img-responsive" src="~/img/backgroundTransparentSmall.png" />
+                </div>
             </div>
         </div>
     </div>
-    <!-- -->
-
-        @RenderBody()
-        
-        <!-- footer start here -->
-        <div class="myfooter">
-            <div class="progress">
-                <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 12%">
-                    <span class="sr-only">35% Complete (success)</span>
-                </div>
-                <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 12%">
-                    <span class="sr-only">20% Complete (warning)</span>
-                </div>
-                <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: 12%">
-                    <span class="sr-only">10% Complete (danger)</span>
-                </div>
-                <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 14%">
-                    <span class="sr-only">10% Complete (danger)</span>
-                </div>
-                <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 14%">
-                    <span class="sr-only">35% Complete (success)</span>
-                </div>
-                <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 12%">
-                    <span class="sr-only">20% Complete (warning)</span>
-                </div>
-                <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: 12%">
-                    <span class="sr-only">10% Complete (danger)</span>
-                </div>
-                <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 12%">
-                    <span class="sr-only">10% Complete (danger)</span>
-                </div>
-            </div>
-
-            <!-- pagination start here -->
-            <!-- pagination is palced in last questionaries -->
-            <div class="text-center navPagination">
-                <nav>
-                    <ul class="pagination pagination-lg">
-                        <li>
-                            <a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span> First Page</a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">Last page <span aria-hidden="true">&raquo;</span></a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <!-- pagination end here -->
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-9">
-                        <h4>
-                            About WorldWideVote:</h3>
-                            <p>World Wide Vote's purpose is to fulfill the daily needs of thorough answers and fast elections.</p>
-                            <br>
-
-                            <h4>
-                                About us:</h3>
-                                <p>We are four students at university studying computer science. Our goal is to provide  simple to use website with responsive UI that suit any device.</p>
-                                <br>
-
-                                <div class="row">
-                                    <div class="col-md-3 col-sm-6 col-xs-6 mythumbnail">
-                                        <h5>
-                                            My Name Here:</h3>
-                                            <div class="col-sm-4">
-                                                <img class="img-circle img-responsive" src="http://placehold.it/110x110">
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <h6>Email: mymail@domain</h6>
-                                                <h6>git: urltogit</h6>
-                                            </div>
-                                    </div>  <!-- end first -->
-                                    <div class="col-md-3 col-sm-6  col-xs-6 mythumbnail">
-                                        <h5>
-                                            Other Name here:</h3>
-                                            <div class="col-sm-4">
-                                                <img class="img-circle img-responsive" src="http://placehold.it/110x110">
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <h6>Email: xyz@xyz</h6>
-                                                <h6>git: xyz@git</h6>
-                                            </div>
-                                    </div>  <!-- end second -->
-                                    <div class="col-md-3 col-sm-6 col-xs-6  mythumbnail">
-                                        <h5>
-                                            Other Name here</h3>
-                                            <div class="col-sm-4">
-                                                <img class="img-circle img-responsive" src="http://placehold.it/110x110">
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <h6>Email: xyz@xyz</h6>
-                                                <h6>git: xyz@git</h6>
-                                            </div>
-                                    </div>  <!-- end third -->
-                                    <div class="col-md-3 col-sm-6 col-xs-6  mythumbnail">
-                                        <h5>
-                                            Other Name here</h3>
-                                            <div class="col-sm-4">
-                                                <img class="img-circle img-responsive" src="http://placehold.it/110x110">
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <h6>Email: xyz@xyz</h6>
-                                                <h6>git: xyz@git</h6>
-                                            </div>
-                                    </div>  <!-- end fourth -->
-                                </div>
-                    </div>
-                    <div class="col-md-3">
-                        <img class="footer-img img-responsive" src="~/img/backgroundTransparentSmall.png" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- footer end here -->
+    <!-- footer end here -->
 
 
     @Scripts.Render("~/bundles/jquery")

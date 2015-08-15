@@ -1,4 +1,10 @@
- /* global preferences*/
+ /* 
+    /////////////////////////////////////
+    ///                               ///
+    ///      Global preferences       ///
+    ///                               ///
+    /////////////////////////////////////
+ */
   body{
     min-width: 620px;
   }
@@ -6,14 +12,18 @@
   .navbar{
     min-width: 620px;
   }
- /* global preferences end here*/
+ 
 
 
 
 
-
- /*top menu style start here */
-
+ /* 
+    /////////////////////////////////////
+    ///                               ///
+    ///          Top menu             ///
+    ///                               ///
+    /////////////////////////////////////
+ */
 @media (max-width: 1199px) {
   .navbar .input-group {
     width: 378px !important;
@@ -143,7 +153,9 @@
   margin-right: 10px;
 }
 
-
+/*    ////////////////////////////////
+      ////////////////////////////////
+*/
 .content{
   margin-top: 50px;
 }
@@ -174,8 +186,14 @@
 
 
 
-/* questionnaire style start here */
 
+/*  
+  /////////////////////////////////////
+  ///                               ///
+  ///      questionnairies          ///
+  ///                               ///
+  /////////////////////////////////////
+*/
 .questionnaireOdd{
   background: rgb(34, 34, 34);
   padding-bottom: 45px;
@@ -204,10 +222,17 @@
 
 
 
-/* pagination style start here */
+/*
+    /////////////////////////////////////
+    ///                               ///
+    ///         Pagination            ///
+    ///                               ///
+    /////////////////////////////////////
+ */
 .navPagination{
   position: relative;
-  top: -50px;
+  top: -25px;
+  height: 0px
 }
 
 .pagination{
@@ -219,7 +244,14 @@
 
 
 
-/* progress bar*/
+
+/*  
+    /////////////////////////////////////
+    ///                               ///
+    ///         Progress bar          ///
+    ///                               ///
+    /////////////////////////////////////
+ */
 .progress{
     height: 3px;
     margin-bottom: 24px;
@@ -235,8 +267,13 @@
 
 
 
-/*here start footer*/
 
+/*  /////////////////////////////////////
+    ///                               ///
+    ///           Footer              ///
+    ///                               ///
+    /////////////////////////////////////
+ */
 .myfooter{
     background: #2A569D;
     color: white;

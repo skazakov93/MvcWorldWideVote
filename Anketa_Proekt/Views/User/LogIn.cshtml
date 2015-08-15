@@ -1,0 +1,63 @@
+﻿@model Anketa_Proekt.Models.Louse
+
+@{
+    ViewBag.Title = "LogIn";
+}
+
+@using(Html.BeginForm())
+{
+    <!-- my popUp WINDOW  -->
+    <div class="container">
+        
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Log in to WWV (World Wide Vote)</h4>
+                    </div>
+                    <div class="modal-body">
+                        @Html.ValidationSummary(true, "Login failed. Check your login details.")
+                        <div>
+                            <fieldset>
+                                <div>@Html.LabelFor(u => u.e_mail)</div>
+                                <div>
+                                    @Html.TextBoxFor(u => u.e_mail)
+                                    @Html.ValidationMessageFor(u => u.e_mail)
+                                </div>
+
+                                <div>@Html.LabelFor(u => u.lozinka)</div>
+                                <div>
+                                    @Html.PasswordFor(u => u.lozinka)
+                                    @Html.ValidationMessageFor(u => u.lozinka)
+                                </div>
+                                <br />
+                                <input type="submit" class="btn btn-primary" value="Log In" />
+                            </fieldset>
+                        </div>
+                    </div>                    
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- -->
+}
+
+<script>
+
+    $(document).ready(function () {
+        $("#myModal").modal({
+            backdrop: 'static',
+        });
+    });
+
+</script>
+

@@ -28,6 +28,12 @@
                 {
                     br++;
                     string evenOrOdd = "";
+                    string disabeled = "";
+
+                    if (Session["id_lice"] == null)
+                    {
+                        disabeled = "disabled";
+                    }
                     
                     if (br % 2 == 0)
                     {
@@ -102,7 +108,7 @@
                                                 </ul>
                                             </div>
                                             <div class="row">
-                                                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
+                                                <button type="button" class="btn btn-success @disabeled"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
                                             </div>
                                         </div>
 
@@ -125,3 +131,25 @@
         </div>  <!-- class container flyid end here -->
     </div>  <!-- class questionnaire end here -->
     <!-- Questionnaires end here -->
+
+
+<!-- pagination start here -->
+<!-- pagination is palced in last questionaries -->
+<div class="text-center navPagination">
+    <nav>
+        <ul class="pagination pagination-lg">
+            <li>
+                <a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span> First Page</a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">Last page <span aria-hidden="true">&raquo;</span></a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!-- pagination end here -->

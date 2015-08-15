@@ -12,7 +12,7 @@ namespace Anketa_Proekt.Controllers
 {
     public class AnketaController : Controller
     {
-        private AnketiEntities db = new AnketiEntities();
+        private AnketiEntities1 db = new AnketiEntities1();
 
         // GET: /Anketa/
         public ActionResult Index()

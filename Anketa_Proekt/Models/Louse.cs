@@ -11,8 +11,13 @@ namespace Anketa_Proekt.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Linq;
+    using System.Web;
     
-    public partial class Louse
+    public partial class Louse : ViewModelBase
     {
         public Louse()
         {
@@ -23,13 +28,29 @@ namespace Anketa_Proekt.Models
         }
     
         public int id_lice { get; set; }
+
         public string ime { get; set; }
+
         public string prezime { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [StringLength(30)]
+        [Display(Name = "Email: ")]
         public string e_mail { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [StringLength(40, MinimumLength=6)]
+        [Display(Name = "Password: ")]
         public string lozinka { get; set; }
+
         public string tel_broj { get; set; }
+
         public string ulica { get; set; }
+
         public string grad { get; set; }
+
         public Nullable<System.DateTime> datum_r { get; set; }
     
         public virtual ICollection<Anketa> Anketas { get; set; }
@@ -38,5 +59,36 @@ namespace Anketa_Proekt.Models
         public virtual Korisnik Korisnik { get; set; }
         public virtual Premium_Korisnik Premium_Korisnik { get; set; }
         public virtual ICollection<Ogranicuvanja> Ogranicuvanjas { get; set; }
+
+        public bool isValidUser(string email, string pass)
+        {
+            using (var cn = new SqlConnection(@"Data Source=KAZAKOV\SQLEXPRESS;Initial Catalog=Anketi;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework"))
+            {
+                string sql = @"select [e_mail], [lozinka] from [dbo].[Lice] where [e_mail] = @eMail and [lozinka] = @pass";
+
+                var cmd = new SqlCommand(sql, cn);
+
+                cmd.Parameters.Add(new SqlParameter("@eMail", SqlDbType.NVarChar)).Value = email;
+
+                cmd.Parameters.Add(new SqlParameter("@pass", SqlDbType.NVarChar)).Value = pass;
+
+
+                cn.Open();
+
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    reader.Dispose();
+                    cmd.Dispose();
+                    return true;
+                }
+                else
+                {
+                    reader.Dispose();
+                    cmd.Dispose();
+                    return false;
+                }
+            }
+        }
     }
 }
