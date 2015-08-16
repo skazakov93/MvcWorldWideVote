@@ -13,10 +13,10 @@ namespace Anketa_Proekt.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class AnketiEntities1 : DbContext
+    public partial class AnketiEntities3 : DbContext
     {
-        public AnketiEntities1()
-            : base("name=AnketiEntities1")
+        public AnketiEntities3()
+            : base("name=AnketiEntities3")
         {
         }
     

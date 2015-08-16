@@ -26,7 +26,7 @@
  */
 @media (max-width: 1199px) {
   .navbar .input-group {
-    width: 378px !important;
+    width: 350px !important;
     /*margin-top: 7px;*/
     /*float: left;*/
   }
@@ -34,7 +34,7 @@
 
 @media (max-width: 1025px) {
   .navbar .input-group {
-    width: 380px !important;
+    width: 347px !important;
     /*margin-top: 7px;*/
     /*float: left;*/
   }
@@ -42,7 +42,7 @@
 
 @media (max-width: 991px) {
   .navbar .input-group {
-    width: 166px !important;
+    width: 135px !important;
     /*margin-top: 7px;*/
     /*float: left;*/
   }

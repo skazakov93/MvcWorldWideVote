@@ -14,10 +14,8 @@ namespace Anketa_Proekt.Models
     using System.ComponentModel.DataAnnotations;
     using System.Data;
     using System.Data.SqlClient;
-    using System.Linq;
-    using System.Web;
     
-    public partial class Louse : ViewModelBase
+    public partial class Louse
     {
         public Louse()
         {
@@ -26,11 +24,18 @@ namespace Anketa_Proekt.Models
             this.Komentar_Za = new HashSet<Komentar_Za>();
             this.Ogranicuvanjas = new HashSet<Ogranicuvanja>();
         }
-    
+
+        [Key]
         public int id_lice { get; set; }
 
+        [Required]
+        [StringLength(20)]
+        [Display(Name = "Name: ")]
         public string ime { get; set; }
 
+        [Required]
+        [StringLength(30)]
+        [Display(Name = "Surname: ")]
         public string prezime { get; set; }
 
         [Required]
@@ -41,16 +46,27 @@ namespace Anketa_Proekt.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(40, MinimumLength=6)]
+        [StringLength(40, MinimumLength = 6)]
         [Display(Name = "Password: ")]
         public string lozinka { get; set; }
 
+        [Required]
+        [StringLength(9)]
+        [Display(Name = "Mobile number: ")]
         public string tel_broj { get; set; }
 
+        [Required]
+        [StringLength(30)]
+        [Display(Name = "Street: ")]
         public string ulica { get; set; }
 
+        [Required]
+        [StringLength(30)]
+        [Display(Name = "City: ")]
         public string grad { get; set; }
 
+        [Required]
+        [Display(Name = "Date of birth: ")]
         public Nullable<System.DateTime> datum_r { get; set; }
     
         public virtual ICollection<Anketa> Anketas { get; set; }

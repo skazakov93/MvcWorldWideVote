@@ -12,7 +12,7 @@ namespace Anketa_Proekt.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Anketa : ViewModelBase
+    public partial class Anketa
     {
         public Anketa()
         {

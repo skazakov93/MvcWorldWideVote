@@ -55,7 +55,7 @@
                         <button class="blackButton btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-user"></span> My Account <span class="caret"></span></button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><a href="#">Check Status</a></li>
-                            <li><a href="#">Log Out</a></li>
+                            <li><a href="@Url.Action("LogOut", "User", null)">Log Out</a></li>
                         </ul>
                     </div>      <!-- dropdown second -->
 
@@ -78,7 +78,9 @@
                         </ul>
                     </div>  <!-- class = "dropdown" -->
 
-                    <button type="submit" class="btn btn-primary"><span class = "glyphicon glyphicon-plus"></span> Sign Up</button>
+                        <a href="@Url.Action("Registration", "User", null)">
+                            <button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Sign Up</button>
+                        </a>
                         <a href="@Url.Action("Login", "User", null)">
                             <button class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Sign In</button>
                             <!-- <button class="btn btn-success" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-ok"></span> Sign In</button> -->

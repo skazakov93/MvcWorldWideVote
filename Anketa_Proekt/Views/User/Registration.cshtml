@@ -1,7 +1,65 @@
-﻿
+﻿@model Anketa_Proekt.Models.Louse
+
 @{
     ViewBag.Title = "Registration";
 }
 
-<h2>Registration</h2>
+@using (Html.BeginForm())
+{
+                        <div>
+                            <fieldset>
+                                <div class="editor-label">@Html.LabelFor(u => u.ime)</div>
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(u => u.ime)
+                                    @Html.ValidationMessageFor(u => u.ime)
+                                </div>
+
+                                <div>@Html.LabelFor(u => u.prezime)</div>
+                                <div>
+                                    @Html.TextBoxFor(u => u.prezime)
+                                    @Html.ValidationMessageFor(u => u.prezime)
+                                </div>
+                                
+                                <div>@Html.LabelFor(u => u.e_mail)</div>
+                                <div>
+                                    @Html.TextBoxFor(u => u.e_mail)
+                                    @Html.ValidationMessageFor(u => u.e_mail)
+                                </div>
+
+                                <div>@Html.LabelFor(u => u.lozinka)</div>
+                                <div>
+                                    @Html.PasswordFor(u => u.lozinka)
+                                    @Html.ValidationMessageFor(u => u.lozinka)
+                                </div>
+
+                                <div>@Html.LabelFor(u => u.tel_broj)</div>
+                                <div>
+                                    @Html.TextBoxFor(u => u.tel_broj)
+                                    @Html.ValidationMessageFor(u => u.tel_broj)
+                                </div>
+
+                                <div>@Html.LabelFor(u => u.ulica)</div>
+                                <div>
+                                    @Html.TextBoxFor(u => u.ulica)
+                                    @Html.ValidationMessageFor(u => u.ulica)
+                                </div>
+
+                                <div>@Html.LabelFor(u => u.grad)</div>
+                                <div>
+                                    @Html.TextBoxFor(u => u.grad)
+                                    @Html.ValidationMessageFor(u => u.grad)
+                                </div>
+
+                                <div>@Html.LabelFor(u => u.datum_r)</div>
+                                <div>
+                                    @Html.TextBoxFor(u => u.datum_r)
+                                    @Html.ValidationMessageFor(u => u.datum_r)
+                                </div>
+
+                                <br />
+                                <input type="submit" class="btn btn-primary" value="Register" />
+                            </fieldset>
+                        </div>
+                    
+}
 

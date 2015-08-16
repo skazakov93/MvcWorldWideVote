@@ -4,12 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AnketiModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="AnketiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Anketa">
           <Key>
             <PropertyRef Name="id_anketa" />
           </Key>
-          <Property Name="id_anketa" Type="int" Nullable="false" />
+          <Property Name="id_anketa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="prasanje" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="opis_a" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="kraen_datum" Type="datetime" Nullable="false" />
@@ -48,7 +48,7 @@
           <Key>
             <PropertyRef Name="id_k" />
           </Key>
-          <Property Name="id_k" Type="int" Nullable="false" />
+          <Property Name="id_k" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ime_k" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="opis_k" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
@@ -56,7 +56,7 @@
           <Key>
             <PropertyRef Name="id_kom" />
           </Key>
-          <Property Name="id_kom" Type="int" Nullable="false" />
+          <Property Name="id_kom" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="sodrzina" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="Komentar_Za">
@@ -82,7 +82,7 @@
           <Key>
             <PropertyRef Name="id_lice" />
           </Key>
-          <Property Name="id_lice" Type="int" Nullable="false" />
+          <Property Name="id_lice" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ime" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="prezime" Type="char" MaxLength="30" Nullable="false" />
           <Property Name="e_mail" Type="char" MaxLength="30" Nullable="false" />
@@ -96,14 +96,14 @@
           <Key>
             <PropertyRef Name="id_odg" />
           </Key>
-          <Property Name="id_odg" Type="int" Nullable="false" />
+          <Property Name="id_odg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ime_odg" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="Ogranicuvanja">
           <Key>
             <PropertyRef Name="id_o" />
           </Key>
-          <Property Name="id_o" Type="int" Nullable="false" />
+          <Property Name="id_o" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ime_o" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="opis_o" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
@@ -343,7 +343,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="AnketiModel1StoreContainer">
+        <EntityContainer Name="AnketiModelStoreContainer">
           <EntitySet Name="Anketa" EntityType="Self.Anketa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dozvoleni_Korisnici" EntityType="Self.Dozvoleni_Korisnici" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Glasa" EntityType="Self.Glasa" Schema="dbo" store:Type="Tables" />
@@ -432,12 +432,12 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="AnketiModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="AnketiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Anketa">
           <Key>
             <PropertyRef Name="id_anketa" />
           </Key>
-          <Property Name="id_anketa" Type="Int32" Nullable="false" />
+          <Property Name="id_anketa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="prasanje" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="opis_a" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="kraen_datum" Type="DateTime" Nullable="false" Precision="3" />
@@ -469,7 +469,7 @@
           <Key>
             <PropertyRef Name="id_k" />
           </Key>
-          <Property Name="id_k" Type="Int32" Nullable="false" />
+          <Property Name="id_k" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ime_k" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="opis_k" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Anketas" Relationship="Self.Pripagja" FromRole="Kategorija" ToRole="Anketa" />
@@ -478,7 +478,7 @@
           <Key>
             <PropertyRef Name="id_kom" />
           </Key>
-          <Property Name="id_kom" Type="Int32" Nullable="false" />
+          <Property Name="id_kom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="sodrzina" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Komentar_Za" Relationship="Self.FK_Komentar_Za_Komentar" FromRole="Komentar" ToRole="Komentar_Za" />
         </EntityType>
@@ -509,7 +509,7 @@
           <Key>
             <PropertyRef Name="id_lice" />
           </Key>
-          <Property Name="id_lice" Type="Int32" Nullable="false" />
+          <Property Name="id_lice" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ime" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="prezime" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="e_mail" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
@@ -529,7 +529,7 @@
           <Key>
             <PropertyRef Name="id_odg" />
           </Key>
-          <Property Name="id_odg" Type="Int32" Nullable="false" />
+          <Property Name="id_odg" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ime_odg" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Glasas" Relationship="Self.FK_Glasa_Mozni_Odgovori" FromRole="Mozni_Odgovori" ToRole="Glasa" />
           <NavigationProperty Name="Anketas" Relationship="Self.Sodrzi" FromRole="Mozni_Odgovori" ToRole="Anketa" />
@@ -538,7 +538,7 @@
           <Key>
             <PropertyRef Name="id_o" />
           </Key>
-          <Property Name="id_o" Type="Int32" Nullable="false" />
+          <Property Name="id_o" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ime_o" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="opis_o" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Anketas" Relationship="Self.Dozvoleni_Korisnici" FromRole="Ogranicuvanja" ToRole="Anketa" />
@@ -685,7 +685,7 @@
           <End Role="Anketa" Type="Self.Anketa" Multiplicity="*" />
           <End Role="Mozni_Odgovori" Type="Self.Mozni_Odgovori" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="AnketiEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="AnketiEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Anketas" EntityType="Self.Anketa" />
           <EntitySet Name="Glasas" EntityType="Self.Glasa" />
           <EntitySet Name="Kategorijas" EntityType="Self.Kategorija" />
@@ -755,9 +755,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AnketiModel1StoreContainer" CdmEntityContainer="AnketiEntities1">
+        <EntityContainerMapping StorageEntityContainer="AnketiModelStoreContainer" CdmEntityContainer="AnketiEntities3">
           <EntitySetMapping Name="Anketas">
-            <EntityTypeMapping TypeName="AnketiModel1.Anketa">
+            <EntityTypeMapping TypeName="AnketiModel.Anketa">
               <MappingFragment StoreEntitySet="Anketa">
                 <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
                 <ScalarProperty Name="prasanje" ColumnName="prasanje" />
@@ -770,7 +770,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Glasas">
-            <EntityTypeMapping TypeName="AnketiModel1.Glasa">
+            <EntityTypeMapping TypeName="AnketiModel.Glasa">
               <MappingFragment StoreEntitySet="Glasa">
                 <ScalarProperty Name="id_lice" ColumnName="id_lice" />
                 <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
@@ -780,7 +780,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Kategorijas">
-            <EntityTypeMapping TypeName="AnketiModel1.Kategorija">
+            <EntityTypeMapping TypeName="AnketiModel.Kategorija">
               <MappingFragment StoreEntitySet="Kategorija">
                 <ScalarProperty Name="id_k" ColumnName="id_k" />
                 <ScalarProperty Name="ime_k" ColumnName="ime_k" />
@@ -789,7 +789,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Komentars">
-            <EntityTypeMapping TypeName="AnketiModel1.Komentar">
+            <EntityTypeMapping TypeName="AnketiModel.Komentar">
               <MappingFragment StoreEntitySet="Komentar">
                 <ScalarProperty Name="id_kom" ColumnName="id_kom" />
                 <ScalarProperty Name="sodrzina" ColumnName="sodrzina" />
@@ -797,7 +797,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Komentar_Za">
-            <EntityTypeMapping TypeName="AnketiModel1.Komentar_Za">
+            <EntityTypeMapping TypeName="AnketiModel.Komentar_Za">
               <MappingFragment StoreEntitySet="Komentar_Za">
                 <ScalarProperty Name="id_kom" ColumnName="id_kom" />
                 <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
@@ -807,7 +807,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Korisniks">
-            <EntityTypeMapping TypeName="AnketiModel1.Korisnik">
+            <EntityTypeMapping TypeName="AnketiModel.Korisnik">
               <MappingFragment StoreEntitySet="Korisnik">
                 <ScalarProperty Name="id_lice" ColumnName="id_lice" />
                 <ScalarProperty Name="br_anketi" ColumnName="br_anketi" />
@@ -815,7 +815,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Lice">
-            <EntityTypeMapping TypeName="AnketiModel1.Louse">
+            <EntityTypeMapping TypeName="AnketiModel.Louse">
               <MappingFragment StoreEntitySet="Lice">
                 <ScalarProperty Name="id_lice" ColumnName="id_lice" />
                 <ScalarProperty Name="ime" ColumnName="ime" />
@@ -830,7 +830,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Mozni_Odgovori">
-            <EntityTypeMapping TypeName="AnketiModel1.Mozni_Odgovori">
+            <EntityTypeMapping TypeName="AnketiModel.Mozni_Odgovori">
               <MappingFragment StoreEntitySet="Mozni_Odgovori">
                 <ScalarProperty Name="id_odg" ColumnName="id_odg" />
                 <ScalarProperty Name="ime_odg" ColumnName="ime_odg" />
@@ -838,7 +838,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ogranicuvanjas">
-            <EntityTypeMapping TypeName="AnketiModel1.Ogranicuvanja">
+            <EntityTypeMapping TypeName="AnketiModel.Ogranicuvanja">
               <MappingFragment StoreEntitySet="Ogranicuvanja">
                 <ScalarProperty Name="id_o" ColumnName="id_o" />
                 <ScalarProperty Name="ime_o" ColumnName="ime_o" />
@@ -847,14 +847,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Premium_Korisnik">
-            <EntityTypeMapping TypeName="AnketiModel1.Premium_Korisnik">
+            <EntityTypeMapping TypeName="AnketiModel.Premium_Korisnik">
               <MappingFragment StoreEntitySet="Premium_Korisnik">
                 <ScalarProperty Name="id_lice" ColumnName="id_lice" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="AnketiModel1.sysdiagram">
+            <EntityTypeMapping TypeName="AnketiModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -864,7 +864,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Dozvoleni_Korisnici" TypeName="AnketiModel1.Dozvoleni_Korisnici" StoreEntitySet="Dozvoleni_Korisnici">
+          <AssociationSetMapping Name="Dozvoleni_Korisnici" TypeName="AnketiModel.Dozvoleni_Korisnici" StoreEntitySet="Dozvoleni_Korisnici">
             <EndProperty Name="Anketa">
               <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
             </EndProperty>
@@ -872,7 +872,7 @@
               <ScalarProperty Name="id_o" ColumnName="id_o" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Ima_Ogranicuvanje" TypeName="AnketiModel1.Ima_Ogranicuvanje" StoreEntitySet="Ima_Ogranicuvanje">
+          <AssociationSetMapping Name="Ima_Ogranicuvanje" TypeName="AnketiModel.Ima_Ogranicuvanje" StoreEntitySet="Ima_Ogranicuvanje">
             <EndProperty Name="Lice">
               <ScalarProperty Name="id_lice" ColumnName="id_lice" />
             </EndProperty>
@@ -880,7 +880,7 @@
               <ScalarProperty Name="id_o" ColumnName="id_o" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Pripagja" TypeName="AnketiModel1.Pripagja" StoreEntitySet="Pripagja">
+          <AssociationSetMapping Name="Pripagja" TypeName="AnketiModel.Pripagja" StoreEntitySet="Pripagja">
             <EndProperty Name="Anketa">
               <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
             </EndProperty>
@@ -888,7 +888,7 @@
               <ScalarProperty Name="id_k" ColumnName="id_k" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Sodrzi" TypeName="AnketiModel1.Sodrzi" StoreEntitySet="Sodrzi">
+          <AssociationSetMapping Name="Sodrzi" TypeName="AnketiModel.Sodrzi" StoreEntitySet="Sodrzi">
             <EndProperty Name="Anketa">
               <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
             </EndProperty>
