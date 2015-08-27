@@ -36,6 +36,13 @@
           <Property Name="id_odg" Type="int" Nullable="false" />
           <Property Name="datum_glasanje" Type="datetime" />
         </EntityType>
+        <EntityType Name="Grad">
+          <Key>
+            <PropertyRef Name="id_grad" />
+          </Key>
+          <Property Name="id_grad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ime_grad" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Ima_Ogranicuvanje">
           <Key>
             <PropertyRef Name="id_lice" />
@@ -89,8 +96,8 @@
           <Property Name="lozinka" Type="char" MaxLength="40" Nullable="false" />
           <Property Name="tel_broj" Type="char" MaxLength="9" Nullable="false" />
           <Property Name="ulica" Type="char" MaxLength="30" Nullable="false" />
-          <Property Name="grad" Type="char" MaxLength="30" Nullable="false" />
-          <Property Name="datum_r" Type="datetime" />
+          <Property Name="datum_r" Type="datetime" Nullable="false" />
+          <Property Name="id_grad" Type="int" />
         </EntityType>
         <EntityType Name="Mozni_Odgovori">
           <Key>
@@ -283,6 +290,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Lice_Grad">
+          <End Role="Grad" Type="Self.Grad" Multiplicity="0..1" />
+          <End Role="Lice" Type="Self.Lice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grad">
+              <PropertyRef Name="id_grad" />
+            </Principal>
+            <Dependent Role="Lice">
+              <PropertyRef Name="id_grad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Premium_Korisnik_Lice">
           <End Role="Lice" Type="Self.Lice" Multiplicity="1" />
           <End Role="Premium_Korisnik" Type="Self.Premium_Korisnik" Multiplicity="0..1" />
@@ -347,6 +366,7 @@
           <EntitySet Name="Anketa" EntityType="Self.Anketa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dozvoleni_Korisnici" EntityType="Self.Dozvoleni_Korisnici" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Glasa" EntityType="Self.Glasa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grad" EntityType="Self.Grad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ima_Ogranicuvanje" EntityType="Self.Ima_Ogranicuvanje" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kategorija" EntityType="Self.Kategorija" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Komentar" EntityType="Self.Komentar" Schema="dbo" store:Type="Tables" />
@@ -407,6 +427,10 @@
             <End Role="Lice" EntitySet="Lice" />
             <End Role="Korisnik" EntitySet="Korisnik" />
           </AssociationSet>
+          <AssociationSet Name="FK_Lice_Grad" Association="Self.FK_Lice_Grad">
+            <End Role="Grad" EntitySet="Grad" />
+            <End Role="Lice" EntitySet="Lice" />
+          </AssociationSet>
           <AssociationSet Name="FK_Premium_Korisnik_Lice" Association="Self.FK_Premium_Korisnik_Lice">
             <End Role="Lice" EntitySet="Lice" />
             <End Role="Premium_Korisnik" EntitySet="Premium_Korisnik" />
@@ -465,6 +489,14 @@
           <NavigationProperty Name="Louse" Relationship="Self.FK_Glasa_Lice" FromRole="Glasa" ToRole="Lice" />
           <NavigationProperty Name="Mozni_Odgovori" Relationship="Self.FK_Glasa_Mozni_Odgovori" FromRole="Glasa" ToRole="Mozni_Odgovori" />
         </EntityType>
+        <EntityType Name="Grad">
+          <Key>
+            <PropertyRef Name="id_grad" />
+          </Key>
+          <Property Name="id_grad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ime_grad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Lice" Relationship="Self.FK_Lice_Grad" FromRole="Grad" ToRole="Lice" />
+        </EntityType>
         <EntityType Name="Kategorija">
           <Key>
             <PropertyRef Name="id_k" />
@@ -516,10 +548,11 @@
           <Property Name="lozinka" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="tel_broj" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ulica" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="grad" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="datum_r" Type="DateTime" Precision="3" />
+          <Property Name="datum_r" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="id_grad" Type="Int32" />
           <NavigationProperty Name="Anketas" Relationship="Self.FK_Anketa_Lice" FromRole="Lice" ToRole="Anketa" />
           <NavigationProperty Name="Glasas" Relationship="Self.FK_Glasa_Lice" FromRole="Lice" ToRole="Glasa" />
+          <NavigationProperty Name="Grad" Relationship="Self.FK_Lice_Grad" FromRole="Lice" ToRole="Grad" />
           <NavigationProperty Name="Komentar_Za" Relationship="Self.FK_Komentar_Za_Lice" FromRole="Lice" ToRole="Komentar_Za" />
           <NavigationProperty Name="Korisnik" Relationship="Self.FK_Korisnik_Lice" FromRole="Lice" ToRole="Korisnik" />
           <NavigationProperty Name="Premium_Korisnik" Relationship="Self.FK_Premium_Korisnik_Lice" FromRole="Lice" ToRole="Premium_Korisnik" />
@@ -621,6 +654,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Lice_Grad">
+          <End Role="Grad" Type="Self.Grad" Multiplicity="0..1" />
+          <End Role="Lice" Type="Self.Louse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grad">
+              <PropertyRef Name="id_grad" />
+            </Principal>
+            <Dependent Role="Lice">
+              <PropertyRef Name="id_grad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Komentar_Za_Komentar">
           <End Role="Komentar" Type="Self.Komentar" Multiplicity="1" />
           <End Role="Komentar_Za" Type="Self.Komentar_Za" Multiplicity="*" />
@@ -685,9 +730,10 @@
           <End Role="Anketa" Type="Self.Anketa" Multiplicity="*" />
           <End Role="Mozni_Odgovori" Type="Self.Mozni_Odgovori" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="AnketiEntities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="AnketiEntities4" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Anketas" EntityType="Self.Anketa" />
           <EntitySet Name="Glasas" EntityType="Self.Glasa" />
+          <EntitySet Name="Grads" EntityType="Self.Grad" />
           <EntitySet Name="Kategorijas" EntityType="Self.Kategorija" />
           <EntitySet Name="Komentars" EntityType="Self.Komentar" />
           <EntitySet Name="Komentar_Za" EntityType="Self.Komentar_Za" />
@@ -716,6 +762,10 @@
           <AssociationSet Name="FK_Glasa_Mozni_Odgovori" Association="Self.FK_Glasa_Mozni_Odgovori">
             <End Role="Mozni_Odgovori" EntitySet="Mozni_Odgovori" />
             <End Role="Glasa" EntitySet="Glasas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lice_Grad" Association="Self.FK_Lice_Grad">
+            <End Role="Grad" EntitySet="Grads" />
+            <End Role="Lice" EntitySet="Lice" />
           </AssociationSet>
           <AssociationSet Name="FK_Komentar_Za_Komentar" Association="Self.FK_Komentar_Za_Komentar">
             <End Role="Komentar" EntitySet="Komentars" />
@@ -755,7 +805,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AnketiModelStoreContainer" CdmEntityContainer="AnketiEntities3">
+        <EntityContainerMapping StorageEntityContainer="AnketiModelStoreContainer" CdmEntityContainer="AnketiEntities4">
           <EntitySetMapping Name="Anketas">
             <EntityTypeMapping TypeName="AnketiModel.Anketa">
               <MappingFragment StoreEntitySet="Anketa">
@@ -776,6 +826,14 @@
                 <ScalarProperty Name="id_anketa" ColumnName="id_anketa" />
                 <ScalarProperty Name="id_odg" ColumnName="id_odg" />
                 <ScalarProperty Name="datum_glasanje" ColumnName="datum_glasanje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grads">
+            <EntityTypeMapping TypeName="AnketiModel.Grad">
+              <MappingFragment StoreEntitySet="Grad">
+                <ScalarProperty Name="id_grad" ColumnName="id_grad" />
+                <ScalarProperty Name="ime_grad" ColumnName="ime_grad" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -824,8 +882,8 @@
                 <ScalarProperty Name="lozinka" ColumnName="lozinka" />
                 <ScalarProperty Name="tel_broj" ColumnName="tel_broj" />
                 <ScalarProperty Name="ulica" ColumnName="ulica" />
-                <ScalarProperty Name="grad" ColumnName="grad" />
                 <ScalarProperty Name="datum_r" ColumnName="datum_r" />
+                <ScalarProperty Name="id_grad" ColumnName="id_grad" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

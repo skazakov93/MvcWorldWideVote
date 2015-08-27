@@ -56,35 +56,75 @@ namespace Anketa_Proekt.Controllers
         [HttpGet]
         public ActionResult Registration()
         {
-            return View();
+            using (var db = new AnketiEntities4())
+            {
+                List<SelectListItem> listSelectListItems = new List<SelectListItem>();
+
+                foreach (Grad city in db.Grads)
+                {
+                    SelectListItem selectList = new SelectListItem()
+                    {
+                        Text = city.ime_grad,
+                        Value = city.id_grad.ToString()
+                    };
+
+                    listSelectListItems.Add(selectList);
+                }
+
+                ViewBag.MyGradovi = listSelectListItems;
+
+                return View();
+            }
         }
 
         [HttpPost]
         public ActionResult Registration(Anketa_Proekt.Models.Louse user)
         {
+            using (var db = new AnketiEntities4())
+            {
+                List<SelectListItem> listSelectListItems = new List<SelectListItem>();
+
+                foreach (Grad city in db.Grads)
+                {
+                    SelectListItem selectList = new SelectListItem()
+                    {
+                        Text = city.ime_grad,
+                        Value = city.id_grad.ToString(),
+                        //Selected = false
+                    };
+
+                    listSelectListItems.Add(selectList);
+                }
+
+                ViewBag.MyGradovi = listSelectListItems;
+
+                //return View();
+            }
+
             if (ModelState.IsValid)
             {
-                using (var db = new AnketiEntities3())
-                {
-                    var newUser = db.Lice.Create();
+                    using (var db = new AnketiEntities4())
+                    {
+                        var newUser = db.Lice.Create();
 
-                    newUser.ime = user.ime;
-                    newUser.prezime = user.prezime;
-                    newUser.e_mail = user.e_mail;
-                    newUser.lozinka = user.lozinka;
-                    newUser.tel_broj = user.tel_broj;
-                    newUser.ulica = user.ulica;
-                    newUser.grad = user.grad;
-                    newUser.datum_r = user.datum_r;
+                        newUser.ime = user.ime;
+                        newUser.prezime = user.prezime;
+                        newUser.e_mail = user.e_mail;
+                        newUser.lozinka = user.lozinka;
+                        newUser.tel_broj = user.tel_broj;
+                        newUser.ulica = user.ulica;
+                        newUser.id_grad = user.id_grad;
+                        newUser.datum_r = user.datum_r;
 
-                    db.Lice.Add(newUser);
+                        db.Lice.Add(newUser);
 
-                    db.SaveChanges();
+                        db.SaveChanges();
 
-                    Session["id_lice"] = newUser.id_lice;
+                        Session["id_lice"] = newUser.id_lice;
 
-                    return RedirectToAction("Index", "Anketa");
-                }
+                        return RedirectToAction("Index", "Anketa");
+                    }
+                
             }
             else
             {

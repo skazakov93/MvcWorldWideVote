@@ -44,10 +44,10 @@
                                     @Html.ValidationMessageFor(u => u.ulica)
                                 </div>
 
-                                <div>@Html.LabelFor(u => u.grad)</div>
+                                <div>@Html.LabelFor(u => u.id_grad)</div>
                                 <div>
-                                    @Html.TextBoxFor(u => u.grad)
-                                    @Html.ValidationMessageFor(u => u.grad)
+                                    @Html.DropDownListFor(u => u.id_grad, (IEnumerable<SelectListItem>)ViewBag.MyGradovi, "")
+                                    @Html.ValidationMessageFor(u => u.id_grad)
                                 </div>
 
                                 <div>@Html.LabelFor(u => u.datum_r)</div>

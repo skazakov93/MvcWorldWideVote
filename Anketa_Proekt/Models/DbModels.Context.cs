@@ -13,10 +13,10 @@ namespace Anketa_Proekt.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class AnketiEntities3 : DbContext
+    public partial class AnketiEntities4 : DbContext
     {
-        public AnketiEntities3()
-            : base("name=AnketiEntities3")
+        public AnketiEntities4()
+            : base("name=AnketiEntities4")
         {
         }
     
@@ -27,6 +27,7 @@ namespace Anketa_Proekt.Models
     
         public virtual DbSet<Anketa> Anketas { get; set; }
         public virtual DbSet<Glasa> Glasas { get; set; }
+        public virtual DbSet<Grad> Grads { get; set; }
         public virtual DbSet<Kategorija> Kategorijas { get; set; }
         public virtual DbSet<Komentar> Komentars { get; set; }
         public virtual DbSet<Komentar_Za> Komentar_Za { get; set; }

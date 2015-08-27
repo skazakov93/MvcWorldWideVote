@@ -199,6 +199,9 @@
     <Compile Include="Models\Glasa.cs">
       <DependentUpon>DbModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Grad.cs">
+      <DependentUpon>DbModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Kategorija.cs">
       <DependentUpon>DbModels.tt</DependentUpon>
@@ -224,6 +227,7 @@
     <Compile Include="Models\Premium_Korisnik.cs">
       <DependentUpon>DbModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SelectedItem.cs" />
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>DbModels.tt</DependentUpon>
     </Compile>

@@ -14,6 +14,7 @@ namespace Anketa_Proekt.Models
     using System.ComponentModel.DataAnnotations;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Web.Mvc;
     
     public partial class Louse
     {
@@ -61,16 +62,16 @@ namespace Anketa_Proekt.Models
         public string ulica { get; set; }
 
         [Required]
-        [StringLength(30)]
-        [Display(Name = "City: ")]
-        public string grad { get; set; }
+        [Display(Name = "Date of birth: ")]
+        public System.DateTime datum_r { get; set; }
 
         [Required]
-        [Display(Name = "Date of birth: ")]
-        public Nullable<System.DateTime> datum_r { get; set; }
+        [Display(Name = "City: ")]
+        public Nullable<int> id_grad { get; set; }
     
         public virtual ICollection<Anketa> Anketas { get; set; }
         public virtual ICollection<Glasa> Glasas { get; set; }
+        public virtual Grad Grad { get; set; }
         public virtual ICollection<Komentar_Za> Komentar_Za { get; set; }
         public virtual Korisnik Korisnik { get; set; }
         public virtual Premium_Korisnik Premium_Korisnik { get; set; }
