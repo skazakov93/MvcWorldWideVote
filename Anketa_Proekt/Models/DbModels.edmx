@@ -16,6 +16,7 @@
           <Property Name="id_lice" Type="int" Nullable="false" />
           <Property Name="datum_kreiranje" Type="datetime" Nullable="false" />
           <Property Name="multi_choice" Type="int" Nullable="false" />
+          <Property Name="url_slika" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Dozvoleni_Korisnici">
           <Key>
@@ -119,6 +120,8 @@
             <PropertyRef Name="id_lice" />
           </Key>
           <Property Name="id_lice" Type="int" Nullable="false" />
+          <Property Name="datum_starts" Type="date" />
+          <Property Name="datum_end" Type="date" />
         </EntityType>
         <EntityType Name="Pripagja">
           <Key>
@@ -468,6 +471,7 @@
           <Property Name="id_lice" Type="Int32" Nullable="false" />
           <Property Name="datum_kreiranje" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="multi_choice" Type="Int32" Nullable="false" />
+          <Property Name="url_slika" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Louse" Relationship="Self.FK_Anketa_Lice" FromRole="Anketa" ToRole="Lice" />
           <NavigationProperty Name="Glasas" Relationship="Self.FK_Glasa_Anketa" FromRole="Anketa" ToRole="Glasa" />
           <NavigationProperty Name="Komentar_Za" Relationship="Self.FK_Komentar_Za_Anketa" FromRole="Anketa" ToRole="Komentar_Za" />
@@ -582,6 +586,8 @@
             <PropertyRef Name="id_lice" />
           </Key>
           <Property Name="id_lice" Type="Int32" Nullable="false" />
+          <Property Name="datum_starts" Type="DateTime" Precision="0" />
+          <Property Name="datum_end" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Louse" Relationship="Self.FK_Premium_Korisnik_Lice" FromRole="Premium_Korisnik" ToRole="Lice" />
         </EntityType>
         <EntityType Name="sysdiagram">
@@ -730,7 +736,7 @@
           <End Role="Anketa" Type="Self.Anketa" Multiplicity="*" />
           <End Role="Mozni_Odgovori" Type="Self.Mozni_Odgovori" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="AnketiEntities4" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="AnketiEntities5" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Anketas" EntityType="Self.Anketa" />
           <EntitySet Name="Glasas" EntityType="Self.Glasa" />
           <EntitySet Name="Grads" EntityType="Self.Grad" />
@@ -805,7 +811,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AnketiModelStoreContainer" CdmEntityContainer="AnketiEntities4">
+        <EntityContainerMapping StorageEntityContainer="AnketiModelStoreContainer" CdmEntityContainer="AnketiEntities5">
           <EntitySetMapping Name="Anketas">
             <EntityTypeMapping TypeName="AnketiModel.Anketa">
               <MappingFragment StoreEntitySet="Anketa">
@@ -816,6 +822,7 @@
                 <ScalarProperty Name="id_lice" ColumnName="id_lice" />
                 <ScalarProperty Name="datum_kreiranje" ColumnName="datum_kreiranje" />
                 <ScalarProperty Name="multi_choice" ColumnName="multi_choice" />
+                <ScalarProperty Name="url_slika" ColumnName="url_slika" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -908,6 +915,8 @@
             <EntityTypeMapping TypeName="AnketiModel.Premium_Korisnik">
               <MappingFragment StoreEntitySet="Premium_Korisnik">
                 <ScalarProperty Name="id_lice" ColumnName="id_lice" />
+                <ScalarProperty Name="datum_starts" ColumnName="datum_starts" />
+                <ScalarProperty Name="datum_end" ColumnName="datum_end" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

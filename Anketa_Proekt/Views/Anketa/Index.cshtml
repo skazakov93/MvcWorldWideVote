@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Anketa_Proekt.Models.Anketa>
 
+<link href="~/Content/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-ui-1.10.4.custom.min.js"></script>
+
 @{
     ViewBag.Title = "Index";
 }
@@ -24,6 +28,7 @@
 
             @{
                 int br = 1;
+                int br1 = 0;
                 foreach (var item in Model)
                 {
                     br++;
@@ -52,9 +57,11 @@
                                         @Html.DisplayFor(modelItem => item.prasanje)
                                         
                                         @{
+                                            
                                             HashSet<Anketa_Proekt.Models.Kategorija> kategorii = (HashSet<Anketa_Proekt.Models.Kategorija>)item.Kategorijas;
 
                                             <small>
+                                            
                                             @foreach (Anketa_Proekt.Models.Kategorija k in kategorii)
                                             {
                                                 string ime_k = k.ime_k;
@@ -69,7 +76,16 @@
                                     <!-- questionnaire content row start here-->
                                     <div class="col-sm-6">
                                         <h4>@Html.DisplayFor(modelItem => item.opis_a):</h4>
-                                        <img class="img-responsive imageQuestionnaireDescription" src="http://placehold.it/350x150">
+
+                                        @{
+                                            string imgUrl = "http://placehold.it/350x150";
+                                        
+                                            if(item.url_slika != null){
+                                                imgUrl = item.url_slika;
+                                            }
+                                        }
+
+                                        <img class="img-responsive imageQuestionnaireDescription" src="@imgUrl">
                                         <p class="questionnaireDescriptionParagraph">@Html.DisplayFor(modelItem => item.opis_a)</p>
                                     </div>  <!-- class col-sm-6 (left side) end here -->
                                     <div class="col-sm-6">
@@ -82,34 +98,98 @@
                                         
                                         string radioOrChechBox = "";
                                         string multiAnsewrs = "";
+
+                                        string buttonType = "";
+                                        string buttonValue = "";
+                                        string buttonId = "";
                                         
                                         if (multi_choice == 1)
                                         {
                                             radioOrChechBox = "checkbox";
 
                                             multiAnsewrs = "Multiple answers available";
+
+                                            buttonType = "button";
+                                            buttonValue = item.id_anketa + "";
+                                            buttonId = "save_value";
                                         }
                                         else
                                         {
                                             radioOrChechBox = "radio";
-                                            
+
                                             multiAnsewrs = "Single answer only available";
+
+                                            buttonType = "submit";
+
+                                            buttonId = "sigle_choice_anketa";
+                                            buttonValue = item.id_anketa + "";
                                         }
                                         }
 
                                         <div class="well">
+                                            <!-- -->
+
+                                            @using (Html.BeginForm("ZapisiGlas", "Anketa"))
+                                            {
+                                                @Html.AntiForgeryToken()
+
+                                            <!-- -->
+
                                             <div class="row">
                                                 <ul class="list-unstyled">
-                                                    @foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odgovori)
+                                                    @Html.HiddenFor(m => item.id_anketa)
+
+                                                    @{
+                                                    List<Anketa_Proekt.Models.Glasa> korisnikGlasal = item.Glasas.ToList();
+                                                    
+                                                    bool mozeDaGlasa = true;
+                                                    string myChecked = "";
+                                                    string odbranOdg = "";
+
+                                                    if (Session["id_lice"] != null)
                                                     {
-                                                        <li> <input type="@radioOrChechBox" name="grupa" value="@o.id_odg">@o.ime_odg</li>
+                                                        disabeled = "";
+                                                        
+                                                        foreach (Anketa_Proekt.Models.Glasa g in korisnikGlasal)
+                                                        {
+                                                            if (g.id_anketa == item.id_anketa && g.id_lice == (int)Session["id_lice"])
+                                                            {
+                                                                mozeDaGlasa = false;
+                                                                multiAnsewrs = "You have already voted on this pool!";
+                                                                disabeled = "disabled";
+                                                                myChecked = "disabled";
+                                                            }
+                                                        }
+                                                    }
+                                                           
+                                                    foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odgovori)
+                                                    {
+                                                        if (multi_choice == 1)
+                                                        {
+                                                            br1++;
+
+                                                            string str = "ad_Checkbox" + br1;
+                                                
+                                                            <li> <input class="ads_Checkbox" type="checkbox" id=@str value="@o.id_odg" @myChecked>@o.ime_odg</li>
+                                                        }
+                                                        else
+                                                        {
+                                                            
+                                                            <li>
+                                                                <input type="radio" name=@item.id_anketa value=@o.id_odg @myChecked/>
+                                                                @o.ime_odg
+                                                            </li>
+                                                        }
+                                                    }
                                                     }
 
                                                 </ul>
                                             </div>
                                             <div class="row">
-                                                <button type="button" class="btn btn-success @disabeled"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
+                                                <button type="button" class="btn btn-success @disabeled @buttonId" value=@buttonValue><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
                                             </div>
+                                            }    
+                                                
                                         </div>
 
                                         <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span> @multiAnsewrs</div>
@@ -137,19 +217,81 @@
 <!-- pagination is palced in last questionaries -->
 <div class="text-center navPagination">
     <nav>
+        @{
+            int brStranici = ViewBag.BrStrani;
+            int momStrana = ViewBag.CurrentPage;
+           
         <ul class="pagination pagination-lg">
             <li>
-                <a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span> First Page</a>
+                <a href="@Url.Action("Index", "Anketa", new { id = 1 })" aria-label="Previous"><span aria-hidden="true">&laquo;</span> First Page</a>
             </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
+            @for (int i = 1; i <= brStranici; i++)
+            {
+                string myActivePage = "";
+                if (i == momStrana)
+                {
+                    myActivePage = "active";
+                }
+                
+                <li class="@myActivePage"><a href="@Url.Action("Index", "Anketa", new { id = i })">@i</a></li>   
+            }
             <li>
-                <a href="#" aria-label="Next">Last page <span aria-hidden="true">&raquo;</span></a>
+                <a href="@Url.Action("Index", "Anketa", new { id = brStranici })" aria-label="Next">Last page <span aria-hidden="true">&raquo;</span></a>
             </li>
         </ul>
+        }
     </nav>
 </div>
 <!-- pagination end here -->
+
+<script>
+    $('.save_value').click(function () {
+        var anketaId = $(this).attr("value");
+        var sel = $('input[type=checkbox]:checked').map(function (_, el) {
+            return $(el).val();
+        }).get();
+
+        $.ajax({
+            url: '/Anketa/zapisiMultiChoiceGlas',
+            type: "POST",
+            data: "odgovoriId=" + sel + "&anketa_id=" + anketaId,
+            succes: function (data) {
+                location.reload();
+
+                alert("Your vote has been recorded. \nThank you for voting!!!!");
+            },
+            error: function () {
+                location.reload();
+
+                alert("Your vote has been recorded. \nThank you for voting!!!!");
+            }
+        });
+    })
+</script>
+
+<script>
+    $('.sigle_choice_anketa').click(function () {
+        var anketaId = $(this).attr("value");
+        var pom = "input[name=\'" + anketaId + "\']:checked";
+
+        var radioValue = $(pom).val();
+        if (radioValue) {
+            $.ajax({
+                url: '/Anketa/zapisiSingleChoiceGlas',
+                type: "POST",
+                data: "odgovoriId=" + radioValue + "&anketa_id=" + anketaId,
+                succes: function (data) {
+                    location.reload();
+
+                    alert("Your vote has been recorded. \nThank you for voting!!!!");
+                },
+                error: function () {
+                    location.reload();
+
+                    alert("Your vote has been recorded. \nThank you for voting!!!!");
+                }
+            });
+        }
+    });
+</script>
+

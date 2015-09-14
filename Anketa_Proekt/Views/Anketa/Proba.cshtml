@@ -1,0 +1,25 @@
+﻿@model Anketa_Proekt.Models.Anketa
+
+@{
+    ViewBag.Title = "Proba";
+}
+
+<h2>Proba</h2>
+
+
+    @using (@Html.BeginForm())
+    {
+        <b>Name: </b>
+        @Html.TextBox("searchTerm", null, new { id = "txtSearch" })
+        <input type="submit" value="Search" />
+    }
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetStudents")',
+            minLength: 1
+        });
+    });
+</script>

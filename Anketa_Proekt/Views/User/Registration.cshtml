@@ -6,60 +6,108 @@
 
 @using (Html.BeginForm())
 {
-                        <div>
-                            <fieldset>
-                                <div class="editor-label">@Html.LabelFor(u => u.ime)</div>
-                                <div class="editor-field">
-                                    @Html.TextBoxFor(u => u.ime)
-                                    @Html.ValidationMessageFor(u => u.ime)
-                                </div>
+    <!-- title -->
+    <div class="container-flyid">
+        <div class="content">
 
-                                <div>@Html.LabelFor(u => u.prezime)</div>
-                                <div>
-                                    @Html.TextBoxFor(u => u.prezime)
-                                    @Html.ValidationMessageFor(u => u.prezime)
-                                </div>
-                                
-                                <div>@Html.LabelFor(u => u.e_mail)</div>
-                                <div>
-                                    @Html.TextBoxFor(u => u.e_mail)
-                                    @Html.ValidationMessageFor(u => u.e_mail)
-                                </div>
+            <div class="title">
+                <!-- title start here -->
+                <div class="container">
+                    <!-- wrap image and title -->
+                    <img class="img-responsive titleImage" src="~/img/backgroundTransparentSmall.png" />
+                    <h1 class="text-center titleText">Sign Up</h1>
+                </div>
+            </div>  <!-- class title end here -->
+        </div>  <!-- class content end here -->
+    </div>  <!-- class container-flyid end here -->
+    <!--tile end here-->
 
-                                <div>@Html.LabelFor(u => u.lozinka)</div>
-                                <div>
-                                    @Html.PasswordFor(u => u.lozinka)
-                                    @Html.ValidationMessageFor(u => u.lozinka)
-                                </div>
 
-                                <div>@Html.LabelFor(u => u.tel_broj)</div>
-                                <div>
-                                    @Html.TextBoxFor(u => u.tel_broj)
-                                    @Html.ValidationMessageFor(u => u.tel_broj)
-                                </div>
+    <div class="container">
 
-                                <div>@Html.LabelFor(u => u.ulica)</div>
-                                <div>
-                                    @Html.TextBoxFor(u => u.ulica)
-                                    @Html.ValidationMessageFor(u => u.ulica)
-                                </div>
 
-                                <div>@Html.LabelFor(u => u.id_grad)</div>
-                                <div>
-                                    @Html.DropDownListFor(u => u.id_grad, (IEnumerable<SelectListItem>)ViewBag.MyGradovi, "")
-                                    @Html.ValidationMessageFor(u => u.id_grad)
-                                </div>
+        <div class="sign-up-wraper well">
+            <fieldset>
 
-                                <div>@Html.LabelFor(u => u.datum_r)</div>
-                                <div>
-                                    @Html.TextBoxFor(u => u.datum_r)
-                                    @Html.ValidationMessageFor(u => u.datum_r)
-                                </div>
-
-                                <br />
-                                <input type="submit" class="btn btn-primary" value="Register" />
-                            </fieldset>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="editor-label">@Html.LabelFor(u => u.ime)</div>
+                        <div class="editor-field loginInput">
+                            @Html.TextBoxFor(u => u.ime)
+                            @Html.ValidationMessageFor(u => u.ime)
                         </div>
-                    
-}
+                    </div>
 
+                    <div class="col-sm-6">
+                        <div>@Html.LabelFor(u => u.prezime)</div>
+                        <div class="loginInput">
+                            @Html.TextBoxFor(u => u.prezime)
+                            @Html.ValidationMessageFor(u => u.prezime)
+                        </div>
+                    </div>
+                </div>  <!-- here ends the row -->
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div>@Html.LabelFor(u => u.e_mail)</div>
+                        <div class="loginInput">
+                            @Html.TextBoxFor(u => u.e_mail)
+                            @Html.ValidationMessageFor(u => u.e_mail)
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div>@Html.LabelFor(u => u.lozinka)</div>
+                        <div class="loginInput">
+                            @Html.PasswordFor(u => u.lozinka)
+                            @Html.ValidationMessageFor(u => u.lozinka)
+                        </div>
+                    </div>
+                </div>  <!-- here ends the row -->
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div>@Html.LabelFor(u => u.tel_broj)</div>
+                        <div class="loginInput">
+                            @Html.TextBoxFor(u => u.tel_broj)
+                            @Html.ValidationMessageFor(u => u.tel_broj)
+                        </div>
+                    </div>
+                </div>  <!-- here ends the row -->
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div>@Html.LabelFor(u => u.ulica)</div>
+                        <div class="loginInput">
+                            @Html.TextBoxFor(u => u.ulica)
+                            @Html.ValidationMessageFor(u => u.ulica)
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div>@Html.LabelFor(u => u.id_grad)</div>
+                        <div>
+                            @Html.DropDownListFor(u => u.id_grad, (IEnumerable<SelectListItem>)ViewBag.MyGradovi, "")
+                            @Html.ValidationMessageFor(u => u.id_grad)
+                        </div>
+                    </div>
+                </div>  <!-- here ends the row -->
+                <!-- not in a row -->
+                <div>@Html.LabelFor(u => u.datum_r)</div>
+                <div class="loginInput">
+                    @Html.JQueryUI().DatepickerFor(model => model.datum_r)
+                    @Html.ValidationMessageFor(u => u.datum_r)
+                </div>
+                <!-- not in a row end here-->
+                <!--button floating right-->
+                <div class="pull-right">
+                    <br />
+                    <input type="submit" class="btn btn-lg btn-primary" value="Register" />
+                </div>
+                <!--button flopating right end here-->
+
+            </fieldset>
+        </div>
+    </div>
+
+}

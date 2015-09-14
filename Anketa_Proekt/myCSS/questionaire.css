@@ -3,13 +3,14 @@
 }
 
 /*comments style start here */
-	.detailBox {
-    width:320px;
+.detailBox {
     border:1px solid #bbb;
-    margin:50px;
+    border-radius: 6px;
+    /*overflow: overlay;*/
+    /*max-height: 870px;*/
 }
 .titleBox {
-    background-color:#fdfdfd;
+    /*background-color:#fdfdfd;*/
     padding:10px;
 }
 .titleBox label{
@@ -37,7 +38,7 @@
 .commentList {
     padding:0;
     list-style:none;
-    max-height:200px;
+    /*max-height:200px;*/
     overflow:auto;
 }
 .commentList li {
@@ -48,7 +49,7 @@
     display:table-cell;
 }
 .commenterImage {
-    width:30px;
+    width:45px;
     margin-right:5px;
     height:100%;
     float:left;
@@ -68,5 +69,28 @@
 .actionBox {
     border-top:1px dotted #bbb;
     padding:10px;
+    overflow-y: auto;
+    max-height: 740px;
 }
 /*comments style ends here*/
+
+#comentFormGroup{
+    width: 100%;
+}
+
+#sendBtn{
+    border-radius: 0px;
+}
+
+#comentGroup{
+        padding: 10px;
+}
+
+.comentWarning{
+        padding-left: 10px;
+    padding-top: 10px;
+    border: solid 1px #BBBBBB;
+    margin: -1px;
+    background-color: rgba(252, 248, 227, 0.14);
+    color: #BBBBBB;
+}

@@ -1,0 +1,75 @@
+﻿@model Anketa_Proekt.Models.Korisnik
+
+@{
+    ViewBag.Title = "CheckStatus";
+}
+
+<!-- title -->
+<div class="container-flyid">
+    <div class="content">
+
+        <div class="title">
+            <!-- title start here -->
+            <div class="container">
+                <!-- wrap image and title -->
+                <img class="img-responsive titleImage" src="~/img/backgroundTransparentSmall.png" />
+                <h1 class="text-center titleText">Check Status</h1>
+            </div>
+        </div>  <!-- class title end here -->
+    </div>  <!-- class content end here -->
+</div>  <!-- class container-flyid end here -->
+<!--tile end here-->
+
+<div class="container">
+    <div class="well wellCheckStatus">
+
+        @{
+            DateTime start = DateTime.Today;
+            DateTime end = DateTime.Today;
+            int ostanatiAnketi = 3 - Model.br_anketi;
+
+            <div class="CheckStatusText">
+                First Name: &nbsp;&nbsp;&nbsp;&nbsp;@ViewBag.UserName
+            </div>
+
+            <div class="CheckStatusText">
+                Last Name: &nbsp;&nbsp;&nbsp;&nbsp;@ViewBag.UserLastName
+            </div>
+
+            if (ViewBag.PremiumUserStartDate != null)
+            {
+                start = ViewBag.PremiumUserStartDate;
+                end = ViewBag.PremiumUserEndDate;
+
+                <div class="">
+                    <div class="CheckStatusText">
+                        Acount Type: Premium Account
+                    </div>
+                    <div class="CheckStatusPremium">
+                        <span class="pull-left glyphicon glyphicon-warning-sign"></span>
+                        &nbsp; Your Premium Status expires on @end.ToString("dd.MM.yyyy")
+                    </div>
+                </div>
+
+            }
+            else
+            {
+                <div class="">
+                    <div class="CheckStatusText">
+                        Acount Type: &nbsp;Free Account
+                    </div>
+                    <div class="CheckStatusNoPremium">
+                        <span class="pull-left glyphicon glyphicon-warning-sign glyphiconChekcStatus"></span>
+                        <div>
+                            &nbsp;You have created @Model.br_anketi out of 3 pools.
+                            <br />
+                            &nbsp;If you want to create more pools please upgrade your accont to Premium.
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+

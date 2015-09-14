@@ -1,0 +1,153 @@
+﻿@model IEnumerable<Anketa_Proekt.Models.Anketa>
+
+@{
+    ViewBag.Title = "MySearch";
+}
+<!-- title -->
+<div class="container-flyid">
+    <div class="content">
+
+        <div class="title">
+            <!-- title start here -->
+            <div class="container">
+                <!-- wrap image and title -->
+                <img class="img-responsive titleImage" src="~/img/backgroundTransparentSmall.png" />
+                <h1 class="text-center titleText">Search Results</h1>
+            </div>
+        </div>  <!-- class title end here -->
+    </div>  <!-- class content end here -->
+</div>  <!-- class container-flyid end here -->
+<!--tile end here-->
+
+<div class="container">
+    <div class="well wellMySearch">
+        <div class="row">
+            <div class="col-sm-6">
+                Keywoard:
+                <span>
+                    &nbsp; @ViewBag.SearchWord
+                </span>
+            </div>
+            <div class="col-sm-6">
+                <div class="">
+                    Matches:
+                    @{
+                        int resultsCount = 0;
+
+                        if (ViewBag.AnketiPrasanje != null)
+                        {
+                            resultsCount += ViewBag.AnketiPrasanje;
+                        }
+
+                        if (ViewBag.AnketiVoKategorijata != null)
+                        {
+                            resultsCount += ViewBag.AnketiVoKategorijata.Count;
+                        }
+
+                        if (ViewBag.AnketaSoOdg != null)
+                        {
+                            resultsCount += ViewBag.AnketaSoOdg.Count;
+                        }
+
+                        <span id="resultsFound">
+                            &nbsp;@resultsCount
+                        </span>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <div>
+            @{
+                if (ViewBag.AnketiPrasanje != null)
+                {
+                    int pom = ViewBag.AnketiPrasanje;
+                    <div class="typeOfAnswer">
+                        <!-- Questions which title match the keywoard: <small>&nbsp; @pom found</small> -->
+                        Questions which title matches the keywoard:
+                    </div>
+
+                    foreach (var item in Model)
+                    {
+                        <table>
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Details", "Anketa", new { id = item.id_anketa })">@item.prasanje</a>
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                }
+                /*
+                else
+                {
+                    <div>
+                        Questions which title match the keywoard: <small>0 found</small>
+                    </div>
+                }
+                */
+
+                if (ViewBag.AnketiVoKategorijata != null)
+                {
+
+                    int c = ViewBag.AnketiVoKategorijata.Count;
+                    <div class="typeOfAnswer">
+                        <!-- Questions which category match the keywoard: <small>&nbsp; @c found</small> -->
+                        Questions which category matches the keywoard:
+                    </div>
+
+                    foreach (var v in ViewBag.AnketiVoKategorijata)
+                    {
+                        <table>
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Details", "Anketa", new { id = v.id_anketa })">@v.prasanje</a>
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                }
+                /*
+                else
+                {
+                    <div>
+                        Questions which category match the keywoard: <small>0 found</small>
+                    </div>
+                }
+                */
+
+                if (ViewBag.AnketaSoOdg != null)
+                {
+                    int pom2 = ViewBag.AnketaSoOdg.Count;
+
+                    <div class="typeOfAnswer">
+                        <!-- Questions which some of the anwers match the keywoard: <small>&nbsp; @pom2 found</small> -->
+                        Questions which some of the anwers matches the keywoard:
+                    </div>
+
+                    foreach (var v in ViewBag.AnketaSoOdg)
+                    {
+                        <table>
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Details", "Anketa", new { id = v.id_anketa })">@v.prasanje</a>
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                }
+    /*
+    else
+    {
+        <div>
+            Questions which anwer match the keywoard: <small>0 found</small>
+        </div>
+    }
+     * */
+            }
+        </div>
+    </div>
+
+</div>

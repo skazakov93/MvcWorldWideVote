@@ -15,6 +15,8 @@ namespace Anketa_Proekt.Models
     public partial class Premium_Korisnik
     {
         public int id_lice { get; set; }
+        public Nullable<System.DateTime> datum_starts { get; set; }
+        public Nullable<System.DateTime> datum_end { get; set; }
     
         public virtual Louse Louse { get; set; }
     }

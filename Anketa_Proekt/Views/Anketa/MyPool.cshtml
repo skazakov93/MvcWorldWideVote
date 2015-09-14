@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Anketa_Proekt.Models.Anketa>
+
+@{
+    ViewBag.Title = "MyPool";
+}
+<head>
+    <link href="~/myCSS/mypool.css" rel="stylesheet" />
+</head>
+
+<!-- title -->
+<div class="container-flyid">
+    <div class="content">
+
+        <div class="title">
+            <!-- title start here -->
+            <div class="container">
+                <!-- wrap image and title -->
+                <img class="img-responsive titleImage" src="~/img/backgroundTransparentSmall.png" />
+                <h1 class="text-center titleText">My Pools</h1>
+            </div>
+        </div>  <!-- class title end here -->
+    </div>  <!-- class content end here -->
+</div>  <!-- class container-flyid end here -->
+<!--tile end here-->
+
+<div class="container">
+    <div class="well wellPools">
+        <table class="table">
+            <tr>
+                <th class="tableHeaderNumber">
+                    Number
+                </th>
+                <th class="tableHeaderQuestion">
+                    Question
+                </th>
+                <th class="tableHeaderDescription">
+                    Discription
+                </th>
+                <th class="tableHeaderBeginDate">
+                    Begin Date
+                </th>
+                <th class="tableHeaderEndDate">
+                    End Date
+                </th>
+                <th class="tableHeaderButtons">
+                </th>
+            </tr>
+            @{
+                int br = 0;
+                foreach (var item in Model)
+                {
+                    br++;
+                    string evenOrOdd = "";
+                    <!-- all pools should obtain "questionnaireEven" Colors
+                    if (br % 2 == 0)
+                    {
+                        evenOrOdd = "questionnaireEven";
+                    }
+                    else
+                    {
+                        evenOrOdd = "questionnaireOdd";
+                    }
+                    -->
+
+                    <tr class="tableHeaderNumber">
+                        <td>
+                            @br
+                        </td>
+                        <td class="tableHeaderQuestion">
+                            @Html.DisplayFor(modelItem => item.prasanje)
+                        </td>
+                        <td class="tableHeaderDescription">
+                            @Html.DisplayFor(modelItem => item.opis_a)
+                        </td>
+                        <td class="tableHeaderBeginDate">
+                            @Html.DisplayFor(modelItem => item.datum_kreiranje)
+                        </td>
+                        <td class="tableHeaderEndDate">
+                            @Html.DisplayFor(modelItem => item.kraen_datum)
+                        </td>
+                        <td class="tableHeaderButtons">
+                            <div class="pull-right  btn btn-sm btn-danger">
+                                @Html.ActionLink("Delete", "Delete", new { id = item.id_anketa })
+                            </div>
+                            <div class="pull-right btn btn-sm btn-info">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.id_anketa })
+                            </div>
+                            <div class="pull-right  btn btn-sm btn-default">
+                                @Html.ActionLink("Details", "Details", new { id = item.id_anketa })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <div>
+            <div class="pull-right btn btn-sm btn-success">
+                @Html.ActionLink("Create New", "Create")
+            </div>
+        </div>
+    </div>
+</div>

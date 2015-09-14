@@ -25,7 +25,7 @@
                             <fieldset>
                                 <div>@Html.LabelFor(u => u.e_mail)</div>
                                 <div>
-                                    @Html.TextBoxFor(u => u.e_mail)
+                                    @Html.TextBoxFor(u => u.e_mail, new { autofocus = "autofocus" })
                                     @Html.ValidationMessageFor(u => u.e_mail)
                                 </div>
 

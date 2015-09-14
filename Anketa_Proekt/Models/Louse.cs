@@ -14,7 +14,6 @@ namespace Anketa_Proekt.Models
     using System.ComponentModel.DataAnnotations;
     using System.Data;
     using System.Data.SqlClient;
-    using System.Web.Mvc;
     
     public partial class Louse
     {
@@ -67,6 +66,7 @@ namespace Anketa_Proekt.Models
 
         [Required]
         [Display(Name = "City: ")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<int> id_grad { get; set; }
     
         public virtual ICollection<Anketa> Anketas { get; set; }

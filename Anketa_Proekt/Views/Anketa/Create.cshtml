@@ -1,89 +1,320 @@
 ﻿@model Anketa_Proekt.Models.Anketa
-
 @{
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<!-- title -->
+<div class="container-flyid">
+    <div class="content">
+
+        <div class="title">
+            <!-- title start here -->
+            <div class="container">
+                <!-- wrap image and title -->
+                <img class="img-responsive titleImage" src="~/img/backgroundTransparentSmall.png" />
+                <h1 class="text-center titleText">Create pool</h1>
+            </div>
+        </div>  <!-- class title end here -->
+    </div>  <!-- class content end here -->
+</div>  <!-- class container-flyid end here -->
+<!--tile end here-->
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Anketa</h4>
+<div class="container">
+
+    <div class=" = well createWell">
+        <div class="row">
+            <!-- first row for name, description, date and answers -->
+            <div class="col-md-6">
+                <!-- left half for name and description-->
+                <div class="row">
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <label class="control-label">@Html.LabelFor(u => u.prasanje)</label>
+                        <div>
+                            @Html.TextBoxFor(model => model.prasanje, new { id = "idPrasanje" })
+                            @Html.ValidationMessageFor(model => model.prasanje)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label class="control-label">@Html.LabelFor(u => u.opis_a)</label>
+                        <div>
+                            @Html.TextAreaFor(model => model.opis_a, new { id = "idDesc", rows = "5", })
+                            @Html.ValidationMessageFor(model => model.opis_a)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label class="control-label">@Html.LabelFor(u => u.kraen_datum)</label>
+                        <div>
+                            @Html.JQueryUI().DatepickerFor(model => model.kraen_datum, new { id = "idDueDate" })
+                            @Html.ValidationMessageFor(model => model.kraen_datum)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label class="control-label">@Html.LabelFor(u => u.url_slika)</label>
+                        <div>
+                            @Html.TextBoxFor(model => model.url_slika, new { id = "urlTExt" })
+                            @Html.ValidationMessageFor(model => model.url_slika)
+                        </div>
+                    </div>
+                </div>
+
+            </div>          <!-- left half for name and description ends here -->
+
+            <div class="col-md-6">
+                <!-- right half for categories start here-->
+                <label>Chose categories</label>
+
+                @{
+                    List<SelectListItem> zeroList = new List<SelectListItem>();
+                    List<SelectListItem> firstList = new List<SelectListItem>();
+
+                    int br = 0;
+                    foreach (SelectListItem item in (IEnumerable<SelectListItem>)ViewBag.MyKategorii)
+                    {
+                        br++;
+                        if (br % 2 == 0)
+                        {
+                            zeroList.Add(item);
+                        }
+                        else
+                        {
+                            firstList.Add(item);
+                        }
+                    }
+                }
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="">
+                            <ul class="listCategories">
+                                @{
+                                    foreach (SelectListItem i in zeroList)
+                                    {
+                                        <li>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input class="ads_Checkbox" type="checkbox" id="idKategorii" name="mozniKategorii" value="@i.Value">
+                                                    @i.Text
+                                                </label>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="">
+                            <ul class="listCategories">
+                                @{
+                                    foreach (SelectListItem i in firstList)
+                                    {
+                                        <li>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input class="ads_Checkbox" type="checkbox" id="idKategorii" name="mozniKategorii" value="@i.Value">
+                                                    @i.Text
+                                                </label>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>      <!-- right half for categories end here -->
+
+        </div>  <!-- first row for name, description, date and answers end here-->
         <hr />
-        @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.id_anketa, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.id_anketa)
-                @Html.ValidationMessageFor(model => model.id_anketa)
+
+        <div class="row">
+            <!-- second row for tags -->
+            <div class="row">
+                <div class="col-xs-10">
+                    <label>Enter your anwers once at a time: </label>
+                    <br />
+                    <input type="text" id="txtAnswer" value="" />
+                </div>
+                <div class="col-xs-2">
+                    <button type="submit" id="btnInsert" class="btn btn-primary btn-sm pull-right"><span class="glyphicon glyphicon-ok"></span> Add Answer</button>
+                </div>
             </div>
-        </div>
+            <br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.prasanje, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.prasanje)
-                @Html.ValidationMessageFor(model => model.prasanje)
+            <div class="row">
+                <ul id="vneseniOdg"></ul>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.opis_a, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.opis_a)
-                @Html.ValidationMessageFor(model => model.opis_a)
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="multiChice">
+                        <label class="control-label">@Html.LabelFor(u => u.multi_choice)</label>
+                        <input type="checkbox" id="idMulti" value="1" name="multiCheck" />
+                        @Html.ValidationMessageFor(model => model.multi_choice)
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.kraen_datum, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.kraen_datum)
-                @Html.ValidationMessageFor(model => model.kraen_datum)
+        </div>  <!-- second rof for tags end here -->
+        <hr />
+
+        <div class="row">
+            <!-- third row for submit button start here-->
+            <div class="pull-right">
+                <!--<input type="button" value="Create" class="btn btn-success createButton">&nbsp; -->
+                <button type="submit" id="btnCreatePool" class="btn btn-success pull-right createButton"><span class="glyphicon glyphicon-plus"></span> Create</button>
             </div>
-        </div>
+        </div>  <!-- row for submit button end here-->
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.id_lice, "id_lice", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("id_lice", String.Empty)
-                @Html.ValidationMessageFor(model => model.id_lice)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.datum_kreiranje, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.datum_kreiranje)
-                @Html.ValidationMessageFor(model => model.datum_kreiranje)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.multi_choice, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.multi_choice)
-                @Html.ValidationMessageFor(model => model.multi_choice)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
+    </div>      <!-- well end here -->
+</div>  <!-- container end here-->
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    $(function () {
+        var arr = [];
+        var arrPom = [];
+        $('#btnInsert').click(function () {
+            if (validateAnswer()) {
+                var str = $('#txtAnswer').val().replace(",", ";;;");
+                var strPom = $('#txtAnswer').val();
+
+                arr.push(str);
+                arrPom.push(strPom);
+                $("#vneseniOdg").empty();
+                $('#txtAnswer').val('');
+                for (var i = 0; i < arrPom.length; i++) {
+                    $("#vneseniOdg").append("<li>" + arrPom[i] + "</li>")
+                }
+            }
+        });
+
+        $('.createButton').click(function () {
+            var sel = $('input[name=multiCheck]:checked').map(function (_, el) {
+                return $(el).val();
+            }).get();
+
+            var selK = $('input[name=mozniKategorii]:checked').map(function (_, el) {
+                return $(el).val();
+            }).get();
+
+            var prasanje = $('#idPrasanje').val();
+            var description = $('#idDesc').val();
+            var dueDate = $('#idDueDate').val();
+            var urlImg = $('#urlTExt').val();
+            var multiChoice = sel;
+            var odbraniKategorii = selK;
+
+            if (validateMail()) {
+                $.ajax({
+                    url: '/Anketa/myCreate',
+                    type: "POST",
+                    data: "odgovori=" + arr + "&prasanje=" + prasanje + "&description=" + description + "&dueDate=" + dueDate + "&multiChoice=" + multiChoice + "&idKategorii=" + odbraniKategorii + "&urlSlika=" + urlImg,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#idPrasanje').val('');
+                        $('#idDesc').val('');
+                        $('#idDueDate').val('');
+                        $('#idMulti').attr('checked', false);
+
+                        $('input:checkbox').removeAttr('checked');
+
+                        $('#txtAnswer').val('');
+                        $("#vneseniOdg").empty();
+
+                        arr = [];
+                        arrPom = [];
+
+                        alert(data);
+                    },
+                    error: function (data) {
+                        $('#idPrasanje').val('');
+                        $('#idDesc').val('');
+                        $('#idDueDate').val('');
+                        $('#idMulti').attr('checked', false);
+
+                        $('input:checkbox').removeAttr('checked');
+
+                        $('#txtAnswer').val('');
+                        $("#vneseniOdg").empty();
+
+                        arr = [];
+                        arrPom = [];
+
+                        alert("ERROR");
+                    }
+                });
+            }
+        });
+    })
+</script>
+
+<script>
+    function validateMail() {
+        var prasanje = $('#idPrasanje').val();
+        var kraenDatum = $('#idDueDate').val();
+        var opis = $('#idDesc').val();
+        var brMozniOdg = $("#vneseniOdg li").length;
+
+        console.log(prasanje + " PRASANJE");
+        console.log(kraenDatum + " KRAEN DAT");
+
+        if (prasanje == null || prasanje == "") {
+            alert("Question  field is Required!!!");
+            return false;
+        }
+        else if (prasanje.length > 200) {
+            alert("Question Length should be maximun 200 charakters!!!");
+            return false;
+        }
+        else if (kraenDatum == null || kraenDatum == "") {
+            alert("You must choose the ending date of your pool!!!");
+        }
+        else if (opis.length > 300) {
+            alert("Description Length should be maximun 300 charakters!!!");
+            return false;
+        }
+
+        else if (brMozniOdg < 2) {
+            alert("You shoud enter at leatst 2 answers!!!");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+</script>
+
+<script>
+    function validateAnswer() {
+        var myAnswer = $('#txtAnswer').val();
+
+        if (myAnswer == null || myAnswer == "") {
+            alert("Enter your Answer!!!");
+            return false;
+        }
+        else if (myAnswer.length > 150) {
+            alert("The Answer length should be maximun 150 characters!!!");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+</script>

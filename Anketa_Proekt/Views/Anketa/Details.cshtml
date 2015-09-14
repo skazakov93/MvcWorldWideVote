@@ -6,6 +6,24 @@
 
 <head>
     <link href="~/myCSS/questionaire.css" rel="stylesheet" />
+
+    <!--
+        ####################     D3     ####################
+    -->
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <!--
+        #####################################################
+    -->
+    <!--
+        ####################     C3     ####################
+    -->
+    <!-- Load c3.css -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+    <!--
+        ####################################################
+    -->
+
 </head>
 
 <!-- content of the page start here -->
@@ -68,10 +86,19 @@
             string multiAnsewrs = "";
 
             string disabled = "";
+            string buttonType = "";
+            string buttonValue = "";
+            string buttonId = "ccc";
+            string glasaj = "";
 
             if (Session["id_lice"] == null)
             {
                 disabled = "disabled";
+                glasaj = "disabled";
+            }
+            else
+            {
+                buttonValue = Model.id_anketa + "";
             }
 
             if (multi_choice == 1)
@@ -79,28 +106,93 @@
                 radioOrChechBox = "checkbox";
 
                 multiAnsewrs = "Multiple answers available";
+
+                buttonType = "button";
+                buttonId = "save_value";
             }
             else
             {
-                radioOrChechBox = "radio";
+                radioOrChechBox = "RadioButtonFor";
 
                 multiAnsewrs = "Single answer only available";
+
+                buttonType = "submit";
             }
                         }
 
                         <div class="well">
-                            <div class="row">
-                                <ul class="list-unstyled">
-                                    @foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odgovori)
-                                    {
-                                        <li> <input type="@radioOrChechBox" name="grupa" value="@o.id_odg">@o.ime_odg</li>
-                                    }
+                            
+                            @using (Html.BeginForm("ZapisiGlas", "Anketa"))
+                            {
+                                @Html.AntiForgeryToken()
 
-                                </ul>
-                            </div>
-                            <div class="row">
-                                <button type="button" class="btn btn-success @disabled"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
-                            </div>
+                                @Html.HiddenFor(u => u.id_anketa)
+                                @Html.HiddenFor(u => u.Louse)
+                                @Html.HiddenFor(u => u.Mozni_Odgovori)
+
+                                <div class="row">
+
+                                    <ul class="list-unstyled">
+
+                                        @{
+                                        List<Anketa_Proekt.Models.Glasa> korisnikGlasal = Model.Glasas.ToList();
+
+                                        bool mozeDaGlasa = true;
+                                        string myChecked = "";
+                                        string odbranOdg = "";
+
+                                        if (Session["id_lice"] != null)
+                                        {
+                                            disabled = "";
+
+                                            foreach (Anketa_Proekt.Models.Glasa g in korisnikGlasal)
+                                            {
+                                                if (g.id_anketa == Model.id_anketa && g.id_lice == (int)Session["id_lice"])
+                                                {
+                                                    mozeDaGlasa = false;
+                                                    multiAnsewrs = "You have already voted on this pool!";
+                                                    disabled = "disabled";
+                                                    myChecked = "disabled";
+                                                }
+                                            }
+                                        }
+                                                 
+                                            
+                                        int br = 0;
+                                        foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odgovori)
+                                        {
+                                            if (multi_choice == 1)
+                                            {
+                                                br++;
+
+                                                string str = "ad_Checkbox" + br;
+                                                
+                                                <li> <input class="ads_Checkbox" type="checkbox" id=@str value="@o.id_odg" @myChecked>@o.ime_odg</li>
+                                            }
+                                            else { 
+                                                <li>
+                                                    @if (mozeDaGlasa) { 
+                                                        @Html.RadioButtonFor(u => Model.GlasoviId, o.id_odg)
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.RadioButtonFor(u => Model.GlasoviId, o.id_odg, new { disabled = @myChecked })
+                                                    }
+                                                    @o.ime_odg
+                                                </li>
+                                            }
+                                        }
+                                        }
+
+                                    </ul>
+                                </div>
+                                <div class="row">
+                                    <button type=@buttonType id=@buttonId class="btn btn-success @disabled" value=@buttonValue><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
+                                </div>
+                            }
+
+                            
+
                         </div>
 
                         <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span> @multiAnsewrs</div>
@@ -108,101 +200,223 @@
                     </div>  <!-- class col-sm-6 (right side) end here -->
                 </div>  <!-- Questionnaire content row end here -->
 
-                @{
-                    List<Anketa_Proekt.Models.Mozni_Odgovori> odg = Model.Mozni_Odgovori.ToList();
-
-                    int vkupno = 0;
-                    foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odg)
-                    {
-                        int brGlasovi = o.Glasas.Count;
-                        vkupno += brGlasovi;
-                        
-                        <p>(ID @o.id_odg) @o.ime_odg - @brGlasovi glasa</p>
-                    }
-                    <p>Vkupno glasovi: @vkupno</p>
-                }
-
                 <div class="charts">
                     <div class="row">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h6 class=panel-title>Many Pie Charts here <span class="pull-right">X</span></h6>
-                            </div>
-                            <div class="panel-body">
-                                <h5>each Pie represent one answer</h5>
-                                <h5>The amount of fulfilnes of a pie represent the amount of votes</h5>
-                                <img class="img img-responsive" src="~/img/WB0PHMG9K.png" />
-                            </div>
-                            <div class="panel-footer">Some description of the data???? Hints maby? or date?</div>
-                        </div>
-                    </div>  <!-- first row of chart end here -->
-                    <div class="row">
+
                         <div class="col-md-6">
-                            <div class="panel panel-success">
+                            <!-- left side, chart -->
+                            <div class="panel panel-primary">
                                 <div class="panel-heading">
-                                    <h6 class=panel-title>Graph here <span class="pull-right">X</span></h6>
+                                    <h6 class=panel-title><span class="glyphicon glyphicon-align-justify"></span> Statistic details:</h6>
                                 </div>
                                 <div class="panel-body">
-                                    <h5>Graphical representation of voting activity</h5>
-                                    <h5> X axis represent time</h5>
-                                    <h5>Y axis represent votes</h5>
-                                    <img class="img img-responsive" src="~/img/WB0PHMG9K.png" />
+                                    <h5>Results:</h5>
+                                    <div id="PieChart"></div>
+                                    <br>
+                                    <hr>
+                                    <h5>Votes per day</h5>
+                                    <div id="GraphChart"></div>
                                 </div>
+                                <div class="panel-footer"><span class="glyphicon glyphicon-time"></span> Data results until 16:40</div>
                             </div>
-                        </div>
+                        </div>  <!-- chart end here-->
+
                         <div class="col-md-6">
-                            <div class="well">
-                                <h4>Coments here</h4>
-                                
-                                <div class="detailBox">
-                                    <div class="titleBox">
-                                        <label>Comment Box</label>
-                                        <button type="button" class="close" aria-hidden="true">&times;</button>
-                                    </div>
-                                    <div class="actionBox">
-                                        <ul class="commentList">
-
-                                            @{
-                                                List<Anketa_Proekt.Models.Komentar_Za> komentari =  Model.Komentar_Za.ToList();
-                                                
-                                                foreach (Anketa_Proekt.Models.Komentar_Za k in komentari)
-                                                {
-                                                    Anketa_Proekt.Models.Komentar kom = k.Komentar;
-                                                    
-                                                    string datumStr = k.datum.ToString("MMMM d, yyyy");
-                                                    
-                                                    <li>
-                                                        <div class="commenterImage">
-                                                            <img src="http://lorempixel.com/50/50/people/6" />
-                                                        </div>
-                                                        <div class="commentText">
-                                                            <p class="">@kom.sodrzina</p> <span class="date sub-text">on @datumStr</span>
-                                                        </div>
-                                                    </li>
-                                                } 
-                                            }
-                                        </ul>
-                                        <form class="form-inline" role="form">
-                                            <div class="form-group">
-                                                <input class="form-control" type="text" placeholder="Your comments" />
-                                            </div>
-                                            <div class="form-group">
-                                                <button class="btn btn-default">Add</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                            <!-- coments start here -->
+                            <div class="detailBox">
+                                <div class="titleBox">
+                                    <label><span class="glyphicon glyphicon-text-background"></span> Comments</label>
+                                </div>
+                                <div class="comentWarning">
+                                    <p class="taskDescription">Spam and insulting coments will be baned</p>
                                 </div>
 
-                            </div>
-                        </div>
+                                <div class="actionBox">
+                                    <ul class="commentList">
+
+                                        @{
+                                            List<Anketa_Proekt.Models.Komentar_Za> komentari = Model.Komentar_Za.ToList();
+
+                                            foreach (Anketa_Proekt.Models.Komentar_Za k in komentari)
+                                            {
+                                                Anketa_Proekt.Models.Komentar kom = k.Komentar;
+
+                                                string datumStr = k.datum.ToString("MMMM d, yyyy");
+                                                
+                                                <li>
+                                                    <div class="commenterImage">
+                                                        <img src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png" />
+                                                    </div>
+                                                    <div class="commentText">
+                                                        <p class="">@kom.sodrzina</p> <span class="username date sub-text">by @k.Louse.ime @k.Louse.prezime</span> <span class="date sub-text">on @datumStr</span>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+
+                                </div>      <!-- actionbox ennds here -->
+
+                                <div class="input-group" id="comentGroup">
+                                    <!-- <input type="text" class="form-control" placeholder="Your coment..."> -->
+                                    
+                                    @Html.TextBoxFor(u => u.komentarSodrzina, new { placeholder = "Your coment...", @class = "form-control", id="sodrzinaKom" })    
+                                
+                                    <span class="input-group-btn">
+                                        <button id="sendBtn" class="btn btn-default @glasaj" type="submit" value="@buttonValue">Send</button>
+                                    </span>
+                                </div>  <!-- detailbox end here -->
+                            
+                            </div>      <!-- row for coments end here -->
+                        </div>  <!-- coments end here -->
+
                     </div>
+
                 </div>
 
             </div>  <!-- class container end here -->
     </div>  <!-- class qustioonaireEven end here -->
 
-    }
+    
 
     </div>  <!-- class container flyid end here -->
 </div>  <!-- class questionnaire end here -->
 <!-- Questionnaires end here -->
+
+<!-- ##########     C3     ########## -->
+
+<script>
+    function areaChart(div, data){
+        var chart1 = c3.generate({
+            bindto: div,
+            data: {
+                columns: data,
+                type: 'donut'
+            },
+            donut: {
+                title: "Answers"
+            }
+        });
+    }
+</script>
+
+
+<script>
+    function graphChart(div, data) {
+        var chart = c3.generate({
+            bindto: div,
+            data: {
+                x: 'x',
+                columns: data
+            },
+            axis: {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        format: '%d-%m-%Y'
+                    }
+                }
+            }
+        });
+    }
+</script>
+<!-- ##########     C3     ########## -->
+
+<script>
+    $(document).ready(function () {
+        var actionUrl = '@Url.Action("DonatChartData", "Anketa", new { id = Model.id_anketa })';
+        $.getJSON(actionUrl, displayData);
+    });
+
+    function displayData(response) {
+        if (response != null) {
+            var Array=[]
+
+            for (var i = 0; i < response.length; i++) {
+                var pom = [response[i].Ime_odg, response[i].Br_glasovi]
+
+                Array.push(pom)
+            }
+            areaChart('#PieChart', Array);
+        }
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        var actionUrl = '@Url.Action("GraphChartData", "Anketa", new { id = Model.id_anketa })';
+        $.getJSON(actionUrl, displayData1);
+    });
+
+    function displayData1(response) {
+        if (response != null) {
+            var Array = []
+
+            var Denovi = []
+
+            var Glasovi = []
+
+            Denovi.push("x")
+
+            Glasovi.push("Votes")
+
+            for (var i = 0; i < response.length; i++) {
+                Denovi.push(response[i].Den)
+
+                Glasovi.push(response[i].Br_glasovi)
+            }
+
+            Array.push(Denovi)
+            Array.push(Glasovi)
+
+            //console.log(Array)
+
+            graphChart('#GraphChart', Array);
+        }
+    }
+</script>
+
+<script>
+    $('#save_value').click(function () {
+        var anketaId = $(this).attr("value");
+        var sel = $('input[type=checkbox]:checked').map(function (_, el) {
+            return $(el).val();
+        }).get();
+ 
+        $.ajax({
+            url: '/Anketa/zapisiMultiChoiceGlas',
+            type: "POST",
+            data: "odgovoriId=" + sel + "&anketa_id=" + anketaId,
+            succes: function (data) {
+                location.reload();
+
+                alert("Your vote has been recorded. \nThank you for voting!!!!");
+            },
+            error: function () {
+                location.reload();
+
+                alert("Your vote has been recorded. \nThank you for voting!!!!");
+            }
+        });
+    })
+</script>
+
+<script>
+    $('#sendBtn').click(function () {
+        var anketaId = $(this).attr("value");
+
+        var sel = $("#sodrzinaKom").val();
+
+        $.ajax({
+            url: '/Anketa/ZapisiKomentar',
+            type: "POST",
+            data: "sodrzinaKom=" + sel + "&anketa_id=" + anketaId,
+            succes: function (data) {
+                location.reload();
+            },
+            error: function () {
+                location.reload();
+            }
+        });
+    })
+</script>

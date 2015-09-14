@@ -1,0 +1,38 @@
+﻿@model Anketa_Proekt.Models.Premium_Korisnik
+
+@{
+    ViewBag.Title = "BuyPremium";
+}
+
+<!-- title -->
+<div class="container-flyid">
+    <div class="content">
+
+        <div class="title">
+            <!-- title start here -->
+            <div class="container">
+                <!-- wrap image and title -->
+                <img class="img-responsive titleImage" src="~/img/backgroundTransparentSmall.png" />
+                <h1 class="text-center titleText">Buy Premium</h1>
+            </div>
+        </div>  <!-- class title end here -->
+    </div>  <!-- class content end here -->
+</div>  <!-- class container-flyid end here -->
+<!--tile end here-->
+
+<div class="container">
+    <div class="well wellByuPremium">
+        @using (Html.BeginForm())
+        {
+            <div>
+                Enter credit card number:
+            </div>
+            <div class="creditCardWraper">
+                <input type="text" class="creditCardnumber" />
+                <span>
+                    <input type="submit" value="Buy Premium" class="pull-right btn  btn-success" />
+                </span>
+            </div>
+        }
+    </div>
+</div>

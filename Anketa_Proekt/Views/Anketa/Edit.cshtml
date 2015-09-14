@@ -4,21 +4,21 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Edit Pool</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Anketa</h4>
+        <h4>Pool</h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.id_anketa)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.prasanje, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Question</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.prasanje)
                 @Html.ValidationMessageFor(model => model.prasanje)
@@ -26,7 +26,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.opis_a, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Discription</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.opis_a)
                 @Html.ValidationMessageFor(model => model.opis_a)
@@ -34,23 +34,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.kraen_datum, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.kraen_datum)
-                @Html.ValidationMessageFor(model => model.kraen_datum)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.id_lice, "id_lice", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("id_lice", String.Empty)
-                @Html.ValidationMessageFor(model => model.id_lice)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.datum_kreiranje, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Begin date</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.datum_kreiranje)
                 @Html.ValidationMessageFor(model => model.datum_kreiranje)
@@ -58,9 +42,17 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.multi_choice, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">End date</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.multi_choice)
+                @Html.EditorFor(model => model.kraen_datum)
+                @Html.ValidationMessageFor(model => model.kraen_datum)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Multichoice or Singlechoice</label>
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.isSelected)
                 @Html.ValidationMessageFor(model => model.multi_choice)
             </div>
         </div>
