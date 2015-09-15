@@ -252,6 +252,29 @@
     max-height: 200px;
 }
 
+.imageAndDescription{
+    margin-top: 35px;
+}
+
+.questionnaire .badge{
+    display: inline-block;
+    min-width: 10px;
+    padding: 2px 4px;
+    font-size: 11px;
+    /* font-weight: bold; */
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #999;
+    border-radius: 4px;
+}
+
+.questionnaireDescriptionParagraph{
+    margin-top: 10px;
+}
+
 /*
     /////////////////////////////////////
     ///                               ///
@@ -496,8 +519,8 @@ label{
  */
 .wellPools{
     margin: 20px;
-    margin-top: 60px;
-    margin-bottom:60px;
+    margin-top: 80px;
+    margin-bottom:80px;
     background-color:black;
     background-color: rgba(0, 0, 0, 0.02);
     padding-bottom : 50px;

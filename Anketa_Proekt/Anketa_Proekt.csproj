@@ -319,6 +319,7 @@
     <Content Include="img\backgroundTransparent.png" />
     <Content Include="img\backgroundTransparentSmall.png" />
     <Content Include="img\borce.png" />
+    <Content Include="img\questionarieDefault.jpg" />
     <Content Include="img\slavko.jpg" />
     <Content Include="myCSS\index_v3.css" />
     <Content Include="myCSS\jquery.alerts.css" />

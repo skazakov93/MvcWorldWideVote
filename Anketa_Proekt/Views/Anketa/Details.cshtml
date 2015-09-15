@@ -52,76 +52,85 @@
                     <!-- questionarie title row start here -->
                     <h1>
                         @Html.DisplayFor(model => model.prasanje)
-
-                        @{
-        HashSet<Anketa_Proekt.Models.Kategorija> kategorii = (HashSet<Anketa_Proekt.Models.Kategorija>) Model.Kategorijas;
-
-        <small>
-            @foreach (Anketa_Proekt.Models.Kategorija k in kategorii)
-            {
-                string ime_k = k.ime_k;
-                <a class="badge" href="#">@ime_k</a>
-            }
-        </small>
-                        }
                     </h1>
+                    @{
+                        HashSet<Anketa_Proekt.Models.Kategorija> kategorii = (HashSet<Anketa_Proekt.Models.Kategorija>)Model.Kategorijas;
+
+                        <small>
+                            @foreach (Anketa_Proekt.Models.Kategorija k in kategorii)
+                            {
+                                string ime_k = k.ime_k;
+                                <a class="badge" href="#">@ime_k</a>
+                            }
+                        </small>
+                    }
                 </div>  <!-- questionnaire title row end here -->
 
                 <div class="row">
                     <!-- questionnaire content row start here-->
-                    <div class="col-sm-6">
-                        <h4>@Html.DisplayFor(model => model.opis_a):</h4>
-                        <img class="img-responsive imageQuestionnaireDescription" src="http://placehold.it/350x150">
+                    <div class="col-sm-6 imageAndDescription">
+                        <!-- <h4>@Html.DisplayFor(model => model.opis_a):</h4> -->
+                        
+                        @{
+                            string imgUrl = "/img/questionarieDefault.jpg";
+
+                            if (Model.url_slika != null)
+                            {
+                                imgUrl = Model.url_slika;
+                            }
+                            
+                            <img class="img-responsive imageQuestionnaireDescription" src="@imgUrl">
+                        }
                         <p class="questionnaireDescriptionParagraph">@Html.DisplayFor(model => model.opis_a)</p>
                     </div>  <!-- class col-sm-6 (left side) end here -->
                     <div class="col-sm-6">
                         <h4>Answer the questionnaire:</h4>
 
                         @{
-            int multi_choice = (Model.multi_choice);
+                            int multi_choice = (Model.multi_choice);
 
-            HashSet<Anketa_Proekt.Models.Mozni_Odgovori> odgovori = (HashSet<Anketa_Proekt.Models.Mozni_Odgovori>)Model.Mozni_Odgovori;
+                            HashSet<Anketa_Proekt.Models.Mozni_Odgovori> odgovori = (HashSet<Anketa_Proekt.Models.Mozni_Odgovori>)Model.Mozni_Odgovori;
 
-            string radioOrChechBox = "";
-            string multiAnsewrs = "";
+                            string radioOrChechBox = "";
+                            string multiAnsewrs = "";
 
-            string disabled = "";
-            string buttonType = "";
-            string buttonValue = "";
-            string buttonId = "ccc";
-            string glasaj = "";
+                            string disabled = "";
+                            string buttonType = "";
+                            string buttonValue = "";
+                            string buttonId = "ccc";
+                            string glasaj = "";
 
-            if (Session["id_lice"] == null)
-            {
-                disabled = "disabled";
-                glasaj = "disabled";
-            }
-            else
-            {
-                buttonValue = Model.id_anketa + "";
-            }
+                            if (Session["id_lice"] == null)
+                            {
+                                disabled = "disabled";
+                                glasaj = "disabled";
+                            }
+                            else
+                            {
+                                buttonValue = Model.id_anketa + "";
+                            }
 
-            if (multi_choice == 1)
-            {
-                radioOrChechBox = "checkbox";
+                            if (multi_choice == 1)
+                            {
+                                radioOrChechBox = "checkbox";
 
-                multiAnsewrs = "Multiple answers available";
+                                multiAnsewrs = "Multiple answers available";
 
-                buttonType = "button";
-                buttonId = "save_value";
-            }
-            else
-            {
-                radioOrChechBox = "RadioButtonFor";
+                                buttonType = "button";
+                                buttonId = "save_value";
+                            }
+                            else
+                            {
+                                radioOrChechBox = "RadioButtonFor";
 
-                multiAnsewrs = "Single answer only available";
+                                multiAnsewrs = "Single answer only available";
 
-                buttonType = "submit";
-            }
+                                buttonType = "submit";
+                            }
                         }
 
                         <div class="well">
-                            
+
                             @using (Html.BeginForm("ZapisiGlas", "Anketa"))
                             {
                                 @Html.AntiForgeryToken()
@@ -135,53 +144,55 @@
                                     <ul class="list-unstyled">
 
                                         @{
-                                        List<Anketa_Proekt.Models.Glasa> korisnikGlasal = Model.Glasas.ToList();
+                                List<Anketa_Proekt.Models.Glasa> korisnikGlasal = Model.Glasas.ToList();
 
-                                        bool mozeDaGlasa = true;
-                                        string myChecked = "";
-                                        string odbranOdg = "";
+                                bool mozeDaGlasa = true;
+                                string myChecked = "";
+                                string odbranOdg = "";
 
-                                        if (Session["id_lice"] != null)
+                                if (Session["id_lice"] != null)
+                                {
+                                    disabled = "";
+
+                                    foreach (Anketa_Proekt.Models.Glasa g in korisnikGlasal)
+                                    {
+                                        if (g.id_anketa == Model.id_anketa && g.id_lice == (int)Session["id_lice"])
                                         {
-                                            disabled = "";
-
-                                            foreach (Anketa_Proekt.Models.Glasa g in korisnikGlasal)
-                                            {
-                                                if (g.id_anketa == Model.id_anketa && g.id_lice == (int)Session["id_lice"])
-                                                {
-                                                    mozeDaGlasa = false;
-                                                    multiAnsewrs = "You have already voted on this pool!";
-                                                    disabled = "disabled";
-                                                    myChecked = "disabled";
-                                                }
-                                            }
+                                            mozeDaGlasa = false;
+                                            multiAnsewrs = "You have already voted on this pool!";
+                                            disabled = "disabled";
+                                            myChecked = "disabled";
                                         }
-                                                 
-                                            
-                                        int br = 0;
-                                        foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odgovori)
-                                        {
-                                            if (multi_choice == 1)
-                                            {
-                                                br++;
+                                    }
+                                }
 
-                                                string str = "ad_Checkbox" + br;
-                                                
-                                                <li> <input class="ads_Checkbox" type="checkbox" id=@str value="@o.id_odg" @myChecked>@o.ime_odg</li>
+
+                                int br = 0;
+                                foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odgovori)
+                                {
+                                    if (multi_choice == 1)
+                                    {
+                                        br++;
+
+                                        string str = "ad_Checkbox" + br;
+
+                                        <li> <input class="ads_Checkbox" type="checkbox" id=@str value="@o.id_odg" @myChecked>@o.ime_odg</li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            @if (mozeDaGlasa)
+                                            {
+                                                @Html.RadioButtonFor(u => Model.GlasoviId, o.id_odg)
                                             }
-                                            else { 
-                                                <li>
-                                                    @if (mozeDaGlasa) { 
-                                                        @Html.RadioButtonFor(u => Model.GlasoviId, o.id_odg)
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.RadioButtonFor(u => Model.GlasoviId, o.id_odg, new { disabled = @myChecked })
-                                                    }
-                                                    @o.ime_odg
-                                                </li>
+                                            else
+                                            {
+                                                @Html.RadioButtonFor(u => Model.GlasoviId, o.id_odg, new { disabled = @myChecked })
                                             }
-                                        }
+                                            @o.ime_odg
+                                        </li>
+                                    }
+                                }
                                         }
 
                                     </ul>
@@ -191,7 +202,7 @@
                                 </div>
                             }
 
-                            
+
 
                         </div>
 
@@ -242,7 +253,7 @@
                                                 Anketa_Proekt.Models.Komentar kom = k.Komentar;
 
                                                 string datumStr = k.datum.ToString("MMMM d, yyyy");
-                                                
+
                                                 <li>
                                                     <div class="commenterImage">
                                                         <img src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png" />
@@ -259,14 +270,13 @@
 
                                 <div class="input-group" id="comentGroup">
                                     <!-- <input type="text" class="form-control" placeholder="Your coment..."> -->
-                                    
-                                    @Html.TextBoxFor(u => u.komentarSodrzina, new { placeholder = "Your coment...", @class = "form-control", id="sodrzinaKom" })    
-                                
+                                    @Html.TextBoxFor(u => u.komentarSodrzina, new { placeholder = "Your coment...", @class = "form-control", id = "sodrzinaKom" })
+
                                     <span class="input-group-btn">
                                         <button id="sendBtn" class="btn btn-default @glasaj" type="submit" value="@buttonValue">Send</button>
                                     </span>
                                 </div>  <!-- detailbox end here -->
-                            
+
                             </div>      <!-- row for coments end here -->
                         </div>  <!-- coments end here -->
 
@@ -275,18 +285,17 @@
                 </div>
 
             </div>  <!-- class container end here -->
-    </div>  <!-- class qustioonaireEven end here -->
+        </div>  <!-- class qustioonaireEven end here -->
 
-    
+
 
     </div>  <!-- class container flyid end here -->
 </div>  <!-- class questionnaire end here -->
 <!-- Questionnaires end here -->
-
 <!-- ##########     C3     ########## -->
 
 <script>
-    function areaChart(div, data){
+    function areaChart(div, data) {
         var chart1 = c3.generate({
             bindto: div,
             data: {
@@ -382,7 +391,7 @@
         var sel = $('input[type=checkbox]:checked').map(function (_, el) {
             return $(el).val();
         }).get();
- 
+
         $.ajax({
             url: '/Anketa/zapisiMultiChoiceGlas',
             type: "POST",

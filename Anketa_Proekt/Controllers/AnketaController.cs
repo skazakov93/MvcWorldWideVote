@@ -25,7 +25,10 @@ namespace Anketa_Proekt.Controllers
         {
             int pageNumber = id ?? 1;
 
+            DateTime denesenDatum = DateTime.Today;
+
             var anketas = db.Anketas.Include(a => a.Louse);
+            anketas = anketas.Where(a => a.kraen_datum >= denesenDatum);
             anketas = anketas.OrderByDescending(a => a.datum_kreiranje);
 
             double pom = anketas.Count() / 5.0;

@@ -24,195 +24,190 @@
 </div>  <!-- class container-flyid end here -->
 
 <div class="questionnaire">
-        <div class="container-flyid">
+    <div class="container-flyid">
 
-            @{
-                int br = 1;
-                int br1 = 0;
-                foreach (var item in Model)
+        @{
+            int br = 1;
+            int br1 = 0;
+            foreach (var item in Model)
+            {
+                br++;
+                string evenOrOdd = "";
+                string disabeled = "";
+
+                if (Session["id_lice"] == null)
                 {
-                    br++;
-                    string evenOrOdd = "";
-                    string disabeled = "";
-
-                    if (Session["id_lice"] == null)
-                    {
-                        disabeled = "disabled";
-                    }
-                    
-                    if (br % 2 == 0)
-                    {
-                        evenOrOdd = "questionnaireEven";    
-                    }
-                    else
-                    {
-                        evenOrOdd = "questionnaireOdd";
-                    }
-
-                    <div class="@evenOrOdd">
-                            <div class="container">
-                                <div class="row">
-                                    <!-- questionarie title row start here -->
-                                    <h1>
-                                        @Html.DisplayFor(modelItem => item.prasanje)
-                                        
-                                        @{
-                                            
-                                            HashSet<Anketa_Proekt.Models.Kategorija> kategorii = (HashSet<Anketa_Proekt.Models.Kategorija>)item.Kategorijas;
-
-                                            <small>
-                                            
-                                            @foreach (Anketa_Proekt.Models.Kategorija k in kategorii)
-                                            {
-                                                string ime_k = k.ime_k;
-                                                <a class="badge" href="#">@ime_k</a>
-                                            }
-                                            </small>
-                                        }
-                                    </h1>
-                                </div>  <!-- questionnaire title row end here -->
-
-                                <div class="row">
-                                    <!-- questionnaire content row start here-->
-                                    <div class="col-sm-6">
-                                        <h4>@Html.DisplayFor(modelItem => item.opis_a):</h4>
-
-                                        @{
-                                            string imgUrl = "http://placehold.it/350x150";
-                                        
-                                            if(item.url_slika != null){
-                                                imgUrl = item.url_slika;
-                                            }
-                                        }
-
-                                        <img class="img-responsive imageQuestionnaireDescription" src="@imgUrl">
-                                        <p class="questionnaireDescriptionParagraph">@Html.DisplayFor(modelItem => item.opis_a)</p>
-                                    </div>  <!-- class col-sm-6 (left side) end here -->
-                                    <div class="col-sm-6">
-                                        <h4>Answer the questionnaire:</h4>
-                                        
-                                        @{
-                                        int multi_choice = (item.multi_choice);
-
-                                        HashSet<Anketa_Proekt.Models.Mozni_Odgovori> odgovori = (HashSet<Anketa_Proekt.Models.Mozni_Odgovori>)item.Mozni_Odgovori;
-                                        
-                                        string radioOrChechBox = "";
-                                        string multiAnsewrs = "";
-
-                                        string buttonType = "";
-                                        string buttonValue = "";
-                                        string buttonId = "";
-                                        
-                                        if (multi_choice == 1)
-                                        {
-                                            radioOrChechBox = "checkbox";
-
-                                            multiAnsewrs = "Multiple answers available";
-
-                                            buttonType = "button";
-                                            buttonValue = item.id_anketa + "";
-                                            buttonId = "save_value";
-                                        }
-                                        else
-                                        {
-                                            radioOrChechBox = "radio";
-
-                                            multiAnsewrs = "Single answer only available";
-
-                                            buttonType = "submit";
-
-                                            buttonId = "sigle_choice_anketa";
-                                            buttonValue = item.id_anketa + "";
-                                        }
-                                        }
-
-                                        <div class="well">
-                                            <!-- -->
-
-                                            @using (Html.BeginForm("ZapisiGlas", "Anketa"))
-                                            {
-                                                @Html.AntiForgeryToken()
-
-                                            <!-- -->
-
-                                            <div class="row">
-                                                <ul class="list-unstyled">
-                                                    @Html.HiddenFor(m => item.id_anketa)
-
-                                                    @{
-                                                    List<Anketa_Proekt.Models.Glasa> korisnikGlasal = item.Glasas.ToList();
-                                                    
-                                                    bool mozeDaGlasa = true;
-                                                    string myChecked = "";
-                                                    string odbranOdg = "";
-
-                                                    if (Session["id_lice"] != null)
-                                                    {
-                                                        disabeled = "";
-                                                        
-                                                        foreach (Anketa_Proekt.Models.Glasa g in korisnikGlasal)
-                                                        {
-                                                            if (g.id_anketa == item.id_anketa && g.id_lice == (int)Session["id_lice"])
-                                                            {
-                                                                mozeDaGlasa = false;
-                                                                multiAnsewrs = "You have already voted on this pool!";
-                                                                disabeled = "disabled";
-                                                                myChecked = "disabled";
-                                                            }
-                                                        }
-                                                    }
-                                                           
-                                                    foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odgovori)
-                                                    {
-                                                        if (multi_choice == 1)
-                                                        {
-                                                            br1++;
-
-                                                            string str = "ad_Checkbox" + br1;
-                                                
-                                                            <li> <input class="ads_Checkbox" type="checkbox" id=@str value="@o.id_odg" @myChecked>@o.ime_odg</li>
-                                                        }
-                                                        else
-                                                        {
-                                                            
-                                                            <li>
-                                                                <input type="radio" name=@item.id_anketa value=@o.id_odg @myChecked/>
-                                                                @o.ime_odg
-                                                            </li>
-                                                        }
-                                                    }
-                                                    }
-
-                                                </ul>
-                                            </div>
-                                            <div class="row">
-                                                <button type="button" class="btn btn-success @disabeled @buttonId" value=@buttonValue><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
-                                            </div>
-                                            }    
-                                                
-                                        </div>
-
-                                        <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span> @multiAnsewrs</div>
-
-                                    </div>  <!-- class col-sm-6 (right side) end here -->
-                                </div>  <!-- Questionnaire content row end here -->
-
-                                <div class="row">
-                                    <a href="@Url.Action("Details", "Anketa", new { id = item.id_anketa })">
-                                        <button type="button" class="btn btn-info pull-right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> More info</button>
-                                    </a>
-                                </div>
-                            </div>  <!-- class container end here -->
-                        </div>  <!-- class qustioonaireEven end here -->
-                    
+                    disabeled = "disabled";
                 }
+
+                if (br % 2 == 0)
+                {
+                    evenOrOdd = "questionnaireEven";
+                }
+                else
+                {
+                    evenOrOdd = "questionnaireOdd";
+                }
+
+                <div class="@evenOrOdd">
+                    <div class="container">
+                        <div class="row">
+                            <!-- questionarie title row start here -->
+                            <h1>
+                                @Html.DisplayFor(modelItem => item.prasanje)
+
+                                @{
+
+                HashSet<Anketa_Proekt.Models.Kategorija> kategorii = (HashSet<Anketa_Proekt.Models.Kategorija>)item.Kategorijas;
+                                }
+                            </h1>
+                            <small>
+                                @foreach (Anketa_Proekt.Models.Kategorija k in kategorii)
+                                {
+                                    string ime_k = k.ime_k;
+                                    <a class="badge" href="#">@ime_k</a>
+                                }
+                            </small>
+                        </div>  <!-- questionnaire title row end here -->
+
+                        <div class="row">
+                            <!-- questionnaire content row start here-->
+                            <div class="col-sm-6 imageAndDescription">
+                                <!-- <h4>@Html.DisplayFor(modelItem => item.opis_a):</h4> -->
+                                @{
+                                string imgUrl = "/img/questionarieDefault.jpg";
+
+                                if (item.url_slika != null)
+                                {
+                                    imgUrl = item.url_slika;
+                                }
+                                }
+
+                                <img class="img-responsive imageQuestionnaireDescription" src="@imgUrl">
+                                <p class="questionnaireDescriptionParagraph">@Html.DisplayFor(modelItem => item.opis_a)</p>
+                            </div>  <!-- class col-sm-6 (left side) end here -->
+                            <div class="col-sm-6">
+                                <h4>Answer the questionnaire:</h4>
+
+                                @{
+                                int multi_choice = (item.multi_choice);
+
+                                HashSet<Anketa_Proekt.Models.Mozni_Odgovori> odgovori = (HashSet<Anketa_Proekt.Models.Mozni_Odgovori>)item.Mozni_Odgovori;
+
+                                string radioOrChechBox = "";
+                                string multiAnsewrs = "";
+
+                                string buttonType = "";
+                                string buttonValue = "";
+                                string buttonId = "";
+
+                                if (multi_choice == 1)
+                                {
+                                    radioOrChechBox = "checkbox";
+
+                                    multiAnsewrs = "Multiple answers available";
+
+                                    buttonType = "button";
+                                    buttonValue = item.id_anketa + "";
+                                    buttonId = "save_value";
+                                }
+                                else
+                                {
+                                    radioOrChechBox = "radio";
+
+                                    multiAnsewrs = "Single answer only available";
+
+                                    buttonType = "submit";
+
+                                    buttonId = "sigle_choice_anketa";
+                                    buttonValue = item.id_anketa + "";
+                                }
+                                }
+
+                                <div class="well">
+                                    <!-- -->
+                                    @using (Html.BeginForm("ZapisiGlas", "Anketa"))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                            <!-- -->
+
+                                        <div class="row">
+                                            <ul class="list-unstyled">
+                                                @Html.HiddenFor(m => item.id_anketa)
+
+                                                @{
+                                        List<Anketa_Proekt.Models.Glasa> korisnikGlasal = item.Glasas.ToList();
+
+                                        bool mozeDaGlasa = true;
+                                        string myChecked = "";
+                                        string odbranOdg = "";
+
+                                        if (Session["id_lice"] != null)
+                                        {
+                                            disabeled = "";
+
+                                            foreach (Anketa_Proekt.Models.Glasa g in korisnikGlasal)
+                                            {
+                                                if (g.id_anketa == item.id_anketa && g.id_lice == (int)Session["id_lice"])
+                                                {
+                                                    mozeDaGlasa = false;
+                                                    multiAnsewrs = "You have already voted on this pool!";
+                                                    disabeled = "disabled";
+                                                    myChecked = "disabled";
+                                                }
+                                            }
+                                        }
+
+                                        foreach (Anketa_Proekt.Models.Mozni_Odgovori o in odgovori)
+                                        {
+                                            if (multi_choice == 1)
+                                            {
+                                                br1++;
+
+                                                string str = "ad_Checkbox" + br1;
+
+                                                <li> <input class="ads_Checkbox" type="checkbox" id=@str value="@o.id_odg" @myChecked>@o.ime_odg</li>
+                                            }
+                                            else
+                                            {
+
+                                                <li>
+                                                    <input type="radio" name=@item.id_anketa value=@o.id_odg @myChecked />
+                                                    @o.ime_odg
+                                                </li>
+                                            }
+                                        }
+                                                }
+
+                                            </ul>
+                                        </div>
+                                        <div class="row">
+                                            <button type="button" class="btn btn-success @disabeled @buttonId" value=@buttonValue><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Submit</button>
+                                        </div>
+                                    }
+
+                                </div>
+
+                                <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span> @multiAnsewrs</div>
+
+                            </div>  <!-- class col-sm-6 (right side) end here -->
+                        </div>  <!-- Questionnaire content row end here -->
+
+                        <div class="row">
+                            <a href="@Url.Action("Details", "Anketa", new { id = item.id_anketa })">
+                                <button type="button" class="btn btn-info pull-right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> More info</button>
+                            </a>
+                        </div>
+                    </div>  <!-- class container end here -->
+                </div>  <!-- class qustioonaireEven end here -->
+
             }
+        }
 
-        </div>  <!-- class container flyid end here -->
-    </div>  <!-- class questionnaire end here -->
-    <!-- Questionnaires end here -->
-
-
+    </div>  <!-- class container flyid end here -->
+</div>  <!-- class questionnaire end here -->
+<!-- Questionnaires end here -->
 <!-- pagination start here -->
 <!-- pagination is palced in last questionaries -->
 <div class="text-center navPagination">
@@ -220,25 +215,25 @@
         @{
             int brStranici = ViewBag.BrStrani;
             int momStrana = ViewBag.CurrentPage;
-           
-        <ul class="pagination pagination-lg">
-            <li>
-                <a href="@Url.Action("Index", "Anketa", new { id = 1 })" aria-label="Previous"><span aria-hidden="true">&laquo;</span> First Page</a>
-            </li>
-            @for (int i = 1; i <= brStranici; i++)
-            {
-                string myActivePage = "";
-                if (i == momStrana)
+
+            <ul class="pagination pagination-lg">
+                <li>
+                    <a href="@Url.Action("Index", "Anketa", new { id = 1 })" aria-label="Previous"><span aria-hidden="true">&laquo;</span> First Page</a>
+                </li>
+                @for (int i = 1; i <= brStranici; i++)
                 {
-                    myActivePage = "active";
+                    string myActivePage = "";
+                    if (i == momStrana)
+                    {
+                        myActivePage = "active";
+                    }
+
+                    <li class="@myActivePage"><a href="@Url.Action("Index", "Anketa", new { id = i })">@i</a></li>
                 }
-                
-                <li class="@myActivePage"><a href="@Url.Action("Index", "Anketa", new { id = i })">@i</a></li>   
-            }
-            <li>
-                <a href="@Url.Action("Index", "Anketa", new { id = brStranici })" aria-label="Next">Last page <span aria-hidden="true">&raquo;</span></a>
-            </li>
-        </ul>
+                <li>
+                    <a href="@Url.Action("Index", "Anketa", new { id = brStranici })" aria-label="Next">Last page <span aria-hidden="true">&raquo;</span></a>
+                </li>
+            </ul>
         }
     </nav>
 </div>
