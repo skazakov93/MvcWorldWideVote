@@ -11,7 +11,7 @@
             <!-- title start here -->
             <div class="container">
                 <!-- wrap image and title -->
-                <img class="img-responsive titleImage" src="~/img/backgroundTransparentSmall.png" />
+                <img class="img-responsive titleImage" src="http://i.imgur.com/HYtxRj8.png" />
                 <h1 class="text-center titleText">Create pool</h1>
             </div>
         </div>  <!-- class title end here -->
@@ -103,7 +103,17 @@
                                         <li>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input class="ads_Checkbox" type="checkbox" id="idKategorii" name="mozniKategorii" value="@i.Value">
+
+                                                    @{
+                                        String myChecked = "";
+
+                                        if (i.Selected)
+                                        {
+                                            myChecked = "checked";
+                                        }
+                                                    }
+
+                                                    <input class="ads_Checkbox" type="checkbox" id="idKategorii" name="mozniKategorii" value="@i.Value" @myChecked>
                                                     @i.Text
                                                 </label>
                                             </div>
@@ -123,7 +133,16 @@
                                         <li>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input class="ads_Checkbox" type="checkbox" id="idKategorii" name="mozniKategorii" value="@i.Value">
+                                                    @{
+                                        String myChecked = "";
+
+                                        if (i.Selected)
+                                        {
+                                            myChecked = "checked";
+                                        }
+                                                    }
+
+                                                    <input class="ads_Checkbox" type="checkbox" id="idKategorii" name="mozniKategorii" value="@i.Value" @myChecked>
                                                     @i.Text
                                                 </label>
                                             </div>
@@ -145,7 +164,7 @@
             <!-- second row for tags -->
             <div class="row">
                 <div class="col-xs-10">
-                    <label>Enter your anwers once at a time: </label>
+                    <label>Enter your anwers one at a time: </label>
                     <br />
                     <input type="text" id="txtAnswer" value="" />
                 </div>
@@ -156,14 +175,24 @@
             <br />
 
             <div class="row">
-                <ul id="vneseniOdg"></ul>
+                <table id="vneseniOdg"></table>
             </div>
 
             <div class="row">
                 <div class="col-xs-12">
                     <div class="multiChice">
                         <label class="control-label">@Html.LabelFor(u => u.multi_choice)</label>
-                        <input type="checkbox" id="idMulti" value="1" name="multiCheck" />
+
+                        @{
+                            String multiChoise = "";
+
+                            if (Model.multi_choice == 1)
+                            {
+                                multiChoise = "checked";
+                            }
+                        }
+
+                        <input type="checkbox" id="idMulti" value="1" name="multiCheck" @multiChoise />
                         @Html.ValidationMessageFor(model => model.multi_choice)
                     </div>
                 </div>
@@ -190,18 +219,75 @@
     $(function () {
         var arr = [];
         var arrPom = [];
+
+        var sitePonudeniO = "@Model.getOdgovorii()";
+
+        var ponudeniOdg = sitePonudeniO.split(";###!");
+
+        //alert(ponudeniOdg[2]);
+
+        for (var i = 0; i < ponudeniOdg.length - 1; i++) {
+            //if (ponudeniOdg[i].length > 0)
+                arrPom.push(ponudeniOdg[i]);
+        }
+
+        //Try to get tbody first with jquery children. works faster!
+        var tbody = $('#vneseniOdg').children('tbody');
+
+        //Then if no tbody just select your table
+        var table = tbody.length ? tbody : $('#vneseniOdg');
+
+        $("#vneseniOdg").empty();
+        for (var i = 0; i < arrPom.length; i++) {
+            table.append('<tr><td>' + '<label for="name" class="control-label"><p class="' + i + '">' + arrPom[i] + '</p><i class="icon-star"></i></label>' + '</td><td>' + '<input id="' + i + '" type="button" class="deleteAnswer btn btn-danger" value="Delete">' + '</td><td>' + '<input type="button" id="' + i + '" class="editAnswer btn btn-info" value="Edit">' + '</td></tr>');
+        }
+
+        /////////////////////////////////
+        //za editiranje Test
+        $(document).on('click', ".editAnswer", function () {
+            var idPole = this.id;
+            var text = $('.' + idPole).text();
+            var input = $('<input id="attribute" type="text" value="' + text + '" />')
+            $('.' + idPole).text('').append(input);
+            input.select();
+
+            input.blur(function () {
+                var text = $('#attribute').val();
+                $('#attribute').parent().text(text);
+                $('#attribute').remove();
+                arr[idPole] = text;
+                arrPom[idPole] = text;
+            });
+        });
+
+        /////////////////////////////////
+
         $('#btnInsert').click(function () {
             if (validateAnswer()) {
                 var str = $('#txtAnswer').val().replace(",", ";;;");
                 var strPom = $('#txtAnswer').val();
 
-                arr.push(str);
-                arrPom.push(strPom);
+                if (strPom.length > 0 && str.length > 0) {
+                    arr.push(str);
+                    arrPom.push(strPom);
+                }
+
                 $("#vneseniOdg").empty();
                 $('#txtAnswer').val('');
                 for (var i = 0; i < arrPom.length; i++) {
-                    $("#vneseniOdg").append("<li>" + arrPom[i] + "</li>")
+                    table.append('<tr><td>' + '<label for="name" class="control-label"><p class="' + i + '">' + arrPom[i] + '</p><i class="icon-star"></i></label>' + '</td><td>' + '<input id="' + i + '" type="button" class="deleteAnswer btn btn-danger" value="Delete">' + '</td><td>' + '<input type="button" id="' + i + '" class="editAnswer btn btn-info" value="Edit">' + '</td></tr>');
                 }
+            }
+        });
+
+        $(document).on('click', ".deleteAnswer", function () {
+            //alert(this.id);
+            arrPom.splice(this.id, 1);
+            arr.splice(this.id, 1);
+
+            $("#vneseniOdg").empty();
+            for (var i = 0; i < arrPom.length; i++) {
+                table.append('<tr><td>' + '<label for="name" class="control-label"><p class="' + i + '">' + arrPom[i] + '</p><i class="icon-star"></i></label>' + '</td><td>' + '<input id="' + i + '" type="button" class="deleteAnswer btn btn-danger" value="Delete">' + '</td><td>' + '<input type="button" id="' + i + '" class="editAnswer btn btn-info" value="Edit">' + '</td></tr>');
             }
         });
 
@@ -270,7 +356,7 @@
         var prasanje = $('#idPrasanje').val();
         var kraenDatum = $('#idDueDate').val();
         var opis = $('#idDesc').val();
-        var brMozniOdg = $("#vneseniOdg li").length;
+        var brMozniOdg = $("#vneseniOdg tr").length;
 
         console.log(prasanje + " PRASANJE");
         console.log(kraenDatum + " KRAEN DAT");

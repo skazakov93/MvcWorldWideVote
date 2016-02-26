@@ -32,7 +32,7 @@ namespace Anketa_Proekt.Controllers
             anketas = anketas.OrderByDescending(a => a.datum_kreiranje);
 
             double pom = anketas.Count() / 5.0;
-            int gornaGranica = (int) Math.Ceiling(pom);
+            int gornaGranica = (int)Math.Ceiling(pom);
 
             ViewBag.BrStrani = gornaGranica;
             ViewBag.CurrentPage = pageNumber;
@@ -52,6 +52,21 @@ namespace Anketa_Proekt.Controllers
             {
                 return HttpNotFound();
             }
+
+            Korisnik korisnik = new Korisnik();
+            Louse covek = new Louse();
+            covek.ime = "Error";
+            covek.prezime = "Fail";
+
+            korisnik.Louse = covek;
+
+            if (Session["id_lice"] != null)
+            {
+                korisnik = db.Korisniks.Find((int)Session["id_lice"]);
+            }
+
+            ViewBag.NajavenKorsinik = korisnik;
+
             return View(anketa);
         }
 
@@ -74,12 +89,12 @@ namespace Anketa_Proekt.Controllers
                     int brGlasovi = odg.Glasas.Count;
 
                     //mapa.Add(odg.ime_odg, brGlasovi);
-                    
+
                     movies.Add(new { Ime_odg = odg.ime_odg, Br_glasovi = brGlasovi });
                 }
             }
 
-            return Json (movies, JsonRequestBehavior.AllowGet);
+            return Json(movies, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult zapisiMultiChoiceGlas()
@@ -206,16 +221,16 @@ namespace Anketa_Proekt.Controllers
                     dateFinal += elements[0];
 
                     if (mapa.ContainsKey(dateFinal))
-                        {
-                            int mom = mapa[dateFinal];
-                            mom++;
+                    {
+                        int mom = mapa[dateFinal];
+                        mom++;
 
-                            mapa[dateFinal] = mom;
-                        }
-                        else
-                        {
-                            mapa.Add(dateFinal, 1);
-                        }
+                        mapa[dateFinal] = mom;
+                    }
+                    else
+                    {
+                        mapa.Add(dateFinal, 1);
+                    }
                 }
 
                 foreach (KeyValuePair<string, int> entry in mapa)
@@ -235,6 +250,8 @@ namespace Anketa_Proekt.Controllers
         {
             if (Session["id_lice"] != null)
             {
+                Anketa anketa = null;
+
                 using (var db = new AnketiEntities5())
                 {
                     List<SelectListItem> kategoriiLista = new List<SelectListItem>();
@@ -255,7 +272,9 @@ namespace Anketa_Proekt.Controllers
                     ViewBag.id_lice = new SelectList(db.Lice, "id_lice", "ime");
                 }
 
-                return View();
+                anketa = new Anketa();
+
+                return View(anketa);
             }
 
             return RedirectToAction("Index");
@@ -264,7 +283,7 @@ namespace Anketa_Proekt.Controllers
         // POST: /Anketa/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        
+
         [HttpPost]
         public ActionResult myCreate()
         {
@@ -278,7 +297,7 @@ namespace Anketa_Proekt.Controllers
 
             String[] elements = myOdgovori.Split(',');
 
-            String[] idKategorii = new  string[1] {"kola"};
+            String[] idKategorii = new string[1] { "kola" };
             bool zname = false;
 
             if (myIdKategorii.Length > 0)
@@ -390,37 +409,216 @@ namespace Anketa_Proekt.Controllers
             return Json(strJson2);
         }
 
+        [HttpPost]
+        public ActionResult myEdit()
+        {
+            var myOdgovori = Request.Params["odgovori"];
+            string myPrasanje = Request.Params["prasanje"];
+            string myDesc = Request.Params["description"];
+            string myDueDate = Request.Params["dueDate"];
+            string myMultiChoice = Request.Params["multiChoice"];
+            string myIdKategorii = Request.Params["idKategorii"];
+            string url_slika = Request.Params["urlSlika"];
+            string idAnketaStr = Request.Params["idAnketa"];
+
+            int idAnketa = Convert.ToInt32(idAnketaStr);
+
+            String[] elements = myOdgovori.Split(',');
+
+            String[] idKategorii = new string[1] { "kola" };
+            bool zname = false;
+
+            if (myIdKategorii.Length > 0)
+            {
+                idKategorii = myIdKategorii.Split(',');
+                zname = true;
+            }
+
+            int multiChoice = 0;
+            if (myMultiChoice.Equals("1"))
+            {
+                multiChoice = 1;
+            }
+
+            if (Session["id_lice"] != null)
+            {
+                using (var db = new AnketiEntities5())
+                {
+                    Korisnik korisnik = db.Korisniks.Find((int)Session["id_lice"]);
+                    Premium_Korisnik premiumKorisnik = db.Premium_Korisnik.Find((int)Session["id_lice"]);
+
+                    List<Anketa> anketiNaKorisnik = korisnik.Louse.Anketas.ToList();
+
+                    Anketa anketaP = db.Anketas.Find(idAnketa);
+
+                    if (anketiNaKorisnik.Contains(anketaP))
+                    {
+
+                        DateTime date = DateTime.Now;
+                        string datum = date.ToString("yyyy-MM-dd HH:mm:ss");
+
+                        var novaAnketa = db.Anketas.Find(idAnketa);
+                        novaAnketa.prasanje = myPrasanje;
+                        novaAnketa.opis_a = myDesc;
+                        novaAnketa.kraen_datum = Convert.ToDateTime(myDueDate);
+                        novaAnketa.id_lice = (int)Session["id_lice"];
+                        novaAnketa.datum_kreiranje = Convert.ToDateTime(datum);
+                        novaAnketa.multi_choice = multiChoice;
+
+                        if (url_slika.Length > 1)
+                        {
+                            novaAnketa.url_slika = url_slika;
+                        }
+
+                        db.SaveChanges();
+
+                        Anketa anketa = db.Anketas.Find(novaAnketa.id_anketa);
+
+                        //ne gi brisam odgovorite
+                        //ke ovozmozam samo nivno editiranje i dodavanje na drugi opcii
+                        //anketa.Mozni_Odgovori.Clear();
+
+                        List<Mozni_Odgovori> mozniOdgovori = anketa.Mozni_Odgovori.ToList();
+
+                        for (int i = 0; i < elements.Length; i++)
+                        {
+                            string str = elements[i];
+                            str = str.Replace(";;;", ",");
+
+                            if (str.Length > 0)
+                            {
+                                if (mozniOdgovori.Count > i)
+                                {
+                                    mozniOdgovori[i].ime_odg = str;
+                                }
+                                else
+                                {
+                                    Mozni_Odgovori odgovor = new Mozni_Odgovori();
+                                    odgovor.ime_odg = str;
+
+                                    mozniOdgovori.Add(odgovor);
+                                }
+                            }
+                        }
+
+                        anketa.Mozni_Odgovori = mozniOdgovori;
+
+                        db.SaveChanges();
+
+                        //brisenje na dosegasnite kategorii na anketata
+                        //duri i ako ne sme pratile niedna Selektrana Kategotija,
+                        //toa znaci deka ne pripagja na nitu edna Kategorija!!!
+                        anketa.Kategorijas.Clear();
+
+                        if (zname)
+                        {
+                            for (int i = 0; i < idKategorii.Length; i++)
+                            {
+                                int id_k = Convert.ToInt32(idKategorii[i]);
+
+                                Kategorija kategorija = db.Kategorijas.Find(id_k);
+
+                                anketa.Kategorijas.Add(kategorija);
+
+                                db.SaveChanges();
+                            }
+
+                            db.SaveChanges();
+                        }
+
+                        korisnik.br_anketi = korisnik.br_anketi + 1;
+                        db.SaveChanges();
+
+                        string strJson = "Your have succesfuly Edited you pool!!";
+
+                        return Json(strJson);
+                    }
+                    else
+                    {
+                        string strJson22 = "You have not permissions to edit this poll!!!";
+                        return Json(strJson22);
+                    }
+                }
+            }
+
+            string strJson2 = "You are Not Logged IN!!!";
+            return Json(strJson2);
+        }
+
         // GET: /Anketa/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["id_lice"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Anketa anketa = db.Anketas.Find(id);
-            if (anketa == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.id_lice = new SelectList(db.Lice, "id_lice", "ime", anketa.id_lice);
-            return View(anketa);
-        }
 
-        // POST: /Anketa/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="id_anketa,prasanje,opis_a,kraen_datum,id_lice,datum_kreiranje,multi_choice")] Anketa anketa)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(anketa).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                int idAnketa = id ?? 1;
+
+                Anketa anketa = null;
+
+                //znaci deka ke treba da editiram!!!
+                if (idAnketa > 0)
+                {
+                    using (var db = new AnketiEntities5())
+                    {
+                        anketa = db.Anketas.Find(idAnketa);
+
+                        Korisnik korisnik = db.Korisniks.Find((int)Session["id_lice"]);
+                        Premium_Korisnik premiumKorisnik = db.Premium_Korisnik.Find((int)Session["id_lice"]);
+
+                        List<Anketa> anketiNaKorisnik = korisnik.Louse.Anketas.ToList();
+
+                        Anketa anketaP = db.Anketas.Find(idAnketa);
+
+                        if (anketiNaKorisnik.Contains(anketaP))
+                        {
+
+                            List<SelectListItem> kategoriiLista = new List<SelectListItem>();
+
+                            foreach (Kategorija k in db.Kategorijas)
+                            {
+                                SelectListItem selectList = null;
+
+                                if (anketa.Kategorijas.Contains(k))
+                                {
+                                    selectList = new SelectListItem()
+                                    {
+                                        Text = k.ime_k,
+                                        Value = k.id_k.ToString(),
+                                        Selected = true
+                                    };
+                                }
+                                else
+                                {
+                                    selectList = new SelectListItem()
+                                    {
+                                        Text = k.ime_k,
+                                        Value = k.id_k.ToString(),
+                                        Selected = false
+                                    };
+                                }
+
+                                kategoriiLista.Add(selectList);
+                            }
+
+                            ViewBag.MyKategorii = kategoriiLista;
+
+                            HashSet<Anketa_Proekt.Models.Mozni_Odgovori> odgovori = (HashSet<Anketa_Proekt.Models.Mozni_Odgovori>)anketa.Mozni_Odgovori;
+                            odgovori.ToString();
+
+                            return View(anketa);
+                        }
+                        else
+                        {
+                            //samo da zakacam uste poraka!!!
+                            TempData["notice"] = "You do not have permissions to EDIT that poll!!!";
+
+                            return RedirectToAction("Index");
+                        }
+                    }
+                }
             }
-            ViewBag.id_lice = new SelectList(db.Lice, "id_lice", "ime", anketa.id_lice);
-            return View(anketa);
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -487,30 +685,26 @@ namespace Anketa_Proekt.Controllers
             return View();
         }
 
-        // GET: /Anketa/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Anketa anketa = db.Anketas.Find(id);
-            if (anketa == null)
-            {
-                return HttpNotFound();
-            }
-            return View(anketa);
-        }
-
         // POST: /Anketa/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult DeleteConfirmed(int? id)
         {
             Anketa anketa = db.Anketas.Find(id);
+
+            anketa.Mozni_Odgovori.Clear();
+
+            anketa.Kategorijas.Clear();
+
+            anketa.Glasas.Clear();
+
+            anketa.Komentar_Za.Clear();
+
+            anketa.Ogranicuvanjas.Clear();
+
             db.Anketas.Remove(anketa);
+
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("MyPool");
         }
 
         protected override void Dispose(bool disposing)
@@ -546,8 +740,8 @@ namespace Anketa_Proekt.Controllers
             using (var db = new AnketiEntities5())
             {
                 strJsonKategorii = (from a in db.Kategorijas
-                                  where a.ime_k.StartsWith(term)
-                                  select a.ime_k).ToList();
+                                    where a.ime_k.StartsWith(term)
+                                    select a.ime_k).ToList();
 
                 strJsonAnketi = (from a in db.Anketas
                                  where a.prasanje.StartsWith(term)
@@ -574,7 +768,7 @@ namespace Anketa_Proekt.Controllers
             {
                 retrunJson.Add(s);
             }
- 
+
             //List<string> pom = new List<string>();
             //pom.Add("dd");
             //pom.Add("ddd");
@@ -600,16 +794,16 @@ namespace Anketa_Proekt.Controllers
             using (var db = new AnketiEntities5())
             {
                 kategorii = (from a in db.Kategorijas
-                                    where a.ime_k.StartsWith(search_text)
-                                    select a).ToList();
+                             where a.ime_k.StartsWith(search_text)
+                             select a).ToList();
 
                 anketi = (from a in db.Anketas
-                                 where a.prasanje.StartsWith(search_text)
-                                 select a).ToList();
+                          where a.prasanje.StartsWith(search_text)
+                          select a).ToList();
 
                 odgovori = (from a in db.Mozni_Odgovori
-                                   where a.ime_odg.StartsWith(search_text)
-                                   select a).ToList();
+                            where a.ime_odg.StartsWith(search_text)
+                            select a).ToList();
 
                 if (anketi.Count > 0)
                 {

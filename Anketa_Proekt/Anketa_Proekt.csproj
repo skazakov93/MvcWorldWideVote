@@ -379,15 +379,12 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Anketa\Create.cshtml" />
-    <Content Include="Views\Anketa\Delete.cshtml" />
     <Content Include="Views\Anketa\Details.cshtml" />
     <Content Include="Views\Anketa\Edit.cshtml" />
     <Content Include="Views\Anketa\Index.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\LogIn.cshtml" />
     <Content Include="Views\User\Registration.cshtml" />
     <Content Include="Views\User\LogOut.cshtml" />
-    <Content Include="Views\Anketa\Proba.cshtml" />
     <Content Include="Views\Anketa\MyPool.cshtml" />
     <Content Include="Views\User\CheckStatus.cshtml" />
     <Content Include="Views\User\BuyPremium.cshtml" />

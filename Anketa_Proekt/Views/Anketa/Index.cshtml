@@ -1,11 +1,35 @@
 ﻿@model IEnumerable<Anketa_Proekt.Models.Anketa>
 
-<link href="~/Content/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+<!-- <link href="~/Content/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-1.10.2.js"></script>
-<script src="~/Scripts/jquery-ui-1.10.4.custom.min.js"></script>
-
+<script src="~/Scripts/jquery-ui-1.10.4.custom.min.js"></script> dali ke raboti bez ova? -->
 @{
     ViewBag.Title = "Index";
+}
+
+@if (TempData["notice"] != null)
+{
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Error</h4>
+                </div>
+                <div class="modal-body">
+                    <p>@TempData["notice"]</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 }
 
 <!-- content of the page start here -->
@@ -16,8 +40,8 @@
             <!-- title start here -->
             <div class="container">
                 <!-- wrap image and title -->
-                <img class="img-responsive titleImage" src="~/img/backgroundTransparentSmall.png" />
-                <h1 class="text-center titleText">Most recet questionaries:</h1>
+                <img class="img-responsive titleImage" src="http://i.imgur.com/HYtxRj8.png" />
+                <h1 class="text-center titleText">Most recent questionaries:</h1>
             </div>
         </div>  <!-- class title end here -->
     </div>  <!-- class content end here -->
@@ -65,7 +89,7 @@
                                 @foreach (Anketa_Proekt.Models.Kategorija k in kategorii)
                                 {
                                     string ime_k = k.ime_k;
-                                    <a class="badge" href="#">@ime_k</a>
+                                    <span class="badge">@ime_k</span>
                                 }
                             </small>
                         </div>  <!-- questionnaire title row end here -->
@@ -75,7 +99,7 @@
                             <div class="col-sm-6 imageAndDescription">
                                 <!-- <h4>@Html.DisplayFor(modelItem => item.opis_a):</h4> -->
                                 @{
-                                string imgUrl = "/img/questionarieDefault.jpg";
+                                string imgUrl = "http://i.imgur.com/sdvVY4U.jpg";
 
                                 if (item.url_slika != null)
                                 {
@@ -86,7 +110,7 @@
                                 <img class="img-responsive imageQuestionnaireDescription" src="@imgUrl">
                                 <p class="questionnaireDescriptionParagraph">@Html.DisplayFor(modelItem => item.opis_a)</p>
                             </div>  <!-- class col-sm-6 (left side) end here -->
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <h4>Answer the questionnaire:</h4>
 
                                 @{
@@ -191,14 +215,20 @@
 
                                 <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-warning-sign"></span> @multiAnsewrs</div>
 
-                            </div>  <!-- class col-sm-6 (right side) end here -->
+                                <div class="row">
+                                    <a href="@Url.Action("Details", "Anketa", new { id = item.id_anketa })">
+                                        <button type="button" class="btn btn-info pull-right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> More info</button>
+                                    </a>
+                                </div>
+                            </div>  <!-- class col-sm-4 (right side) end here -->
+
+                            <div class="col-sm-2">
+
+                            </div>
+
                         </div>  <!-- Questionnaire content row end here -->
 
-                        <div class="row">
-                            <a href="@Url.Action("Details", "Anketa", new { id = item.id_anketa })">
-                                <button type="button" class="btn btn-info pull-right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> More info</button>
-                            </a>
-                        </div>
+
                     </div>  <!-- class container end here -->
                 </div>  <!-- class qustioonaireEven end here -->
 
@@ -290,3 +320,8 @@
     });
 </script>
 
+<script type="text/javascript">
+    $(window).load(function () {
+        $('#myModal').modal('show');
+    });
+</script>

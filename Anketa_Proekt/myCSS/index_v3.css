@@ -569,11 +569,11 @@ label{
 }
 
 .tableHeaderEndDate{
-    max-width: 147px;
+    max-width: 120px;
 }
 
 .tableHeaderButtons{
-    max-width: 211px;
+    max-width: 240px;
 }
 
  /* 
@@ -699,4 +699,22 @@ label{
 
 .typeOfAnswer{
     margin-top: 30px;
+}
+
+#vneseniOdg {
+    margin-left: 20px;
+}
+
+#vneseniOdg td:first-child{
+    width: 80%;
+    white-space: nowrap;
+}
+
+#vneseniOdgEdit{
+    margin-left: 20px;
+}
+
+#vneseniOdgEdit td:first-child{
+    width: 90.3%;
+    white-space: nowrap;
 }

@@ -34,7 +34,7 @@
             <!-- title start here -->
             <div class="container">
                 <!-- wrap image and title -->
-                <img class="img-responsive titleImage" src="~/img/backgroundTransparentSmall.png" />
+                <img class="img-responsive titleImage" src="http://i.imgur.com/HYtxRj8.png" />
                 <h1 class="text-center titleText">Detailed preview</h1>
             </div>
         </div>  <!-- class title end here -->
@@ -70,15 +70,14 @@
                     <!-- questionnaire content row start here-->
                     <div class="col-sm-6 imageAndDescription">
                         <!-- <h4>@Html.DisplayFor(model => model.opis_a):</h4> -->
-                        
                         @{
-                            string imgUrl = "/img/questionarieDefault.jpg";
+                            string imgUrl = "http://i.imgur.com/sdvVY4U.jpg";
 
                             if (Model.url_slika != null)
                             {
                                 imgUrl = Model.url_slika;
                             }
-                            
+
                             <img class="img-responsive imageQuestionnaireDescription" src="@imgUrl">
                         }
                         <p class="questionnaireDescriptionParagraph">@Html.DisplayFor(model => model.opis_a)</p>
@@ -228,7 +227,7 @@
                                     <h5>Votes per day</h5>
                                     <div id="GraphChart"></div>
                                 </div>
-                                <div class="panel-footer"><span class="glyphicon glyphicon-time"></span> Data results until 16:40</div>
+                                <div class="panel-footer"><span class="glyphicon glyphicon-time"></span>Current data results</div>
                             </div>
                         </div>  <!-- chart end here-->
 
@@ -416,15 +415,19 @@
 
         var sel = $("#sodrzinaKom").val();
 
+        var sendK = encodeURIComponent(sel);
+
         $.ajax({
             url: '/Anketa/ZapisiKomentar',
             type: "POST",
-            data: "sodrzinaKom=" + sel + "&anketa_id=" + anketaId,
+            data: "sodrzinaKom=" + sendK + "&anketa_id=" + anketaId,
             succes: function (data) {
-                location.reload();
+                //location.reload();
+                $(".actionBox ul").append('<li><div class="commenterImage"><img src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png" /></div><div class="commentText"> <p class="">' + sel + '</p> <span class="username date sub-text">by @ViewBag.NajavenKorsinik.Louse.ime @ViewBag.NajavenKorsinik.Louse.prezime</span> <span class="date sub-text">on  @Model.denesenDatum</span> </div></li>');
             },
             error: function () {
-                location.reload();
+                //location.reload();
+                $(".actionBox ul").append('<li><div class="commenterImage"><img src="http://gurucul.com/wp-content/uploads/2015/01/default-user-icon-profile.png" /></div><div class="commentText"> <p class="">' + sel + '</p> <span class="username date sub-text">by @ViewBag.NajavenKorsinik.Louse.ime @ViewBag.NajavenKorsinik.Louse.prezime</span> <span class="date sub-text">on  @Model.denesenDatum</span> </div></li>');
             }
         });
     })

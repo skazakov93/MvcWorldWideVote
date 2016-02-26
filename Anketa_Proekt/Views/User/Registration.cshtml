@@ -14,7 +14,7 @@
                 <!-- title start here -->
                 <div class="container">
                     <!-- wrap image and title -->
-                    <img class="img-responsive titleImage" src="~/img/backgroundTransparentSmall.png" />
+                    <img class="img-responsive titleImage" src="http://i.imgur.com/HYtxRj8.png" />
                     <h1 class="text-center titleText">Sign Up</h1>
                 </div>
             </div>  <!-- class title end here -->
@@ -95,7 +95,7 @@
                 <!-- not in a row -->
                 <div>@Html.LabelFor(u => u.datum_r)</div>
                 <div class="loginInput">
-                    @Html.JQueryUI().DatepickerFor(model => model.datum_r)
+                    @Html.JQueryUI().DatepickerFor(u => u.datum_r, new { id = "datepicker" })
                     @Html.ValidationMessageFor(u => u.datum_r)
                 </div>
                 <!-- not in a row end here-->
@@ -111,3 +111,12 @@
     </div>
 
 }
+
+<script>
+    $(document).ready(function () {
+        $("#datepicker").datepicker({
+            changeYear: true,
+            yearRange: "-100:+0"
+        });
+    });
+</script>

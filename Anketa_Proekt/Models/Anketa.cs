@@ -12,7 +12,7 @@ namespace Anketa_Proekt.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class Anketa
     {
         public Anketa()
@@ -25,6 +25,10 @@ namespace Anketa_Proekt.Models
 
             this.GlasoviId = new List<int>();
             this.isSelected = false;
+
+            kraen_datum = DateTime.Now;
+
+            this.denesenDatum = DateTime.Now.ToString("MMMM d, yyyy");
         }
 
         [Key]
@@ -55,7 +59,7 @@ namespace Anketa_Proekt.Models
 
         [Display(Name = "Image URL: ")]
         public string url_slika { get; set; }
-    
+
         public virtual Louse Louse { get; set; }
         public virtual ICollection<Glasa> Glasas { get; set; }
         public virtual ICollection<Komentar_Za> Komentar_Za { get; set; }
@@ -70,5 +74,28 @@ namespace Anketa_Proekt.Models
         public string mozen_odg { get; set; }
 
         public bool isSelected { get; set; }
+
+        public String getOdgovorii()
+        {
+            String str = "";
+
+            foreach (Mozni_Odgovori odg in this.Mozni_Odgovori)
+            {
+                str += odg.ime_odg;
+                str += ";###!";
+            }
+
+            return str;
+        }
+
+        public bool isMulti()
+        {
+            if (this.multi_choice == 1)
+                return true;
+
+            return false;
+        }
+
+        public string denesenDatum { get; set; }
     }
 }

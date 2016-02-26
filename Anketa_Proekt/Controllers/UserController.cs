@@ -38,26 +38,33 @@ namespace Anketa_Proekt.Controllers
         {
             //if (ModelState.IsValid)
             //{
-                if (user.isValidUser(user.e_mail, user.lozinka))
+            //if (user.isValidUser(user.e_mail, user.lozinka))
+            //{
+            //FormsAuthentication.SetAuthCookie(user.e_mail, true);
+            //FormsAuthentication.SetAuthCookie()
+            using (var db = new AnketiEntities5())
+            {
+                var query = from a in db.Lice
+                            where a.e_mail.Equals(user.e_mail) & a.lozinka.Equals(user.lozinka)
+                            select a.id_lice;
+
+                int idLice = query.FirstOrDefault();
+
+                if (idLice > 0)
                 {
-                    //FormsAuthentication.SetAuthCookie(user.e_mail, true);
-                    //FormsAuthentication.SetAuthCookie()
-                    using (var db = new AnketiEntities5())
-                    {
-                        var query = from a in db.Lice
-                                    where a.e_mail.Equals(user.e_mail) & a.lozinka.Equals(user.lozinka)
-                                    select a.id_lice;
-
-                        int idLice = query.FirstOrDefault();
-
-                        Session["id_lice"] = idLice;
-                        return RedirectToAction("Index", "Anketa");
-                    }
+                    Session["id_lice"] = idLice;
+                    return RedirectToAction("Index", "Anketa");
                 }
                 else
                 {
                     ModelState.AddModelError("", "Login data is incorrect!");
                 }
+            }
+            //}
+            //else
+            //{
+            //ModelState.AddModelError("", "Login data is incorrect!");
+            //}
             //}
             return View(user);
         }
@@ -112,37 +119,37 @@ namespace Anketa_Proekt.Controllers
 
             if (ModelState.IsValid)
             {
-                    using (var db = new AnketiEntities5())
-                    {
-                        var newUser = db.Lice.Create();
+                using (var db = new AnketiEntities5())
+                {
+                    var newUser = db.Lice.Create();
 
-                        newUser.ime = user.ime;
-                        newUser.prezime = user.prezime;
-                        newUser.e_mail = user.e_mail;
-                        newUser.lozinka = user.lozinka;
-                        newUser.tel_broj = user.tel_broj;
-                        newUser.ulica = user.ulica;
-                        newUser.id_grad = user.id_grad;
-                        newUser.datum_r = user.datum_r;
+                    newUser.ime = user.ime;
+                    newUser.prezime = user.prezime;
+                    newUser.e_mail = user.e_mail;
+                    newUser.lozinka = user.lozinka;
+                    newUser.tel_broj = user.tel_broj;
+                    newUser.ulica = user.ulica;
+                    newUser.id_grad = user.id_grad;
+                    newUser.datum_r = user.datum_r;
 
-                        db.Lice.Add(newUser);
+                    db.Lice.Add(newUser);
 
-                        db.SaveChanges();
+                    db.SaveChanges();
 
-                        Session["id_lice"] = newUser.id_lice;
+                    Session["id_lice"] = newUser.id_lice;
 
-                        var korisnik = db.Korisniks.Create();
+                    var korisnik = db.Korisniks.Create();
 
-                        korisnik.id_lice = newUser.id_lice;
-                        korisnik.br_anketi = 0;
+                    korisnik.id_lice = newUser.id_lice;
+                    korisnik.br_anketi = 0;
 
-                        db.Korisniks.Add(korisnik);
+                    db.Korisniks.Add(korisnik);
 
-                        db.SaveChanges();
+                    db.SaveChanges();
 
-                        return RedirectToAction("Index", "Anketa");
-                    }
-                
+                    return RedirectToAction("Index", "Anketa");
+                }
+
             }
             else
             {
@@ -170,7 +177,7 @@ namespace Anketa_Proekt.Controllers
                 using (var db = new AnketiEntities5())
                 {
                     Korisnik korisnik = db.Korisniks.Find((int)Session["id_lice"]);
-                    
+
                     Premium_Korisnik premiumKorsinik = db.Premium_Korisnik.Find((int)Session["id_lice"]);
 
                     Louse lice = db.Lice.Find((int)Session["id_lice"]);
@@ -179,7 +186,7 @@ namespace Anketa_Proekt.Controllers
                     {
                         ViewBag.PremiumUserStartDate = premiumKorsinik.datum_starts;
                         ViewBag.PremiumUserEndDate = premiumKorsinik.datum_end;
-                        
+
                         ViewBag.UserName = lice.ime;
                         ViewBag.UserLastName = lice.prezime;
 
@@ -206,7 +213,7 @@ namespace Anketa_Proekt.Controllers
             {
                 using (var db = new AnketiEntities5())
                 {
-                    Premium_Korisnik premiumKorisnik = db.Premium_Korisnik.Find((int) Session["id_lice"]);
+                    Premium_Korisnik premiumKorisnik = db.Premium_Korisnik.Find((int)Session["id_lice"]);
 
                     if (premiumKorisnik == null)
                     {
@@ -251,5 +258,5 @@ namespace Anketa_Proekt.Controllers
 
             return View();
         }
-	}
+    }
 }

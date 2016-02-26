@@ -3,31 +3,23 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - WW-Vote</title>
     
     <!-- Bootstrap -->
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <!-- <link href="~/Content/bootstrap.min.css" rel="stylesheet" /> -->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MyCustom CSS file -->
     <link href="~/myCSS/index_v3.css" rel="stylesheet" />
 
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
     
-    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <!-- <script src="~/Scripts/jquery-1.10.2.js"></script> -->
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 
-    <script src="~/Scripts/jquery-ui-1.10.4.custom.min.js"></script>
+    <!-- <script src="~/Scripts/jquery-ui-1.10.4.custom.min.js"></script> dali ova treba? -->
 
     <link href="~/Content/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
-
-    <!-- <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script> -->
-
-    
-    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"> -->
-
-    
-    <!-- <script src="//code.jquery.com/jquery-1.10.2.js"></script> -->
-
-    <!-- <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script> -->
 </head>
 
 <body>
@@ -69,7 +61,6 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><a href="@Url.Action("Create", "Anketa")">Create Pool</a></li>
                             <li><a href="@Url.Action("MyPool", "Anketa")">My Pools</a></li>
-                            <li><a href="#">Sort Pools</a></li>
                         </ul>
                     </div>   <!-- dropdown first -->
                     <div class="dropdown">
@@ -189,7 +180,7 @@
                                     <h5>
                                         Borche Jankovski</h3>
                                         <div class="col-sm-4">
-                                            <img class="img-circle img-responsive" src="~/img/borce.png" />
+                                            <img class="img-circle img-responsive" src="http://i.imgur.com/KEKxSKV.jpg" />
                                         </div>
                                         <div class="col-sm-8">
                                             <h6>Email: borche.jankovski@finki.ukim.mk</h6>
@@ -200,7 +191,7 @@
                                     <h5>
                                         Slavko Kazakov</h3>
                                         <div class="col-sm-4">
-                                            <img class="img-circle img-responsive" src="~/img/slavko.jpg" />
+                                            <img class="img-circle img-responsive" src="http://i.imgur.com/S0BsWIK.jpg" />
                                         </div>
                                         <div class="col-sm-8">
                                             <h6>Email: slavce.kazakov@gmail.com</h6>
@@ -232,7 +223,7 @@
                             </div>
                 </div>
                 <div class="col-md-3">
-                    <img class="footer-img img-responsive" src="~/img/backgroundTransparentSmall.png" />
+                    <img class="footer-img img-responsive" src="http://i.imgur.com/HYtxRj8.png" />
                 </div>
             </div>
         </div>
